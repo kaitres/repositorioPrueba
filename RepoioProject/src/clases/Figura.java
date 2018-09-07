@@ -22,7 +22,12 @@ public abstract class Figura {
         this.coordenadas = coordenadas;
     }
     public void dibujar(ArrayList<Coordenada> coordenadas){
-        
+        for (Coordenada coordenada : coordenadas) {
+            
+        }
+ {
+            
+        }
     }
     
     
