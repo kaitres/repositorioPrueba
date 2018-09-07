@@ -12,14 +12,17 @@ import java.util.ArrayList;
  * @author IP-ROUTE
  */
 public abstract class Figura {
-    ArrayList<Integer> coordenadas;
+    ArrayList<Coordenada> coordenadas;
 
-    public ArrayList<Integer> getCoordenadas() {
+    public ArrayList<Coordenada> getCoordenadas() {
         return coordenadas;
     }
 
-    public void setCoordenadas(ArrayList<Integer> coordenadas) {
+    public void setCoordenadas(ArrayList<Coordenada> coordenadas) {
         this.coordenadas = coordenadas;
+    }
+    public void dibujar(ArrayList<Coordenada> coordenadas){
+        
     }
     
     
