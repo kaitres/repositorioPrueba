@@ -5,13 +5,18 @@
  */
 package javafxapplication5;
 
+import clases.Diagrama;
+import clases.Entidad;
+import clases.Rectangulo;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.paint.Color;
 
 /**
  * FXML Controller class
@@ -19,13 +24,20 @@ import javafx.scene.control.Button;
  * @author The.N
  */
 public class PantallaPrincipalController implements Initializable {
-
+    Diagrama diagrama;
+    
+    public int posicionDefaultX = 10;
+    public int posicionDefaultY = 10;
+    
+    public GraphicsContext gc;
+    
     @FXML
     private Button btEntidad;
     @FXML
     private Button btRelacion;
     @FXML
     private Canvas canvas;
+    
     @FXML
     private Button btBorrar;
 
@@ -35,11 +47,24 @@ public class PantallaPrincipalController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        diagrama = new Diagrama();
+        gc = canvas.getGraphicsContext2D();
+        gc.setFill(Color.BLUE);
     }    
 
     @FXML
     private void crearEntidad(ActionEvent event) {
+        Rectangulo rec = new Rectangulo(posicionDefaultX, posicionDefaultY, 
+                posicionDefaultX+30, posicionDefaultY, 
+                posicionDefaultX+30, posicionDefaultY+10, 
+                posicionDefaultX, posicionDefaultY+10);
+        Entidad ent = new Entidad();
+        ent.setFigura(rec);
+        diagrama.getEntidades().add(ent);
+        rec.dibujar(gc);
+        
+        posicionDefaultX+=2;
+        posicionDefaultY+=2;
     }
 
     @FXML
@@ -48,6 +73,9 @@ public class PantallaPrincipalController implements Initializable {
 
     @FXML
     private void borrar(ActionEvent event) {
+        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        posicionDefaultX=10;
+        posicionDefaultY=10;
     }
     
 }

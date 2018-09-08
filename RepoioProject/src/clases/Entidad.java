@@ -20,6 +20,14 @@ public class Entidad {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
+    public void setFigura(Figura figura) {
+        this.figura = figura;
+    }
+
+    public Figura getFigura() {
+        return figura;
+    }
     
     
 }

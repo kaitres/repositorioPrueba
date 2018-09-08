@@ -6,6 +6,7 @@
 package clases;
 
 import java.util.ArrayList;
+import javafx.scene.canvas.GraphicsContext;
 
 /**
  *
@@ -21,13 +22,18 @@ public abstract class Figura {
     public void setCoordenadas(ArrayList<Coordenada> coordenadas) {
         this.coordenadas = coordenadas;
     }
-    public void dibujar(ArrayList<Coordenada> coordenadas){
-        for (Coordenada coordenada : coordenadas) {
+    public void dibujar(GraphicsContext gc){
+        for (int x=0;x<coordenadas.size();x++) {
+            if(x+1<coordenadas.size()){
+                gc.strokeLine(coordenadas.get(x).getX(), coordenadas.get(x).getY()
+                        ,coordenadas.get(x+1).getX(), coordenadas.get(x+1).getY());
+            }else{
+                gc.strokeLine(coordenadas.get(x).getX(), coordenadas.get(x).getY()
+                    ,coordenadas.get(0).getX(), coordenadas.get(0).getY());
+            }
             
         }
- {
-            
-        }
+ 
     }
     
     
