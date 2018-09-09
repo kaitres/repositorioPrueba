@@ -7,7 +7,10 @@ package javafxapplication5;
 
 import clases.Diagrama;
 import clases.Entidad;
+import clases.Pentagono;
 import clases.Rectangulo;
+import clases.Rombo;
+import clases.Triangulo;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -26,8 +29,8 @@ import javafx.scene.paint.Color;
 public class PantallaPrincipalController implements Initializable {
     Diagrama diagrama;
     
-    public int posicionDefaultX = 10;
-    public int posicionDefaultY = 10;
+    public int posicionDefaultX = 50;
+    public int posicionDefaultY = 50;
     
     public GraphicsContext gc;
     
@@ -54,10 +57,7 @@ public class PantallaPrincipalController implements Initializable {
 
     @FXML
     private void crearEntidad(ActionEvent event) {
-        Rectangulo rec = new Rectangulo(posicionDefaultX, posicionDefaultY, 
-                posicionDefaultX+30, posicionDefaultY, 
-                posicionDefaultX+30, posicionDefaultY+10, 
-                posicionDefaultX, posicionDefaultY+10);
+        Pentagono rec = new Pentagono(posicionDefaultX, posicionDefaultY,30);
         Entidad ent = new Entidad();
         ent.setFigura(rec);
         diagrama.getEntidades().add(ent);
