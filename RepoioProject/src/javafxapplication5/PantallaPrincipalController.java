@@ -59,7 +59,7 @@ public class PantallaPrincipalController implements Initializable {
     @FXML
     private void crearEntidad(ActionEvent event) {
         Pentagono rec = new Pentagono(posicionDefaultX, posicionDefaultY,30);
-        Entidad ent = new Entidad();
+        Entidad ent = new Entidad("Default");
         ent.setFigura(rec);
         diagrama.getEntidades().add(ent);
         rec.dibujar(gc);
@@ -75,8 +75,10 @@ public class PantallaPrincipalController implements Initializable {
     @FXML
     private void borrar(ActionEvent event) {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        posicionDefaultX=10;
-        posicionDefaultY=10;
+        posicionDefaultX=50;
+        posicionDefaultY=50;
+        diagrama = new Diagrama();
+        
     }
     
 }

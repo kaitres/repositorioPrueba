@@ -22,7 +22,7 @@ public class Pentagono extends Figura{
         int cordX=centroX;
         int cordY=centroY;
         
-        System.out.println("cord : "+cordX +","+cordY );
+        
     // corresponden a los triangulos que se pueden formar en los costados del pentagono
         avanzaY=abs ((int) (escala*cos(72)));
         avanzaX=abs ((int) (escala*sin(72)));
@@ -36,29 +36,28 @@ public class Pentagono extends Figura{
         cordX += avanzaX;
         cordY += avanzaY;
         this.coordenadas.add(new Coordenada(cordX , cordY));
-        System.out.println("cord : "+cordX+"," +cordY );
+        
         
     //tercer punto
         cordX += escala;
         this.coordenadas.add(new Coordenada(cordX , cordY));
-        System.out.println("cord : "+cordX +","+cordY );
+        
         
     //cuarto punto
         cordX += avanzaX;
         cordY -= avanzaY;
         this.coordenadas.add(new Coordenada(cordX , cordY));
-        System.out.println("cord : "+cordX+"," +cordY );
+        
         
     //quinto punto
         //un triangolo que se forma en la parte superior del pentagono
         avanzaX = abs((int) (escala * cos(54)));
         avanzaY = abs((int) (escala * sin(54)));
-        System.out.println("avanzaX"+avanzaX);
-        System.out.println("avanzay"+avanzaY);
+        
         cordX -= avanzaX;
         cordY -= avanzaY;
         this.coordenadas.add(new Coordenada(cordX , cordY));
-        System.out.println("cord : "+cordX+"," +cordY );
+        
         
     }
 }

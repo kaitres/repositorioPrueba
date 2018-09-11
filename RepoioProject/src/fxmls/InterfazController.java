@@ -60,7 +60,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
 
     @FXML
     private void crearEntidad(ActionEvent event) {
-        Rectangulo rec = new Rectangulo(posicionDefaultX, posicionDefaultY,20);
+        Rectangulo rec = new Rectangulo(posicionDefaultX, posicionDefaultY,25);
         Entidad ent = new Entidad("Entidad");
         ent.setFigura(rec);
         diagrama.addEntidad(ent);
@@ -92,7 +92,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     
     @FXML
     private void crearRelacion3(ActionEvent event) {
-        Triangulo tri = new Triangulo(posicionDefaultX, posicionDefaultY,20);
+        Triangulo tri = new Triangulo(posicionDefaultX, posicionDefaultY,40);
         Relacion rec = new Relacion();
         rec.setFigura(tri);
         diagrama.addRelacion(rec);
@@ -114,7 +114,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
 
     @FXML
     private void crearRelacion5(ActionEvent event) {
-        Pentagono tri = new Pentagono(posicionDefaultX, posicionDefaultY,20);
+        Pentagono tri = new Pentagono(posicionDefaultX, posicionDefaultY,30);
         Relacion rec = new Relacion();
         rec.setFigura(tri);
         diagrama.addRelacion(rec);
@@ -125,7 +125,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
 
     @FXML
     private void crearRelacion6(ActionEvent event) {
-        Hexagono tri = new Hexagono(posicionDefaultX, posicionDefaultY,20);
+        Hexagono tri = new Hexagono(posicionDefaultX, posicionDefaultY,25);
         Relacion rec = new Relacion();
         rec.setFigura(tri);
         diagrama.addRelacion(rec);

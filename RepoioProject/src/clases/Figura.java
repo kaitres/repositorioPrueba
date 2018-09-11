@@ -14,7 +14,7 @@ import javafx.scene.canvas.GraphicsContext;
  */
 public abstract class Figura {
     ArrayList<Coordenada> coordenadas;
-
+    String nombre;
     public ArrayList<Coordenada> getCoordenadas() {
         return coordenadas;
     }
@@ -33,7 +33,9 @@ public abstract class Figura {
             }
             
         }
- 
+        
+        gc.strokeText(nombre, coordenadas.get(0).getX()+5, coordenadas.get(0).getY()+12,40);
+        
     }
     
     
