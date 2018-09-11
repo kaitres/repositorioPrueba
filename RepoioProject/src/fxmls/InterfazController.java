@@ -51,6 +51,8 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
 
     @FXML
     private void clear(ActionEvent event) {
+        diagrama.clear();
+        disableAllR();
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         posicionDefaultX = 50;
         posicionDefaultY = 50;

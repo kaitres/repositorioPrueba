@@ -44,7 +44,7 @@ public class Diagrama {
         relaciones.add(relacion);
     }
     
-    public void clearDiagrama(){//Lo hizo el Carlos UwU
+    public void clear(){//Lo hizo el Carlos UwU
         entidades.clear();
         relaciones.clear();
     }
