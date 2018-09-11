@@ -24,6 +24,14 @@ public class Relacion {
         this.nombre = nombre;
     }
 
+    public void setFigura(Figura figura) {
+        this.figura = figura;
+    }
+
+    public void setComponentes(ArrayList<Entidad> componentes) {
+        this.componentes = componentes;
+    }
+
     public ArrayList<Entidad> getComponentes() {
         return componentes;
     }
