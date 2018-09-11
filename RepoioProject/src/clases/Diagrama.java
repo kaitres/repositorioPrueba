@@ -36,5 +36,16 @@ public class Diagrama {
         this.relaciones = relaciones;
     }
     
+    public void addEntidad(Entidad entidad){//Lo hizo el Carlos UwU
+        entidades.add(entidad);
+    }
     
+    public void addRelacion(Relacion relacion){//Lo hizo el Carlos UwU
+        relaciones.add(relacion);
+    }
+    
+    public void clear(){//Lo hizo el Carlos UwU
+        entidades.clear();
+        relaciones.clear();
+    }
 }

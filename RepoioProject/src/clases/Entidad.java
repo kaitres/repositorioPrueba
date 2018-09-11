@@ -13,6 +13,10 @@ public class Entidad {
     String nombre;
     Figura figura; //puede ser Rectangulo ya que solo se puede representar de esa manera
 
+    public Entidad(String nombre) {//Lo hizo el Carlos UwU
+        this.nombre = nombre;
+    }
+
     public String getNombre() {
         return nombre;
     }
