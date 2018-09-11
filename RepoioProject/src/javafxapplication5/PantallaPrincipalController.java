@@ -7,6 +7,7 @@ package javafxapplication5;
 
 import clases.Diagrama;
 import clases.Entidad;
+import clases.Hexagono;
 import clases.Pentagono;
 import clases.Rectangulo;
 import clases.Rombo;
