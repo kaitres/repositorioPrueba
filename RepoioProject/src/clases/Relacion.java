@@ -15,6 +15,10 @@ public class Relacion {
     String nombre;
     Figura figura;
     ArrayList<Entidad> componentes;
+    
+    public Relacion(String nombre) {
+        this.nombre = nombre;
+    }
 
     public String getNombre() {
         return nombre;
