@@ -23,10 +23,12 @@ public class Entidad {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+        this.figura.nombre= nombre;
     }
 
     public void setFigura(Figura figura) {
         this.figura = figura;
+        this.figura.nombre = nombre;
     }
 
     public Figura getFigura() {
