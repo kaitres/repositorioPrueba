@@ -15,7 +15,7 @@ public class Relacion {
     String nombre;
     Figura figura;
     ArrayList<Entidad> componentes;
-    
+
     public Relacion(String nombre) {
         this.nombre = nombre;
     }
@@ -26,10 +26,12 @@ public class Relacion {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+        this.figura.nombre=nombre;
     }
 
     public void setFigura(Figura figura) {
         this.figura = figura;
+        this.figura.nombre = nombre;
     }
 
     public void setComponentes(ArrayList<Entidad> componentes) {

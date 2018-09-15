@@ -10,7 +10,9 @@ import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 import java.util.ArrayList;
 import javafx.geometry.Point2D;
+import javafx.geometry.VPos;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.text.TextAlignment;
 
 /**
  *
@@ -19,6 +21,9 @@ import javafx.scene.canvas.GraphicsContext;
 public  class Figura {
     ArrayList<Point2D> coordenadas = new ArrayList();
     String nombre;
+    Point2D puntoCentral; 
+    int lados;
+    
     public ArrayList<Point2D> getCoordenadas() {
         return coordenadas;
     }
@@ -27,6 +32,7 @@ public  class Figura {
         this.coordenadas = coordenadas;
     }
     public void dibujar(GraphicsContext gc){
+        this.reCalcular();
         for (int x=0;x<coordenadas.size();x++) {
             if(x+1<coordenadas.size()){
                 gc.strokeLine(coordenadas.get(x).getX(), coordenadas.get(x).getY()
@@ -37,26 +43,38 @@ public  class Figura {
             }
             
         }
+        gc.setTextAlign(TextAlignment.CENTER);
+        gc.setTextBaseline(VPos.CENTER);
+        int mitadY = (int)(coordenadas.get(0).getY()+coordenadas.get(coordenadas.size()/2).getY())/2;
+        if(lados!=-1){
+            gc.fillText(nombre, coordenadas.get(0).getX(), (int)puntoCentral.getY());
+        }else{
+            int mitadX = (int)(coordenadas.get(0).getX()+coordenadas.get(1).getX())/2;
+            gc.fillText(nombre, (int)puntoCentral.getX(), (int)puntoCentral.getY());
+        }
         
-        gc.strokeText(nombre, coordenadas.get(0).getX()+5, coordenadas.get(0).getY()+12,40);
         
     }
     public void rectangulo(int centroX,int centroY, int escala) {
-        int alto=50;
+        lados=-1;
+        puntoCentral = new Point2D(centroX , centroY);
+        int alto=20;
         
         this.coordenadas = new ArrayList<>();
-        this.coordenadas.add(new Point2D(centroX-alto/2, centroY-escala/2));
-        this.coordenadas.add(new Point2D(centroX+alto/2, centroY-escala/2));
-        this.coordenadas.add(new Point2D(centroX+alto/2, centroY+escala/2));
-        this.coordenadas.add(new Point2D(centroX-alto/2, centroY+escala/2));
+        this.coordenadas.add(new Point2D(centroX-escala/2, centroY-alto/2));
+        this.coordenadas.add(new Point2D(centroX-escala/2, centroY+alto/2));
+        this.coordenadas.add(new Point2D(centroX+escala/2, centroY+alto/2));
+        this.coordenadas.add(new Point2D(centroX+escala/2, centroY-alto/2));
     }
     
     public void crearFigura(int centroX , int centroY , int escala , int lados){
+        puntoCentral = new Point2D(centroX , centroY);
+        this.lados =lados;
         double angulo = 0;
         double anguloAux;
         int movX;
         int movY;
-        
+        this.coordenadas = new ArrayList<>();
         for (int i = 0; i < lados; i++ ) {
             if(angulo==0){
                 this.coordenadas.add(new Point2D(centroX , centroY - escala));
@@ -105,6 +123,17 @@ public  class Figura {
     }
     public double gradosRadianes(double grados){
         return (grados*Math.PI)/180;
+    }
+    public void reCalcular(){
+        int escala = nombre.length()*4;
+        int centroX = (int)puntoCentral.getX();
+        int centroY = (int)puntoCentral.getY();
+        if(lados==-1){
+            rectangulo(centroX, centroY, escala*2);
+        }else{
+            crearFigura(centroX, centroY, escala+4, lados);
+        }
+        
     }
 }
     
