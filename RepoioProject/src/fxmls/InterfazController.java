@@ -77,7 +77,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             Figura rec = new Figura();
             rec.rectangulo(posicionDefaultX, posicionDefaultY,25);
 
-            Entidad ent = new Entidad("Entidad");
+            Entidad ent = new Entidad(newEntidadNombre);
             ent.setFigura(rec);
             diagrama.addEntidad(ent);
             rec.dibujar(gc);
@@ -105,7 +105,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             Figura tri = new Figura();
             tri.crearFigura(posicionDefaultX, posicionDefaultY, 20 , 4);
 
-            Relacion rec = new Relacion("R"+cantDeRelaciones);
+            Relacion rec = new Relacion(newRelacionNombre);
             rec.setFigura(tri);
             diagrama.addRelacion(rec);
             tri.dibujar(gc);
@@ -125,7 +125,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             tri.crearFigura(posicionDefaultX, posicionDefaultY, 20 , 3);
 
 
-            Relacion rec = new Relacion("R"+cantDeRelaciones);;
+            Relacion rec = new Relacion(newRelacionNombre);;
             rec.setFigura(tri);
             diagrama.addRelacion(rec);
             tri.dibujar(gc);
@@ -144,7 +144,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             Figura tri = new Figura();
         tri.crearFigura(posicionDefaultX, posicionDefaultY, 20 , 4);
         
-        Relacion rec = new Relacion("R"+cantDeRelaciones);
+        Relacion rec = new Relacion(newRelacionNombre);
         rec.setFigura(tri);
         diagrama.addRelacion(rec);
         tri.dibujar(gc);
@@ -164,7 +164,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             Figura tri = new Figura();
             tri.crearFigura(posicionDefaultX, posicionDefaultY, 20 , 5);
 
-            Relacion rec = new Relacion("R"+cantDeRelaciones);
+            Relacion rec = new Relacion(newRelacionNombre);
             rec.setFigura(tri);
             diagrama.addRelacion(rec);
             tri.dibujar(gc);
@@ -183,7 +183,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             Figura tri = new Figura();
             tri.crearFigura(posicionDefaultX, posicionDefaultY, 20 , 6);
 
-            Relacion rec = new Relacion("R"+cantDeRelaciones);
+            Relacion rec = new Relacion(newRelacionNombre);
             rec.setFigura(tri);
             diagrama.addRelacion(rec);
             tri.dibujar(gc);
