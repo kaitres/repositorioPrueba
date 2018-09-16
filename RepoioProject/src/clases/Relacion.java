@@ -16,18 +16,28 @@ public class Relacion {
     Figura figura;
     ArrayList<Entidad> componentes;
 
+    public Relacion(String nombre) {
+        this.nombre = nombre;
+    }
+
     public String getNombre() {
         return nombre;
     }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+        this.figura.nombre=nombre;
     }
 
     public void setFigura(Figura figura) {
         this.figura = figura;
+        this.figura.nombre = nombre;
     }
 
+    public Figura getFigura() {
+        return figura;
+    }
+    
     public void setComponentes(ArrayList<Entidad> componentes) {
         this.componentes = componentes;
     }
