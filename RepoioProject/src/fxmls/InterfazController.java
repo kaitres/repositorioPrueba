@@ -12,9 +12,11 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.MenuItem;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 /**
@@ -33,7 +35,9 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     public static String newRelacionNombre;
     public static boolean relacionValidacion;
     
-    public int cantDeRelaciones =1;
+    public boolean arrastrando= false;
+    
+    
     public GraphicsContext gc;
     
     @FXML
@@ -64,7 +68,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         posicionDefaultX = 50;
         posicionDefaultY = 50;
-        cantDeRelaciones = 1;
+        
     }
 
     @FXML
@@ -111,7 +115,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             tri.dibujar(gc);
             posicionDefaultX+=20;
             posicionDefaultY+=20;
-            cantDeRelaciones+=1;
+            
         }
     }
     
@@ -131,7 +135,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             tri.dibujar(gc);
             posicionDefaultX+=20;
             posicionDefaultY+=20;
-            cantDeRelaciones+=1;
+            
         }
     }
 
@@ -150,7 +154,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         tri.dibujar(gc);
         posicionDefaultX+=20;
         posicionDefaultY+=20;
-        cantDeRelaciones+=1;
+        
         }
         
     }
@@ -170,7 +174,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             tri.dibujar(gc);
             posicionDefaultX+=20;
             posicionDefaultY+=20;
-            cantDeRelaciones+=1;
+            
         }
     }
 
@@ -189,10 +193,66 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             tri.dibujar(gc);
             posicionDefaultX+=20;
             posicionDefaultY+=20;
-            cantDeRelaciones+=1;
+            
         }
     }
-    
+    @FXML
+    private void ratonPresionado(MouseEvent event) {
+        
+        Point2D coorMov = new Point2D(event.getX(), event.getY());
+        if (!arrastrando) {
+
+            if (dentroDeAlgunaFigura(coorMov)) {
+                
+                arrastrando = true;
+            }
+        }else{
+
+            figuraEnMovimiento(coorMov).setPuntoCentral(new Point2D(event.getX(),event.getY())); 
+            
+            gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+            reDibujarTodo();
+            
+        }
+    }
+
+    @FXML
+    private void ratonSinPresionar(MouseEvent event) {
+        
+        this.arrastrando=false;
+    }
+    public boolean dentroDeAlgunaFigura(Point2D e){
+        for (Entidad entidade : diagrama.getEntidades()) {
+            if ((e.getX() > entidade.getFigura().getCoordenadas().get(0).getX()) &&
+                    (e.getX() < entidade.getFigura().getCoordenadas().get(1).getX()) &&
+                    (e.getY() > entidade.getFigura().getCoordenadas().get(0).getY()) &&
+                    (e.getY() < entidade.getFigura().getCoordenadas().get(2).getY())){
+                return true;
+            }
+        }
+        return false;
+    }
+    public Figura figuraEnMovimiento(Point2D e){
+        for (Entidad entidad : diagrama.getEntidades()) {
+            if ((e.getX() > entidad.getFigura().getCoordenadas().get(0).getX()) &&
+                    (e.getX() < entidad.getFigura().getCoordenadas().get(1).getX()) &&
+                    (e.getY() > entidad.getFigura().getCoordenadas().get(0).getY()) &&
+                    (e.getY() < entidad.getFigura().getCoordenadas().get(2).getY())){
+                
+                return entidad.getFigura();
+            }
+        }
+        
+        return new Figura();
+    }
+    public void reDibujarTodo(){
+        for (Entidad entidade : diagrama.getEntidades()) {
+            entidade.getFigura().dibujar(gc);
+        }
+        for (Relacion relacion : diagrama.getRelaciones()) {
+            relacion.getFigura().dibujar(gc);
+        }
+    }
     private void disableAllR(){
         r2.setDisable(true);
         r3.setDisable(true);

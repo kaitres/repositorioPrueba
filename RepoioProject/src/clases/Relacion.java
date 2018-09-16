@@ -34,6 +34,10 @@ public class Relacion {
         this.figura.nombre = nombre;
     }
 
+    public Figura getFigura() {
+        return figura;
+    }
+    
     public void setComponentes(ArrayList<Entidad> componentes) {
         this.componentes = componentes;
     }

@@ -45,11 +45,11 @@ public  class Figura {
         }
         gc.setTextAlign(TextAlignment.CENTER);
         gc.setTextBaseline(VPos.CENTER);
-        int mitadY = (int)(coordenadas.get(0).getY()+coordenadas.get(coordenadas.size()/2).getY())/2;
+        
         if(lados!=-1){
             gc.fillText(nombre, coordenadas.get(0).getX(), (int)puntoCentral.getY());
         }else{
-            int mitadX = (int)(coordenadas.get(0).getX()+coordenadas.get(1).getX())/2;
+            
             gc.fillText(nombre, (int)puntoCentral.getX(), (int)puntoCentral.getY());
         }
         
@@ -62,9 +62,9 @@ public  class Figura {
         
         this.coordenadas = new ArrayList<>();
         this.coordenadas.add(new Point2D(centroX-escala/2, centroY-alto/2));
-        this.coordenadas.add(new Point2D(centroX-escala/2, centroY+alto/2));
-        this.coordenadas.add(new Point2D(centroX+escala/2, centroY+alto/2));
         this.coordenadas.add(new Point2D(centroX+escala/2, centroY-alto/2));
+        this.coordenadas.add(new Point2D(centroX+escala/2, centroY+alto/2));
+        this.coordenadas.add(new Point2D(centroX-escala/2, centroY+alto/2));
     }
     
     public void crearFigura(int centroX , int centroY , int escala , int lados){
@@ -75,6 +75,7 @@ public  class Figura {
         int movX;
         int movY;
         this.coordenadas = new ArrayList<>();
+        
         for (int i = 0; i < lados; i++ ) {
             if(angulo==0){
                 this.coordenadas.add(new Point2D(centroX , centroY - escala));
@@ -135,6 +136,11 @@ public  class Figura {
         }
         
     }
+
+    public void setPuntoCentral(Point2D puntoCentral) {
+        this.puntoCentral = puntoCentral;
+    }
+    
 }
     
     
