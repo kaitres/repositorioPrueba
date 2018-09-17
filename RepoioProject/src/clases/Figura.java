@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import javafx.geometry.Point2D;
 import javafx.geometry.VPos;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
 /**
@@ -49,13 +51,13 @@ public  class Figura {
         }
         gc.setTextAlign(TextAlignment.CENTER);
         gc.setTextBaseline(VPos.CENTER);
+        gc.setFont(Font.font(15));
         
-        if(lados!=-1){
-            gc.fillText(nombre, coordenadas.get(0).getX(), (int)puntoCentral.getY());
-        }else{
+            
+        
             
             gc.fillText(nombre, (int)puntoCentral.getX(), (int)puntoCentral.getY());
-        }       
+               
     }
     
     public void puntosControl(){
@@ -134,13 +136,13 @@ public  class Figura {
         return (grados*Math.PI)/180;
     }
     public void reCalcular(){
-        int escala = nombre.length()*4;
+        int escala = calEscala();
         int centroX = (int)puntoCentral.getX();
         int centroY = (int)puntoCentral.getY();
         if(lados==-1){
             rectangulo(centroX, centroY, escala*2);
         }else{
-            crearFigura(centroX, centroY, escala+4, lados);
+            crearFigura(centroX, centroY, escala+2, lados);
         }
         
     }
@@ -161,7 +163,13 @@ public  class Figura {
         return lados;
     }
 
-    
+    public int calEscala(){
+        Text text = new Text(this.nombre);
+        if((int)text.getLayoutBounds().getWidth()<(int)text.getLayoutBounds().getHeight()){
+            return (int)text.getLayoutBounds().getHeight();
+        }
+        return (int)text.getLayoutBounds().getWidth();
+    }
 }
     
     
