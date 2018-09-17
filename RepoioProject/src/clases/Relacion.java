@@ -18,12 +18,18 @@ public class Relacion {
     ArrayList<Entidad> componentes = new ArrayList();
     ArrayList<Union> uniones = new ArrayList();
     
-    
+    /**
+     * metodo que dibuja todas las uniones del objeto Relacion 
+     * @param gc GraphicsContext del diagrama
+     */
     public void dibujarUniones(GraphicsContext gc){
         for (Union uniones : uniones) {
             uniones.dibujarUnion(gc);
         }
     }
+    /**
+     * metodo que crea todas las uniones(objeto Union) del objeto Relacion 
+     */
     public void crearUniones(){
         for (int i = 0; i < componentes.size(); i++) {
             uniones.add(new Union(this.figura ,componentes.get(i).figura));
