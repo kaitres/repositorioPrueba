@@ -20,6 +20,7 @@ import javafx.scene.text.TextAlignment;
  */
 public  class Figura {
     ArrayList<Point2D> coordenadas = new ArrayList();
+    ArrayList<Point2D> coordenadasConeccion = new ArrayList();
     String nombre;
     Point2D puntoCentral; 
     int lados;
@@ -31,6 +32,9 @@ public  class Figura {
     public void setCoordenadas(ArrayList<Point2D> coordenadas) {
         this.coordenadas = coordenadas;
     }
+    public void dibujarPuntoControl(GraphicsContext gc){
+        
+}
     public void dibujar(GraphicsContext gc){
         this.reCalcular();
         for (int x=0;x<coordenadas.size();x++) {
@@ -51,8 +55,10 @@ public  class Figura {
         }else{
             
             gc.fillText(nombre, (int)puntoCentral.getX(), (int)puntoCentral.getY());
-        }
-        
+        }       
+    }
+    
+    public void puntosControl(){
         
     }
     public void rectangulo(int centroX,int centroY, int escala) {
@@ -65,6 +71,7 @@ public  class Figura {
         this.coordenadas.add(new Point2D(centroX+escala/2, centroY-alto/2));
         this.coordenadas.add(new Point2D(centroX+escala/2, centroY+alto/2));
         this.coordenadas.add(new Point2D(centroX-escala/2, centroY+alto/2));
+        coordenadasConeccion=coordenadas;
     }
     
     public void crearFigura(int centroX , int centroY , int escala , int lados){
@@ -121,6 +128,7 @@ public  class Figura {
             }
             angulo+=360/lados;
         }
+        coordenadasConeccion=coordenadas;
     }
     public double gradosRadianes(double grados){
         return (grados*Math.PI)/180;
@@ -140,6 +148,7 @@ public  class Figura {
     public void setPuntoCentral(Point2D puntoCentral) {
         this.puntoCentral = puntoCentral;
     }
+
     
 }
     

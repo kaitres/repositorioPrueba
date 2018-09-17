@@ -15,6 +15,7 @@ public class Relacion {
     String nombre;
     Figura figura;
     ArrayList<Entidad> componentes;
+    Union union;
 
     public Relacion(String nombre) {
         this.nombre = nombre;

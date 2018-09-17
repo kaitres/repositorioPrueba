@@ -221,7 +221,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         
         this.arrastrando=false;
     }
-    public boolean dentroDeAlgunaFigura(Point2D e){
+    public boolean dentroDeAlgunaFigura(Point2D e){        
         for (Entidad entidade : diagrama.getEntidades()) {
             if ((e.getX() > entidade.getFigura().getCoordenadas().get(0).getX()) &&
                     (e.getX() < entidade.getFigura().getCoordenadas().get(1).getX()) &&
