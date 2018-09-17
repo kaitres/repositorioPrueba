@@ -196,6 +196,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             
         }
     }
+    
     @FXML
     private void ratonPresionado(MouseEvent event) {
         
@@ -221,12 +222,22 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         
         this.arrastrando=false;
     }
+    
     public boolean dentroDeAlgunaFigura(Point2D e){        
         for (Entidad entidade : diagrama.getEntidades()) {
             if ((e.getX() > entidade.getFigura().getCoordenadas().get(0).getX()) &&
                     (e.getX() < entidade.getFigura().getCoordenadas().get(1).getX()) &&
                     (e.getY() > entidade.getFigura().getCoordenadas().get(0).getY()) &&
                     (e.getY() < entidade.getFigura().getCoordenadas().get(2).getY())){
+                return true;
+            }
+        }
+        for (Relacion entidade : diagrama.getRelaciones()) {
+            
+            if ((e.getX() > entidade.getFigura().getPuntoCentral().getX()-entidade.getFigura().getNombre().length()*4) &&
+                    (e.getX() < entidade.getFigura().getPuntoCentral().getX()+entidade.getFigura().getNombre().length()*4) &&
+                    (e.getY() > entidade.getFigura().getPuntoCentral().getY()-entidade.getFigura().getNombre().length()*4) &&
+                    (e.getY() < entidade.getFigura().getPuntoCentral().getY()+entidade.getFigura().getNombre().length()*4)){
                 return true;
             }
         }
@@ -242,7 +253,15 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                 return entidad.getFigura();
             }
         }
-        
+        for (Relacion entidade : diagrama.getRelaciones()) {
+            
+            if ((e.getX() > entidade.getFigura().getPuntoCentral().getX()-entidade.getFigura().getNombre().length()*4) &&
+                    (e.getX() < entidade.getFigura().getPuntoCentral().getX()+entidade.getFigura().getNombre().length()*4) &&
+                    (e.getY() > entidade.getFigura().getPuntoCentral().getY()-entidade.getFigura().getNombre().length()*4) &&
+                    (e.getY() < entidade.getFigura().getPuntoCentral().getY()+entidade.getFigura().getNombre().length()*4)){
+                return entidade.getFigura();
+            }
+        }
         return new Figura();
     }
     public void reDibujarTodo(){

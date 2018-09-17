@@ -34,7 +34,7 @@ public  class Figura {
     }
     public void dibujarPuntoControl(GraphicsContext gc){
         
-}
+    }
     public void dibujar(GraphicsContext gc){
         this.reCalcular();
         for (int x=0;x<coordenadas.size();x++) {
@@ -147,6 +147,18 @@ public  class Figura {
 
     public void setPuntoCentral(Point2D puntoCentral) {
         this.puntoCentral = puntoCentral;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public Point2D getPuntoCentral() {
+        return puntoCentral;
+    }
+
+    public int getLados() {
+        return lados;
     }
 
     
