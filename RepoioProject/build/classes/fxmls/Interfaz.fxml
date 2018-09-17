@@ -2,8 +2,6 @@
 
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.SplitMenuButton?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Rectangle?>
@@ -16,15 +14,7 @@
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ececec" height="570.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="140.0" />
             <Button layoutX="14.0" layoutY="530.0" mnemonicParsing="false" onAction="#clear" prefHeight="26.0" prefWidth="114.0" text="Limpiar" />
             <Button layoutX="15.0" layoutY="34.0" mnemonicParsing="false" onAction="#crearEntidad" prefHeight="26.0" prefWidth="114.0" text="Crear Entidad" />
-            <SplitMenuButton layoutX="13.0" layoutY="73.0" mnemonicParsing="false" text="Crear Relacion">
-              <items>
-                <MenuItem fx:id="r2" mnemonicParsing="false" onAction="#crearRelacion2" text="Relacion de 2" />
-                <MenuItem fx:id="r3" mnemonicParsing="false" onAction="#crearRelacion3" text="Relacion de 3" />
-                  <MenuItem fx:id="r4" mnemonicParsing="false" onAction="#crearRelacion4" text="Relacion de 4" />
-                  <MenuItem fx:id="r5" mnemonicParsing="false" onAction="#crearRelacion5" text="Relacion de 5" />
-                  <MenuItem fx:id="r6" mnemonicParsing="false" onAction="#crearRelacion6" text="Relacion de 6" />
-              </items>
-            </SplitMenuButton>
+            <Button fx:id="rBtn" layoutX="15.0" layoutY="67.0" mnemonicParsing="false" onAction="#crearRelacion" prefHeight="25.0" prefWidth="114.0" text="Crear Relación" />
          </children>
       </Pane>
    </children>
