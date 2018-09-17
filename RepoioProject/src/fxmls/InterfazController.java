@@ -187,5 +187,6 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         for (Relacion relacion : diagrama.getRelaciones()) {
             relacion.getFigura().dibujar(gc);
         }
-    }
+    }    
+    
 }

@@ -34,11 +34,37 @@ public  class Figura {
     public void setCoordenadas(ArrayList<Point2D> coordenadas) {
         this.coordenadas = coordenadas;
     }
+    
+    /**
+     * metodo que crear los circulos de los puntos de control, a partir de la lista con las cooredenadas de la figura
+     * @param gc GraphicsContext del diagrama
+     */
     public void dibujarPuntoControl(GraphicsContext gc){
-        
+        Figura circulo = new Figura();
+        for (Point2D coordenada : coordenadas) {
+            circulo.crearFigura((int)(coordenada.getX()),(int)(coordenada.getY()), 2, 20);
+            circulo.dibujarPoligono(gc,true);
+        }
     }
+    /**
+     * metodo que dibuja el poligono correspndiente en la lista de coordenas del objeto de clase Figura
+     * tambien dibuja los puntos de control que coinciden con los vertices de las figuras
+     * @param gc GraphicsContext donde se trabaja el diagrama del programa
+     */
     public void dibujar(GraphicsContext gc){
-        this.reCalcular();
+        dibujarPoligono(gc,false);
+        dibujarPuntoControl(gc);
+    }
+    
+    /**
+     * metodo que conecta graficamente los puntos de la lista de coordenas de la figura
+     * @param gc GraphicsContext del diagrama
+     * @param circulo booelan con el cual se puede identificar si se esta dibujando un circulo para no recalcular el tamaño de la figura
+     */
+    public void dibujarPoligono(GraphicsContext gc ,boolean circulo ){
+        if(!circulo){
+            this.reCalcular();
+        }
         for (int x=0;x<coordenadas.size();x++) {
             if(x+1<coordenadas.size()){
                 gc.strokeLine(coordenadas.get(x).getX(), coordenadas.get(x).getY()
@@ -63,6 +89,13 @@ public  class Figura {
     public void puntosControl(){
         
     }
+    
+    /**
+     * metodo que obtien las cooredenas de los vertices correspondientes del rectanguo (entidad) 
+     * @param centroX int con la coordenada (eje x) del centro del rectangulo deseeado
+     * @param centroY int con la coordenada (eje y) del centro del rectangulo deseeado
+     * @param escala int con la escala de la figura
+     */
     public void rectangulo(int centroX,int centroY, int escala) {
         lados=-1;
         puntoCentral = new Point2D(centroX , centroY);
@@ -76,6 +109,13 @@ public  class Figura {
         coordenadasConeccion=coordenadas;
     }
     
+    /**
+     * metodo que obtien las cooredenas de los vertices correspondientes de la figura deseada (relacion)
+     * @param centroX int con la coordenada (eje x) del centro de la figura deseeada
+     * @param centroY int con la coordenada (eje y) del centro de la figura deseeada
+     * @param escala int con la escala de la figura (largo de los lados)
+     * @param lados  int con la cantidad de lados que tendra la figura
+     */
     public void crearFigura(int centroX , int centroY , int escala , int lados){
         puntoCentral = new Point2D(centroX , centroY);
         this.lados =lados;
@@ -132,9 +172,19 @@ public  class Figura {
         }
         coordenadasConeccion=coordenadas;
     }
+    
+    /**
+     * metodo que transforma grados a radianes
+     * @param grados double con grados
+     * @return  double con los grados transformados a radianes
+     */
     public double gradosRadianes(double grados){
         return (grados*Math.PI)/180;
     }
+    
+    /**
+     * metodo que llama a calEscala() con lo cual crear las figuras con la escala perfecta segun lo que se encuentre en su interior
+     */
     public void reCalcular(){
         int escala = calEscala();
         int centroX = (int)puntoCentral.getX();
@@ -163,6 +213,10 @@ public  class Figura {
         return lados;
     }
 
+    /**
+     * metodo que encuentra la escala de la figura a partir del texto que esta tendra dentro de su interior
+     * @return int con la escala calculada
+     */
     public int calEscala(){
         Text text = new Text(this.nombre);
         if((int)text.getLayoutBounds().getWidth()<(int)text.getLayoutBounds().getHeight()){

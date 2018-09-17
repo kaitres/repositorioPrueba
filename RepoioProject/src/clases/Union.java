@@ -25,7 +25,10 @@ Union(Figura relacion,Figura entidad ){
         this.relacion = relacion;
         ConeccionEntidadRelacion();
     }
-    
+
+    /**
+     * metodo que busca los puntos (coordenadas) mas cercanos entre una entidad y una relacion (puntos de control)
+     */
     public void ConeccionEntidadRelacion(){       
         Point2D minimoEntidad=new Point2D(0,0);
         Point2D minimoRelacion=new Point2D(0,0);;
@@ -49,7 +52,10 @@ Union(Figura relacion,Figura entidad ){
     }
     
 
-    
+    /**
+     * dibuja graficamente la union de dos puntos, lo cual corresponde a la union de la entidad y relacion
+     * @param gc GraphicsContext del diagrama
+     */
     public void dibujarUnion(GraphicsContext gc){
         gc.strokeLine(unionRelacion.getX() , unionRelacion.getY() , unionEntidad.getX() , unionEntidad.getY());
         
