@@ -8,6 +8,7 @@ package fxmls;
 import clases.*;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,7 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
@@ -24,16 +25,17 @@ import javafx.scene.paint.Color;
  * @author cmsan
  */
 public class InterfazController implements Initializable {//Lo hizo el Carlos UwU
-    Diagrama diagrama;
+    public static Diagrama diagrama;
     
-    public int posicionDefaultX = 100;
-    public int posicionDefaultY = 100;
+    public int posicionDefaultX = 370;
+    public int posicionDefaultY = 285;
     
     public static String newEntidadNombre;
     public static boolean entidadValidacion;
     
     public static String newRelacionNombre;
     public static boolean relacionValidacion;
+    public static ArrayList<Entidad> compRelacion; 
     
     public boolean arrastrando= false;
     
@@ -43,19 +45,12 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     @FXML
     private Canvas canvas;
     @FXML
-    private MenuItem r2;
-    @FXML
-    private MenuItem r3;
-    @FXML
-    private MenuItem r4;
-    @FXML
-    private MenuItem r5;
-    @FXML
-    private MenuItem r6;
+    private Button rBtn;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        disableAllR();
+        compRelacion = new ArrayList<>();
+        rBtn.setDisable(true);
         diagrama = new Diagrama();
         gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.BLUE);
@@ -64,10 +59,8 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     @FXML
     private void clear(ActionEvent event) {
         diagrama.clear();
-        disableAllR();
+        rBtn.setDisable(true);
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        posicionDefaultX = 50;
-        posicionDefaultY = 50;
         
     }
 
@@ -85,116 +78,40 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             ent.setFigura(rec);
             diagrama.addEntidad(ent);
             rec.dibujar(gc);
-            posicionDefaultX+=20;
-            posicionDefaultY+=20;
-
-            switch (diagrama.getEntidades().size()){
-                case 0: disableAllR(); break;
-                case 1: r2.setDisable(false);
-                case 2: break;
-                case 3: r3.setDisable(false); break;
-                case 4: r4.setDisable(false); break;
-                case 5: r5.setDisable(false); break;
-                case 6: r6.setDisable(false); break;
-            }
         }
-    }
-
-    @FXML
-    private void crearRelacion2(ActionEvent event) throws IOException {
-        relacionValidacion = false;
-        AbrirVentana.CargarVista(getClass().getResource("CrearRelacion.fxml"));
         
-        if (relacionValidacion){
-            Figura tri = new Figura();
-            tri.crearFigura(posicionDefaultX, posicionDefaultY, 20 , 4);
-
-            Relacion rec = new Relacion(newRelacionNombre);
-            rec.setFigura(tri);
-            diagrama.addRelacion(rec);
-            tri.dibujar(gc);
-            posicionDefaultX+=20;
-            posicionDefaultY+=20;
-            
+        if (!diagrama.getEntidades().isEmpty()){
+            rBtn.setDisable(false);
+        } else {
+            rBtn.setDisable(true);
         }
     }
     
     @FXML
-    private void crearRelacion3(ActionEvent event) throws IOException {
+    private void crearRelacion(ActionEvent event) throws IOException {
         relacionValidacion = false;
         AbrirVentana.CargarVista(getClass().getResource("CrearRelacion.fxml"));
         
         if (relacionValidacion){
-            Figura tri = new Figura();
-            tri.crearFigura(posicionDefaultX, posicionDefaultY, 20 , 3);
-
-
-            Relacion rec = new Relacion(newRelacionNombre);;
-            rec.setFigura(tri);
-            diagrama.addRelacion(rec);
-            tri.dibujar(gc);
-            posicionDefaultX+=20;
-            posicionDefaultY+=20;
-            
-        }
-    }
-
-    @FXML
-    private void crearRelacion4(ActionEvent event) throws IOException {
-        relacionValidacion = false;
-        AbrirVentana.CargarVista(getClass().getResource("CrearRelacion.fxml"));
-        
-        if (relacionValidacion){
-            Figura tri = new Figura();
-        tri.crearFigura(posicionDefaultX, posicionDefaultY, 20 , 4);
-        
-        Relacion rec = new Relacion(newRelacionNombre);
-        rec.setFigura(tri);
-        diagrama.addRelacion(rec);
-        tri.dibujar(gc);
-        posicionDefaultX+=20;
-        posicionDefaultY+=20;
-        
-        }
-        
-    }
-
-    @FXML
-    private void crearRelacion5(ActionEvent event) throws IOException {
-        relacionValidacion = false;
-        AbrirVentana.CargarVista(getClass().getResource("CrearRelacion.fxml"));
-        
-        if (relacionValidacion){
-            Figura tri = new Figura();
-            tri.crearFigura(posicionDefaultX, posicionDefaultY, 20 , 5);
-
+            Figura fig = new Figura();
+            System.out.println(compRelacion.size());
+            if (compRelacion.size()==1 ||
+                    compRelacion.size()==2 ||
+                    compRelacion.size()==4 ){
+                fig.crearFigura(posicionDefaultX, posicionDefaultY, 20 , 4);
+            } else {
+                fig.crearFigura(posicionDefaultX, posicionDefaultY, 20 , compRelacion.size());
+            }   
             Relacion rec = new Relacion(newRelacionNombre);
-            rec.setFigura(tri);
+            rec.setFigura(fig);
             diagrama.addRelacion(rec);
-            tri.dibujar(gc);
-            posicionDefaultX+=20;
-            posicionDefaultY+=20;
+            fig.dibujar(gc);
             
+            rec.setComponentes(compRelacion);
+            rec.crearUniones();
+            rec.dibujarUniones(gc);
         }
-    }
-
-    @FXML
-    private void crearRelacion6(ActionEvent event) throws IOException {
-        relacionValidacion = false;
-        AbrirVentana.CargarVista(getClass().getResource("CrearRelacion.fxml"));
-        
-        if (relacionValidacion){
-            Figura tri = new Figura();
-            tri.crearFigura(posicionDefaultX, posicionDefaultY, 20 , 6);
-
-            Relacion rec = new Relacion(newRelacionNombre);
-            rec.setFigura(tri);
-            diagrama.addRelacion(rec);
-            tri.dibujar(gc);
-            posicionDefaultX+=20;
-            posicionDefaultY+=20;
-            
-        }
+        InterfazController.compRelacion.clear();
     }
     
     @FXML
@@ -204,7 +121,6 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         if (!arrastrando) {
 
             if (dentroDeAlgunaFigura(coorMov)) {
-                
                 arrastrando = true;
             }
         }else{
@@ -272,12 +188,4 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             relacion.getFigura().dibujar(gc);
         }
     }
-    private void disableAllR(){
-        r2.setDisable(true);
-        r3.setDisable(true);
-        r4.setDisable(true);
-        r5.setDisable(true);
-        r6.setDisable(true);
-    }
-    
 }

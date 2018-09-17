@@ -12,8 +12,8 @@ import java.util.ArrayList;
  * @author IP-ROUTE
  */
 public class Diagrama {
-    ArrayList<Entidad> entidades;
-    ArrayList<Relacion> relaciones;
+    public static ArrayList<Entidad> entidades;
+    public static ArrayList<Relacion> relaciones;
 
     public Diagrama() {
         this.entidades = new ArrayList<>();
