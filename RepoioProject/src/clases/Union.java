@@ -14,46 +14,44 @@ import javafx.scene.canvas.GraphicsContext;
  * @author The.N
  */
 public class Union {
-    ArrayList<Point2D> unionEntidad;
-    ArrayList<Point2D> unionRelacion;
+    Figura relacion;
+    Figura entidad;
+    Point2D unionEntidad;
+    Point2D unionRelacion;
 
     
-    public void ConeccionEntidadRelacion(Relacion relacion , Entidad entidad){       
+Union(Figura relacion,Figura entidad ){
+        this.entidad = entidad;
+        this.relacion = relacion;
+        ConeccionEntidadRelacion();
+    }
+    
+    public void ConeccionEntidadRelacion(){       
         Point2D minimoEntidad=new Point2D(0,0);
         Point2D minimoRelacion=new Point2D(0,0);;
-        for (int i = 0; i < relacion.figura.coordenadasConeccion.size() ; i++) {
-            for (int j = 0; j < entidad.figura.coordenadasConeccion.size(); j++) {
+        for (int i = 0; i < relacion.coordenadasConeccion.size() ; i++) {
+            for (int j = 0; j < entidad.coordenadasConeccion.size(); j++) {
                 if(j==0 && i==0){
-                    minimoRelacion = relacion.figura.coordenadasConeccion.get(i);
-                    minimoEntidad = entidad.figura.coordenadasConeccion.get(j) ;
+                    minimoRelacion = relacion.coordenadasConeccion.get(i);
+                    minimoEntidad = entidad.coordenadasConeccion.get(j) ;
                 }
-                if(minimoEntidad.distance(minimoRelacion) > relacion.figura.coordenadasConeccion.get(i).distance(entidad.figura.coordenadasConeccion.get(j) )){                 
-                   minimoRelacion = relacion.figura.coordenadasConeccion.get(i);
-                   minimoEntidad = entidad.figura.coordenadasConeccion.get(j);
+                if(minimoEntidad.distance(minimoRelacion) > relacion.coordenadasConeccion.get(i).distance(entidad.coordenadasConeccion.get(j) )){                 
+                   minimoRelacion = relacion.coordenadasConeccion.get(i);
+                   minimoEntidad = entidad.coordenadasConeccion.get(j);
                 }
             }
         }
-        relacion.figura.coordenadasConeccion.remove(minimoRelacion);
-        entidad.figura.coordenadasConeccion.remove(minimoEntidad);
+        relacion.coordenadasConeccion.remove(minimoRelacion);
+        entidad.coordenadasConeccion.remove(minimoEntidad);
         
-        unionEntidad.add(minimoEntidad);
-        unionRelacion.add(minimoRelacion);
+        unionEntidad = minimoEntidad;
+        unionRelacion = minimoRelacion;
     }
     
-    public void obtenerPuntosConeccion(Relacion relacion){
-        for (Entidad entidad : relacion.getComponentes()) {
-            ConeccionEntidadRelacion(relacion, entidad);        
-        }
-    }
+
     
-    public void dibujarUniones(GraphicsContext gc){
-        for (int i = 0; i < unionRelacion.size(); i++) {
-            gc.strokeLine(unionRelacion.get(i).getX() , unionRelacion.get(i).getY() , unionEntidad.get(i).getX() , unionEntidad.get(i).getY());
-        }
+    public void dibujarUnion(GraphicsContext gc){
+        gc.strokeLine(unionRelacion.getX() , unionRelacion.getY() , unionEntidad.getX() , unionEntidad.getY());
         
     }
-    
-    
-    
-    
 }

@@ -116,6 +116,12 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             posicionDefaultX+=20;
             posicionDefaultY+=20;
             
+            for (int i = 0; i < diagrama.entidades.size(); i++) {
+                Entidad comp = diagrama.entidades.get(i);
+                diagrama.relaciones.get(0).addComponente(comp);
+            }
+            diagrama.relaciones.get(0).crearUniones();
+            diagrama.relaciones.get(0).dibujarUniones(gc);
         }
     }
     

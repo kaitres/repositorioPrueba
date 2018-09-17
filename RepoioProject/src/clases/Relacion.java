@@ -6,6 +6,7 @@
 package clases;
 
 import java.util.ArrayList;
+import javafx.scene.canvas.GraphicsContext;
 
 /**
  *
@@ -14,8 +15,20 @@ import java.util.ArrayList;
 public class Relacion {
     String nombre;
     Figura figura;
-    ArrayList<Entidad> componentes;
-    Union union;
+    ArrayList<Entidad> componentes = new ArrayList();
+    ArrayList<Union> uniones = new ArrayList();
+    
+    
+    public void dibujarUniones(GraphicsContext gc){
+        for (Union uniones : uniones) {
+            uniones.dibujarUnion(gc);
+        }
+    }
+    public void crearUniones(){
+        for (int i = 0; i < componentes.size(); i++) {
+            uniones.add(new Union(this.figura ,componentes.get(i).figura));
+        }
+    }
 
     public Relacion(String nombre) {
         this.nombre = nombre;
