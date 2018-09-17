@@ -150,10 +150,10 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         }
         for (Relacion entidade : diagrama.getRelaciones()) {
             
-            if ((e.getX() > entidade.getFigura().getPuntoCentral().getX()-entidade.getFigura().getNombre().length()*4) &&
-                    (e.getX() < entidade.getFigura().getPuntoCentral().getX()+entidade.getFigura().getNombre().length()*4) &&
-                    (e.getY() > entidade.getFigura().getPuntoCentral().getY()-entidade.getFigura().getNombre().length()*4) &&
-                    (e.getY() < entidade.getFigura().getPuntoCentral().getY()+entidade.getFigura().getNombre().length()*4)){
+            if ((e.getX() > entidade.getFigura().getPuntoCentral().getX()-entidade.getFigura().calEscala()) &&
+                    (e.getX() < entidade.getFigura().getPuntoCentral().getX()+entidade.getFigura().calEscala()) &&
+                    (e.getY() > entidade.getFigura().getPuntoCentral().getY()-entidade.getFigura().calEscala()) &&
+                    (e.getY() < entidade.getFigura().getPuntoCentral().getY()+entidade.getFigura().calEscala())){
                 return true;
             }
         }
@@ -171,10 +171,10 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         }
         for (Relacion entidade : diagrama.getRelaciones()) {
             
-            if ((e.getX() > entidade.getFigura().getPuntoCentral().getX()-entidade.getFigura().getNombre().length()*4) &&
-                    (e.getX() < entidade.getFigura().getPuntoCentral().getX()+entidade.getFigura().getNombre().length()*4) &&
-                    (e.getY() > entidade.getFigura().getPuntoCentral().getY()-entidade.getFigura().getNombre().length()*4) &&
-                    (e.getY() < entidade.getFigura().getPuntoCentral().getY()+entidade.getFigura().getNombre().length()*4)){
+            if ((e.getX() > entidade.getFigura().getPuntoCentral().getX()-entidade.getFigura().calEscala()) &&
+                    (e.getX() < entidade.getFigura().getPuntoCentral().getX()+entidade.getFigura().calEscala()) &&
+                    (e.getY() > entidade.getFigura().getPuntoCentral().getY()-entidade.getFigura().calEscala()) &&
+                    (e.getY() < entidade.getFigura().getPuntoCentral().getY()+entidade.getFigura().calEscala())){
                 return entidade.getFigura();
             }
         }

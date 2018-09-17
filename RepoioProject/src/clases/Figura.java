@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import javafx.geometry.Point2D;
 import javafx.geometry.VPos;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
 /**
@@ -134,13 +135,13 @@ public  class Figura {
         return (grados*Math.PI)/180;
     }
     public void reCalcular(){
-        int escala = nombre.length()*4;
+        int escala = calEscala();
         int centroX = (int)puntoCentral.getX();
         int centroY = (int)puntoCentral.getY();
         if(lados==-1){
             rectangulo(centroX, centroY, escala*2);
         }else{
-            crearFigura(centroX, centroY, escala+4, lados);
+            crearFigura(centroX, centroY, escala+1, lados);
         }
         
     }
@@ -161,7 +162,11 @@ public  class Figura {
         return lados;
     }
 
-    
+    public int calEscala(){
+        Text text = new Text(this.nombre);
+        
+        return (int)text.getLayoutBounds().getWidth();
+    }
 }
     
     
