@@ -12,10 +12,10 @@
       <Pane prefHeight="570.0" prefWidth="140.0">
          <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ececec" height="570.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="140.0" />
-            <Button layoutX="14.0" layoutY="530.0" mnemonicParsing="false" onAction="#clear" prefHeight="26.0" prefWidth="114.0" text="Limpiar" />
+            <Button layoutX="13.0" layoutY="457.0" mnemonicParsing="false" onAction="#clear" prefHeight="26.0" prefWidth="114.0" text="Limpiar" />
             <Button layoutX="15.0" layoutY="34.0" mnemonicParsing="false" onAction="#crearEntidad" prefHeight="26.0" prefWidth="114.0" text="Crear Entidad" />
             <Button fx:id="rBtn" layoutX="15.0" layoutY="67.0" mnemonicParsing="false" onAction="#crearRelacion" prefHeight="25.0" prefWidth="114.0" text="Crear Relación" />
-            <Button layoutX="45.0" layoutY="414.0" mnemonicParsing="false" onAction="#exportImage" text="Button" />
+            <Button layoutX="12.0" layoutY="503.0" mnemonicParsing="false" onAction="#exportImage" prefHeight="25.0" prefWidth="114.0" text="Guardar" />
          </children>
       </Pane>
    </children>

@@ -23,14 +23,17 @@ public class Relacion {
      * @param gc GraphicsContext del diagrama
      */
     public void dibujarUniones(GraphicsContext gc){
-        for (Union uniones : uniones) {
-            uniones.dibujarUnion(gc);
+        for (Union union : uniones) {
+            union.dibujarUnion(gc);
         }
     }
     /**
      * metodo que crea todas las uniones(objeto Union) del objeto Relacion 
      */
     public void crearUniones(){
+        
+        uniones =new ArrayList<>();
+        
         for (int i = 0; i < componentes.size(); i++) {
             uniones.add(new Union(this.figura ,componentes.get(i).figura));
         }
@@ -59,7 +62,11 @@ public class Relacion {
     }
     
     public void setComponentes(ArrayList<Entidad> componentes) {
-        this.componentes = componentes;
+        ArrayList<Entidad> nuevo = new ArrayList<>();
+        for (Entidad componente : componentes) {
+            nuevo.add(componente);
+        }
+        this.componentes = nuevo;
     }
 
     public ArrayList<Entidad> getComponentes() {

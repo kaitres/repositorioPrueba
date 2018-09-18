@@ -20,7 +20,7 @@ public class Union {
     Point2D unionRelacion;
 
     
-Union(Figura relacion,Figura entidad ){
+    public Union(Figura relacion,Figura entidad ){
         this.entidad = entidad;
         this.relacion = relacion;
         ConeccionEntidadRelacion();
@@ -31,7 +31,7 @@ Union(Figura relacion,Figura entidad ){
      */
     public void ConeccionEntidadRelacion(){       
         Point2D minimoEntidad=new Point2D(0,0);
-        Point2D minimoRelacion=new Point2D(0,0);;
+        Point2D minimoRelacion=new Point2D(0,0);
         for (int i = 0; i < relacion.coordenadasConeccion.size() ; i++) {
             for (int j = 0; j < entidad.coordenadasConeccion.size(); j++) {
                 if(j==0 && i==0){
