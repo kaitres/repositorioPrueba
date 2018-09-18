@@ -51,6 +51,10 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     
     public boolean arrastrando= false;
     
+    Figura figuraMov;
+    
+    
+    
     
     public GraphicsContext gc;
     
@@ -127,28 +131,26 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     }
     
     @FXML
-    private void ratonPresionado(MouseEvent event) {
-        
-        Point2D coorMov = new Point2D(event.getX(), event.getY());
-        if (!arrastrando) {
-
-            if (dentroDeAlgunaFigura(coorMov)) {
-                arrastrando = true;
-            }
-        }else{
-
-            figuraEnMovimiento(coorMov).setPuntoCentral(new Point2D(event.getX(),event.getY())); 
-            
+    private void ratonSinPresionar(MouseEvent event) {
+        this.arrastrando=false;       
+    }
+    
+    @FXML
+    private void movimiento(MouseEvent event){
+        Point2D mouse=new Point2D(event.getX(), event.getY());
+        if(arrastrando){
+            figuraMov.setPuntoCentral(mouse);
             gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
             reDibujarTodo();
-            
         }
-    }
-
-    @FXML
-    private void ratonSinPresionar(MouseEvent event) {
+        else if(dentroDeAlgunaFigura(mouse)){
+            arrastrando=true;
+            figuraMov =figuraEnMovimiento(mouse);
+            figuraMov.setPuntoCentral(mouse);
+            gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+            reDibujarTodo();
+        }
         
-        this.arrastrando=false;
     }
     
     public boolean dentroDeAlgunaFigura(Point2D e){        

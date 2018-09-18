@@ -86,10 +86,6 @@ public  class Figura {
                
     }
     
-    public void puntosControl(){
-        
-    }
-    
     /**
      * metodo que obtien las cooredenas de los vertices correspondientes del rectanguo (entidad) 
      * @param centroX int con la coordenada (eje x) del centro del rectangulo deseeado
