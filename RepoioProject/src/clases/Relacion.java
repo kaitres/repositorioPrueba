@@ -32,10 +32,10 @@ public class Relacion {
      */
     public void crearUniones(){
         
-        uniones =new ArrayList<>();
+        uniones.clear();
         
-        for (int i = 0; i < componentes.size(); i++) {
-            uniones.add(new Union(this.figura ,componentes.get(i).figura));
+        for (Entidad e: componentes) {
+            uniones.add(new Union(this.figura , e.figura));
         }
     }
 

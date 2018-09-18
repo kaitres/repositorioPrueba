@@ -6,15 +6,12 @@
 package fxmls;
 
 import clases.*;
-import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -26,7 +23,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -110,7 +106,6 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         
         if (relacionValidacion){
             Figura fig = new Figura();
-            System.out.println(compRelacion.size());
             if (compRelacion.size()==1 ||
                     compRelacion.size()==2 ||
                     compRelacion.size()==4 ){
@@ -153,7 +148,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         
     }
     
-    public boolean dentroDeAlgunaFigura(Point2D e){        
+    public boolean dentroDeAlgunaFigura(Point2D e){     
         for (Entidad entidade : diagrama.getEntidades()) {
             if ((e.getX() > entidade.getFigura().getCoordenadas().get(0).getX()) &&
                     (e.getX() < entidade.getFigura().getCoordenadas().get(1).getX()) &&
