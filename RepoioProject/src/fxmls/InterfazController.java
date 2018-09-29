@@ -213,8 +213,11 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         WritableImage writableImage = canvas.snapshot(new SnapshotParameters(), null);
         canvas.snapshot(null, writableImage);
         RenderedImage renderedImage = SwingFXUtils.fromFXImage(writableImage, null);
-        ImageIO.write(renderedImage, "png", file);
-
+        try{
+            ImageIO.write(renderedImage, "png", file);
+        }catch( IOException r){
+            
+        }
         }
 
     @FXML
