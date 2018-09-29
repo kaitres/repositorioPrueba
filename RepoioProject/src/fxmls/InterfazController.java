@@ -215,7 +215,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         RenderedImage renderedImage = SwingFXUtils.fromFXImage(writableImage, null);
         try{
             ImageIO.write(renderedImage, "png", file);
-        }catch( IOException r){
+        }catch( IllegalArgumentException r){
             
         }
         }

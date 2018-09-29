@@ -37,6 +37,11 @@ public class Relacion {
         for (Entidad e: componentes) {
             uniones.add(new Union(this.figura , e.figura));
         }
+        if (componentes.size()==1){
+            for (Entidad e: componentes) {
+                uniones.add(new Union(this.figura , e.figura));
+            }
+        }
     }
 
     public Relacion(String nombre) {
