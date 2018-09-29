@@ -45,8 +45,9 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     public static boolean relacionValidacion;
     public static ArrayList<Entidad> compRelacion; 
     
-    public boolean arrastrando= false;
+    public boolean arrastrando = false;
     
+    public static boolean mostrarPuntos = false;
     Figura figuraMov;
     
     
@@ -89,7 +90,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             Entidad ent = new Entidad(newEntidadNombre);
             ent.setFigura(rec);
             diagrama.addEntidad(ent);
-            rec.dibujar(gc);
+            rec.dibujar(gc,mostrarPuntos);
         }
         
         if (!diagrama.getEntidades().isEmpty()){
@@ -116,7 +117,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             Relacion rec = new Relacion(newRelacionNombre);
             rec.setFigura(fig);
             diagrama.addRelacion(rec);
-            fig.dibujar(gc);
+            fig.dibujar(gc,mostrarPuntos);
             
             rec.setComponentes(compRelacion);
             rec.crearUniones();
@@ -193,10 +194,10 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     }
     public void reDibujarTodo(){
         for (Entidad entidade : diagrama.getEntidades()) {
-            entidade.getFigura().dibujar(gc);
+            entidade.getFigura().dibujar(gc,mostrarPuntos);
         }
         for (Relacion relacion : diagrama.getRelaciones()) {
-            relacion.getFigura().dibujar(gc);
+            relacion.getFigura().dibujar(gc,mostrarPuntos);
             relacion.crearUniones();
             relacion.dibujarUniones(gc);
         }
@@ -215,6 +216,13 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         ImageIO.write(renderedImage, "png", file);
 
         }
+
+    @FXML
+    private void mostrarPuntosDeControl(ActionEvent event) {
+        this.mostrarPuntos = !mostrarPuntos;
+        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        reDibujarTodo();
+    }
 }
     
 

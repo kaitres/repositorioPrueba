@@ -51,9 +51,12 @@ public  class Figura {
      * tambien dibuja los puntos de control que coinciden con los vertices de las figuras
      * @param gc GraphicsContext donde se trabaja el diagrama del programa
      */
-    public void dibujar(GraphicsContext gc){
+    public void dibujar(GraphicsContext gc, boolean dibujarPuntos){
         dibujarPoligono(gc,false);
-        dibujarPuntoControl(gc);
+        if (dibujarPuntos) {
+          dibujarPuntoControl(gc);  
+        }
+        
     }
     
     /**
