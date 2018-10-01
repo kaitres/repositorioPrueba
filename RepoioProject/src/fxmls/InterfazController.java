@@ -206,7 +206,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     @FXML
     public void exportImage() throws IOException {
         FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("png files (.png)", ".png");
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("pdf files (.pdf)", ".pdf");
         fileChooser.getExtensionFilters().add(extFilter);
         final Stage stage = new Stage();
         File file = fileChooser.showSaveDialog(stage);
@@ -214,7 +214,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         canvas.snapshot(null, writableImage);
         RenderedImage renderedImage = SwingFXUtils.fromFXImage(writableImage, null);
         try{
-            ImageIO.write(renderedImage, "png", file);
+            ImageIO.write(renderedImage, "pdf", file);
         }catch( IllegalArgumentException r){
             
         }
