@@ -47,7 +47,11 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     
     public boolean arrastrando = false;
     
+    public static boolean editarEntidades = false;
     public static boolean mostrarPuntos = false;
+    public static Entidad entidadActual;
+    
+    
     Figura figuraMov;
     
     
@@ -226,6 +230,32 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         reDibujarTodo();
     }
+    
+    @FXML
+    private void editar(ActionEvent event) {
+        this.editarEntidades = !editarEntidades;
+    }
+    
+    @FXML
+    public void modificar(MouseEvent event) throws IOException{
+        if(editarEntidades){
+            Point2D e=new Point2D(event.getX(), event.getY());
+            for(Entidad entidad : diagrama.getEntidades() ){
+                if ((e.getX() > entidad.getFigura().getCoordenadas().get(0).getX()) &&
+                        (e.getX() < entidad.getFigura().getCoordenadas().get(1).getX()) &&
+                        (e.getY() > entidad.getFigura().getCoordenadas().get(0).getY()) &&
+                        (e.getY() < entidad.getFigura().getCoordenadas().get(2).getY())){
+                    entidadActual=entidad;
+                    AbrirVentana.CargarVista(getClass().getResource("DatosEntidad.fxml"));
+                    gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+                    reDibujarTodo();
+                }
+            }
+        
+        
+        }   
+    }
+    
 }
     
 
