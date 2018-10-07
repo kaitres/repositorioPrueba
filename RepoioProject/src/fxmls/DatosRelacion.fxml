@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="208.0" prefWidth="292.0" styleClass="canvasColor" stylesheets="@Estilo.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxmls.DatosRelacionController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ececec" height="60.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" styleClass="canvasColor" width="292.0" />
+      <Label layoutX="41.0" layoutY="77.0" text="Ingrese nombre de la relación: " />
+      <TextField fx:id="nombre" layoutX="41.0" layoutY="95.0" prefHeight="25.0" prefWidth="216.0" promptText="Ejemplo: Holiwi" />
+      <Label layoutX="41.0" layoutY="17.0" text="Datos Relación">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Button layoutX="205.0" layoutY="158.0" mnemonicParsing="false" onAction="#modificar" styleClass="boton" stylesheets="@Estilo.css" text="Modificar" />
+      <Button fx:id="canBtn" layoutX="123.0" layoutY="158.0" mnemonicParsing="false" onAction="#cancelar" styleClass="boton" stylesheets="@Estilo.css" text="Cancelar" />
+   </children>
+</AnchorPane>
