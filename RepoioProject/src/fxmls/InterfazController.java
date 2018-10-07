@@ -6,9 +6,17 @@
 package fxmls;
 
 import clases.*;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.image.RenderedImage;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -225,7 +233,33 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             
         }
         }
-
+    @FXML
+    private void exportPDF() throws IOException, DocumentException {
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("pdf files (.pdf)", ".pdf");
+        fileChooser.getExtensionFilters().add(extFilter);
+        final Stage stage = new Stage();
+        File file = fileChooser.showSaveDialog(stage);
+        OutputStream archivo = new FileOutputStream(file);
+        
+        
+        WritableImage writableImage = canvas.snapshot(new SnapshotParameters(), null);
+        canvas.snapshot(null, writableImage);
+        File file2 = new File("chart.png");
+        RenderedImage renderedImage = SwingFXUtils.fromFXImage(writableImage, null);
+        ImageIO.write(renderedImage, "png", file2);
+        
+        Document doc = new Document(PageSize.A7,36,36,10,10);
+        PdfWriter.getInstance(doc, archivo);
+        Image img = Image.getInstance("chart.png");
+        img.scaleAbsolute(150, 150);
+        img.setAlignment(Element.ALIGN_CENTER);
+        doc.open();
+        doc.add(img); 
+        
+        doc.close();
+        file2.delete();
+    }
     @FXML
     private void mostrarPuntosDeControl(ActionEvent event) {
         this.mostrarPuntos = !mostrarPuntos;
