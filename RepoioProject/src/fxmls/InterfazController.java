@@ -14,6 +14,7 @@ import com.itextpdf.text.PageSize;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.image.RenderedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -220,7 +221,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     @FXML
     public void exportImage() throws IOException {
         FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("pdf files (.pdf)", ".pdf");
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("png files (.png)", ".png");
         fileChooser.getExtensionFilters().add(extFilter);
         final Stage stage = new Stage();
         File file = fileChooser.showSaveDialog(stage);
@@ -228,7 +229,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         canvas.snapshot(null, writableImage);
         RenderedImage renderedImage = SwingFXUtils.fromFXImage(writableImage, null);
         try{
-            ImageIO.write(renderedImage, "pdf", file);
+            ImageIO.write(renderedImage, "png", file);
         }catch( IllegalArgumentException r){
             
         }
@@ -240,25 +241,37 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         fileChooser.getExtensionFilters().add(extFilter);
         final Stage stage = new Stage();
         File file = fileChooser.showSaveDialog(stage);
-        OutputStream archivo = new FileOutputStream(file);
-        
-        
+        OutputStream archivo = null;
+        try {
+            archivo = new FileOutputStream(file);
+        }catch(Exception e){
+        }
+
         WritableImage writableImage = canvas.snapshot(new SnapshotParameters(), null);
         canvas.snapshot(null, writableImage);
         File file2 = new File("chart.png");
         RenderedImage renderedImage = SwingFXUtils.fromFXImage(writableImage, null);
-        ImageIO.write(renderedImage, "png", file2);
+        try {
+           ImageIO.write(renderedImage, "png", file2); 
+        }catch( IllegalArgumentException r){
+
+        }
+
+        try{
+            Document doc = new Document(PageSize.A7,36,36,10,10);
+            PdfWriter.getInstance(doc, archivo);
+            Image img = Image.getInstance("chart.png");
+            img.scaleAbsolute(150, 150);
+            img.setAlignment(Element.ALIGN_CENTER);
+            doc.open();
+            doc.add(img);  
+            doc.close();
+            file2.delete();
+        }catch(Exception e){
+
+        }
         
-        Document doc = new Document(PageSize.A7,36,36,10,10);
-        PdfWriter.getInstance(doc, archivo);
-        Image img = Image.getInstance("chart.png");
-        img.scaleAbsolute(150, 150);
-        img.setAlignment(Element.ALIGN_CENTER);
-        doc.open();
-        doc.add(img); 
         
-        doc.close();
-        file2.delete();
     }
     @FXML
     private void mostrarPuntosDeControl(ActionEvent event) {
