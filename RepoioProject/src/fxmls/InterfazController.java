@@ -47,9 +47,10 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     
     public boolean arrastrando = false;
     
-    public static boolean editarEntidades = false;
+    public static boolean editar = false;
     public static boolean mostrarPuntos = false;
     public static Entidad entidadActual;
+    public static Relacion relacionActual;
     
     
     Figura figuraMov;
@@ -137,20 +138,21 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     
     @FXML
     private void movimiento(MouseEvent event){
-        Point2D mouse=new Point2D(event.getX(), event.getY());
-        if(arrastrando){
-            figuraMov.setPuntoCentral(mouse);
-            gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-            reDibujarTodo();
+        if(!editar){
+            Point2D mouse=new Point2D(event.getX(), event.getY());
+            if(arrastrando){
+                figuraMov.setPuntoCentral(mouse);
+                gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+                reDibujarTodo();
+            }
+            else if(dentroDeAlgunaFigura(mouse)){
+                arrastrando=true;
+                figuraMov =figuraEnMovimiento(mouse);
+                figuraMov.setPuntoCentral(mouse);
+                gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+                reDibujarTodo();
+            }
         }
-        else if(dentroDeAlgunaFigura(mouse)){
-            arrastrando=true;
-            figuraMov =figuraEnMovimiento(mouse);
-            figuraMov.setPuntoCentral(mouse);
-            gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-            reDibujarTodo();
-        }
-        
     }
     
     public boolean dentroDeAlgunaFigura(Point2D e){     
@@ -233,12 +235,12 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     
     @FXML
     private void editar(ActionEvent event) {
-        this.editarEntidades = !editarEntidades;
+        this.editar = !editar;
     }
     
-    @FXML
+   @FXML
     public void modificar(MouseEvent event) throws IOException{
-        if(editarEntidades){
+        if(editar){
             Point2D e=new Point2D(event.getX(), event.getY());
             for(Entidad entidad : diagrama.getEntidades() ){
                 if ((e.getX() > entidad.getFigura().getCoordenadas().get(0).getX()) &&
@@ -251,13 +253,20 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                     reDibujarTodo();
                 }
             }
+            for (Relacion relacion : diagrama.getRelaciones()) {
+            
+            if ((e.getX() > relacion.getFigura().getPuntoCentral().getX()-relacion.getFigura().calEscala()) &&
+                    (e.getX() < relacion.getFigura().getPuntoCentral().getX()+relacion.getFigura().calEscala()) &&
+                    (e.getY() > relacion.getFigura().getPuntoCentral().getY()-relacion.getFigura().calEscala()) &&
+                    (e.getY() < relacion.getFigura().getPuntoCentral().getY()+relacion.getFigura().calEscala())){
+                    relacionActual = relacion;
+                    AbrirVentana.CargarVista(getClass().getResource("DatosRelacion.fxml"));
+                    gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+                    reDibujarTodo();
+            }
+            }
         
         
         }   
+        }
     }
-    
-}
-    
-
-    
-

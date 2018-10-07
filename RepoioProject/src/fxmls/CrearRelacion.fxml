@@ -9,7 +9,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="350.0" prefWidth="270.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxmls.CrearRelacionController">
+<AnchorPane id="AnchorPane" prefHeight="350.0" prefWidth="270.0" styleClass="canvasColor" stylesheets="@Estilo.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxmls.CrearRelacionController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ececec" height="60.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="270.0" />
       <Label layoutX="14.0" layoutY="15.0" text="Creación Relación">
@@ -17,8 +17,8 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Button fx:id="canBtn" layoutX="18.0" layoutY="311.0" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" />
-      <Button fx:id="aceBtn" layoutX="195.0" layoutY="310.0" mnemonicParsing="false" onAction="#aceptar" prefHeight="27.0" prefWidth="61.0" text="Aceptar" />
+      <Button fx:id="canBtn" layoutX="18.0" layoutY="311.0" mnemonicParsing="false" onAction="#cancelar" styleClass="boton" stylesheets="@Estilo.css" text="Cancelar" />
+      <Button fx:id="aceBtn" layoutX="195.0" layoutY="310.0" mnemonicParsing="false" onAction="#aceptar" prefHeight="27.0" prefWidth="61.0" styleClass="boton" stylesheets="@Estilo.css" text="Aceptar" />
       <TextField fx:id="nombre" layoutX="14.0" layoutY="117.0" onAction="#txtField" prefHeight="30.0" prefWidth="242.0" promptText="Ejemplo: Holiwi" />
       <Label layoutX="14.0" layoutY="97.0" text="Ingrese nombre de la relación: ">
          <font>

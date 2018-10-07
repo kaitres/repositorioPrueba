@@ -11,6 +11,12 @@ and open the template in the editor.
     -fx-border-color: black;
     -fx-border-radius: 2px;
 }
+.canvasColor{
+     -fx-background-color: #aab2bd;
+}
+.fondo{
+    -fx-background-color:  #e6e9ed;
+}
 
 .boton{
     
@@ -35,4 +41,3 @@ and open the template in the editor.
         -fx-background-color:#f4f4f4;
 
 }
-
