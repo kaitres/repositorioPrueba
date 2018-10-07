@@ -2,15 +2,7 @@
 
 <ClassDiagram name="presentacion">
   <ClassDiagramComponents>
-    <Class name="Coordenada" package="" visibility="public" xPosition="61.0" yPosition="308.0">
-      <Fields>
-        <Field name="x" type="int" visibility="private"/>
-        <Field name="y" type="int" visibility="private"/>
-      </Fields>
-      <Constructors/>
-      <Methods/>
-    </Class>
-    <Class name="Diagrama" package="" visibility="public" xPosition="381.0" yPosition="15.0">
+    <Class name="Diagrama" package="" visibility="public" xPosition="254.0" yPosition="17.0">
       <Fields>
         <Field name="entidades" type="ArrayList&lt;Entidad&gt;" visibility="private"/>
         <Field name="relaciones" type="ArrayList&lt;Relacion&gt;" visibility="private"/>
@@ -18,7 +10,7 @@
       <Constructors/>
       <Methods/>
     </Class>
-    <Class name="Entidad" package="" visibility="public" xPosition="184.0" yPosition="152.0">
+    <Class name="Entidad" package="" visibility="public" xPosition="65.0" yPosition="171.0">
       <Fields>
         <Field name="nombre" type="String" visibility="private"/>
         <Field name="figura" type="Figura" visibility="private"/>
@@ -26,94 +18,82 @@
       <Constructors/>
       <Methods/>
     </Class>
-    <Class name="Figura" package="" visibility="public" isAbstract="true" xPosition="367.0" yPosition="308.0">
+    <Class name="Figura" package="" visibility="public" xPosition="139.0" yPosition="394.0">
       <Fields>
-        <Field name="coordenada" type="ArrayList&lt;Coordenada&gt;" visibility="private"/>
+        <Field name="coordenada" type="ArrayList&lt;Point2D&gt;" visibility="private"/>
+        <Field name="coordenadasConeccion" type="ArrayList&lt;Point2D&gt;" visibility="private"/>
         <Field name="nombre" type="String" visibility="private"/>
+        <Field name="puntoCentral" type="Point2D" visibility="private"/>
+        <Field name="lados" type="int" visibility="private"/>
       </Fields>
       <Constructors/>
       <Methods>
         <Method name="dibujar" returnType="void" visibility="public">
           <Argument type="GraphicsContext" name="gc"/>
+          <Argument type="boolean" name="dibujarPuntos"/>
         </Method>
-      </Methods>
-    </Class>
-    <Class name="Hexagono" package="" visibility="public" xPosition="623.0" yPosition="665.0">
-      <Fields/>
-      <Constructors/>
-      <Methods>
-        <Method name="Hexagono" returnType="void" visibility="public">
+        <Method name="dibujarPuntoControl" returnType="void" visibility="public">
+          <Argument type="GraphicsContext" name="gc"/>
+        </Method>
+        <Method name="dibujarPoligono" returnType="void" visibility="public">
+          <Argument type="GraphicsContext" name="gc"/>
+          <Argument type="boolean" name="circulo"/>
+        </Method>
+        <Method name="rectangulo" returnType="void" visibility="public">
           <Argument type="int" name="centroX"/>
           <Argument type="int" name="centroY"/>
-          <Argument type="int" name="escalar"/>
+          <Argument type="int" name="escala"/>
         </Method>
-      </Methods>
-    </Class>
-    <Class name="Pentagono" package="" visibility="public" xPosition="623.0" yPosition="429.0">
-      <Fields/>
-      <Constructors/>
-      <Methods>
-        <Method name="Pentagono" returnType="void" visibility="public">
+        <Method name="crearFigura" returnType="void" visibility="public">
           <Argument type="int" name="centroX"/>
           <Argument type="int" name="centroY"/>
-          <Argument type="int" name="escalar"/>
+          <Argument type="int" name="escala"/>
+          <Argument type="int" name="lados"/>
         </Method>
+        <Method name="gradosRadianes" returnType="double" visibility="public">
+          <Argument type="double" name="grados"/>
+        </Method>
+        <Method name="reCalcular" returnType="void" visibility="public"/>
+        <Method name="calEscala" returnType="int" visibility="public"/>
       </Methods>
     </Class>
-    <Class name="Rectangulo" package="" visibility="public" xPosition="119.0" yPosition="496.0">
-      <Fields/>
-      <Constructors/>
-      <Methods>
-        <Method name="Rectangulo" returnType="void" visibility="public">
-          <Argument type="int" name="centroX"/>
-          <Argument type="int" name="centroY"/>
-          <Argument type="int" name="escalar"/>
-        </Method>
-      </Methods>
-    </Class>
-    <Class name="Relacion" package="" visibility="public" xPosition="623.0" yPosition="152.0">
+    <Class name="Relacion" package="" visibility="public" xPosition="459.0" yPosition="171.0">
       <Fields>
         <Field name="nombre" type="String" visibility="private"/>
         <Field name="figura" type="Figura" visibility="private"/>
         <Field name="componentes" type="ArrayList&lt;Entidad&gt;" visibility="private"/>
+        <Field name="uniones" type="ArrayList&lt;Union&gt;" visibility="private"/>
       </Fields>
       <Constructors/>
-      <Methods/>
-    </Class>
-    <Class name="Rombo" package="" visibility="public" xPosition="623.0" yPosition="545.0">
-      <Fields/>
-      <Constructors/>
       <Methods>
-        <Method name="Rombo" returnType="void" visibility="public">
-          <Argument type="int" name="centroX"/>
-          <Argument type="int" name="centroY"/>
-          <Argument type="int" name="escalar"/>
+        <Method name="dibujarUniones" returnType="void" visibility="public">
+          <Argument type="GraphicsContext" name="gc"/>
         </Method>
+        <Method name="crearUniones" returnType="void" visibility="public"/>
       </Methods>
     </Class>
-    <Class name="Triangulo" package="" visibility="public" xPosition="623.0" yPosition="796.0">
-      <Fields/>
+    <Class name="Union" package="" visibility="public" xPosition="544.0" yPosition="413.0">
+      <Fields>
+        <Field name="Relacion" type="Figura" visibility="private"/>
+        <Field name="Entidad" type="Figura" visibility="private"/>
+        <Field name="unionEntidad" type="Point2D" visibility="private"/>
+        <Field name="unionRelacion" type="Point2D" visibility="private"/>
+      </Fields>
       <Constructors/>
       <Methods>
-        <Method name="Triangulo" returnType="void" visibility="public">
-          <Argument type="int" name="centroX"/>
-          <Argument type="int" name="centroY"/>
-          <Argument type="int" name="escalar"/>
+        <Method name="ConeccionEntidadRelacion" returnType="void" visibility="public"/>
+        <Method name="dibujarUnion" returnType="void" visibility="public">
+          <Argument type="GraphicsContext" name="gc"/>
         </Method>
       </Methods>
     </Class>
   </ClassDiagramComponents>
   <ClassDiagramRelations>
-    <HasRelation name="relacion" source="Coordenada" target="Figura" type="Composition" sourceCardinality="0..1" targetCardinality="1..*" collectionType="ArrayList"/>
-    <HasRelation name="relacion" source="Relacion" target="Diagrama" type="Composition" sourceCardinality="0..1" targetCardinality="0..*" collectionType="ArrayList"/>
-    <IsRelation name="is" source="Rombo" target="Figura"/>
-    <IsRelation name="is" source="Pentagono" target="Figura"/>
-    <HasRelation name="relacion" source="Entidad" target="Diagrama" type="Composition" sourceCardinality="0..1" targetCardinality="0..*" collectionType="ArrayList"/>
-    <IsRelation name="is" source="Rectangulo" target="Figura"/>
-    <HasRelation name="relacion" source="Figura" target="Entidad" type="Composition" sourceCardinality="0..1" targetCardinality="1..1"/>
-    <IsRelation name="is" source="Hexagono" target="Figura"/>
     <HasRelation name="relacion" source="Entidad" target="Relacion" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..*" collectionType="ArrayList"/>
-    <IsRelation name="is" source="Triangulo" target="Figura"/>
+    <HasRelation name="relacion" source="Relacion" target="Diagrama" type="Composition" sourceCardinality="0..1" targetCardinality="0..*" collectionType="ArrayList"/>
+    <HasRelation name="relacion" source="Union" target="Relacion" type="Composition" sourceCardinality="0..1" targetCardinality="1..*" collectionType="ArrayList"/>
     <HasRelation name="relacion" source="Figura" target="Relacion" type="Composition" sourceCardinality="0..1" targetCardinality="1..1"/>
+    <HasRelation name="relacion" source="Figura" target="Entidad" type="Composition" sourceCardinality="0..1" targetCardinality="1..1"/>
+    <HasRelation name="relacion" source="Entidad" target="Diagrama" type="Composition" sourceCardinality="0..1" targetCardinality="0..*" collectionType="ArrayList"/>
   </ClassDiagramRelations>
 </ClassDiagram>
