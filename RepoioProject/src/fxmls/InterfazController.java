@@ -261,7 +261,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             Document doc = new Document(PageSize.A7,36,36,10,10);
             PdfWriter.getInstance(doc, archivo);
             Image img = Image.getInstance("chart.png");
-            img.scaleAbsolute(150, 150);
+            img.scaleAbsolute(155, 105);
             img.setAlignment(Element.ALIGN_CENTER);
             doc.open();
             doc.add(img);  

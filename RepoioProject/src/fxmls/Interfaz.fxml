@@ -12,7 +12,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="570.0" prefWidth="900.0" style="-fx-background-color: #e6e9ed;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxmls.InterfazController">
    <children>
-      <Canvas fx:id="canvas" height="527.0" layoutX="124.0" layoutY="45.0" onMouseClicked="#modificar" onMouseDragged="#movimiento" onMouseReleased="#ratonSinPresionar" width="776.0" />
+      <Canvas fx:id="canvas" height="525.0" layoutX="124.0" layoutY="45.0" onMouseClicked="#modificar" onMouseDragged="#movimiento" onMouseReleased="#ratonSinPresionar" width="775.0" />
       <Pane layoutY="37.0" prefHeight="535.0" prefWidth="124.0" style="-fx-background-color: #aab2bd;">
          <children>
             <Text layoutX="37.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Crear">

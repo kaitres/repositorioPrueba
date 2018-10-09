@@ -24,6 +24,7 @@ public class JavaFXApplication5 extends Application {
         Scene scene = new Scene(root);
         
         stage.setScene(scene);
+        stage.setTitle("Diagramador entidad relacion limdi");
         stage.show();
     }
 
