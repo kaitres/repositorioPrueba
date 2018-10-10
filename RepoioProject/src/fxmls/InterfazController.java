@@ -65,11 +65,8 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     public static Entidad entidadActual;
     public static Relacion relacionActual;
     
-    public static int XMenor;
-    public static int XMayor;
-    public static int YMenor;
-    public static int YMayor;
-    
+ 
+    public ArrayList<Point2D> puntosDeCorte;
     
     
     Figura figuraMov;
@@ -90,6 +87,8 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        puntosDeCorte = new ArrayList<>();
+        
         compRelacion = new ArrayList<>();
         rBtn.setDisable(true);
         pngBtn.setDisable(true);
@@ -260,10 +259,10 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     
 
     public void puntosCorte(){
-        XMenor = (int) diagrama.getEntidades().get(0).getFigura().getCoordenadas().get(0).getX();
-        XMayor = (int) diagrama.getEntidades().get(0).getFigura().getCoordenadas().get(0).getX();
-        YMenor = (int) diagrama.getEntidades().get(0).getFigura().getCoordenadas().get(0).getY();
-        YMayor = (int) diagrama.getEntidades().get(0).getFigura().getCoordenadas().get(0).getY();
+        int XMenor = (int) diagrama.getEntidades().get(0).getFigura().getCoordenadas().get(0).getX();
+        int XMayor = (int) diagrama.getEntidades().get(0).getFigura().getCoordenadas().get(0).getX();
+        int YMenor = (int) diagrama.getEntidades().get(0).getFigura().getCoordenadas().get(0).getY();
+        int YMayor = (int) diagrama.getEntidades().get(0).getFigura().getCoordenadas().get(0).getY();
         
         for (Entidad entidad : diagrama.getEntidades()) {
             for (Point2D cord : entidad.getFigura().getCoordenadas()) {
@@ -299,13 +298,18 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                 
             }
         }
-        
+        puntosDeCorte.add(new Point2D(XMenor, YMenor));
+        puntosDeCorte.add(new Point2D(XMayor, YMayor));
     }
     
     public void recortar(File file) throws IOException{
         puntosCorte();
         java.awt.Image image = new ImageIcon(file.getPath()).getImage();
         BufferedImage recorte = ImageIO.read(file);
+        int XMenor=(int)puntosDeCorte.get(0).getX();
+        int YMenor=(int)puntosDeCorte.get(0).getY();
+        int XMayor=(int)puntosDeCorte.get(1).getX();
+        int YMayor=(int)puntosDeCorte.get(1).getY();
         if(XMenor-50<0){
             XMenor+=50;
         }
