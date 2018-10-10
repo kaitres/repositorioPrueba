@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import javafx.geometry.Point2D;
 import javafx.geometry.VPos;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
@@ -67,7 +68,10 @@ public  class Figura {
     public void dibujarPoligono(GraphicsContext gc ,boolean circulo ){
         if(!circulo){
             this.reCalcular();
+        }else{
+            gc.setStroke(Color.RED);
         }
+        
         for (int x=0;x<coordenadas.size();x++) {
             if(x+1<coordenadas.size()){
                 gc.strokeLine(coordenadas.get(x).getX(), coordenadas.get(x).getY()
@@ -78,6 +82,7 @@ public  class Figura {
             }
             
         }
+        gc.setStroke(Color.BLACK);
         gc.setTextAlign(TextAlignment.CENTER);
         gc.setTextBaseline(VPos.CENTER);
         gc.setFont(Font.font(15));
