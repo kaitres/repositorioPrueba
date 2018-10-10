@@ -41,7 +41,7 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Text>
-            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="850.0" layoutY="8.0" mnemonicParsing="false" onAction="#exportImage" prefHeight="34.0" prefWidth="37.0" styleClass="boton" stylesheets="@Estilo.css" textAlignment="CENTER">
+            <Button fx:id="pngBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="850.0" layoutY="8.0" mnemonicParsing="false" onAction="#exportImage" prefHeight="34.0" prefWidth="37.0" styleClass="boton" stylesheets="@Estilo.css" textAlignment="CENTER">
                <graphic>
                   <ImageView fitHeight="22.0" fitWidth="21.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -49,7 +49,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="793.0" layoutY="8.0" mnemonicParsing="false" onAction="#exportPDF" prefHeight="34.0" prefWidth="37.0" styleClass="boton" stylesheets="@Estilo.css" textAlignment="CENTER">
+            <Button fx:id="pdfBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="793.0" layoutY="8.0" mnemonicParsing="false" onAction="#exportPDF" prefHeight="34.0" prefWidth="37.0" styleClass="boton" stylesheets="@Estilo.css" textAlignment="CENTER">
                <graphic>
                   <ImageView fitHeight="21.0" fitWidth="27.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                      <image>

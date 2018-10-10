@@ -7,6 +7,7 @@
 package fxmls;
 
 import clases.*;
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
@@ -82,11 +83,17 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     private Canvas canvas;
     @FXML
     private Button rBtn;
+    @FXML
+    private Button pngBtn;
+    @FXML
+    private Button pdfBtn;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         compRelacion = new ArrayList<>();
         rBtn.setDisable(true);
+        pngBtn.setDisable(true);
+        pdfBtn.setDisable(true);
         diagrama = new Diagrama();
         gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.BLUE);
@@ -96,6 +103,8 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     private void clear(ActionEvent event) {
         diagrama.clear();
         rBtn.setDisable(true);
+        pngBtn.setDisable(true);
+        pdfBtn.setDisable(true);
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         
     }
@@ -118,8 +127,12 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         
         if (!diagrama.getEntidades().isEmpty()){
             rBtn.setDisable(false);
+            pngBtn.setDisable(false);
+            pdfBtn.setDisable(false);
         } else {
             rBtn.setDisable(true);
+            pngBtn.setDisable(true);
+            pdfBtn.setDisable(true);
         }
     }
     
@@ -293,11 +306,26 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         puntosCorte();
         java.awt.Image image = new ImageIcon(file.getPath()).getImage();
         BufferedImage recorte = ImageIO.read(file);
-        
-        BufferedImage tmp_Recorte = ((BufferedImage) recorte).getSubimage((int)XMenor -50 ,(int) YMenor - 50 ,(int) XMayor - XMenor+100  ,(int) YMayor - YMenor +100) ;
+        if(XMenor-50<0){
+            XMenor+=50;
+        }
+        if(YMenor-50<0){
+            YMenor+=50;
+        }
+        if(XMayor >canvas.getWidth()-1){
+            
+            XMayor=(int)canvas.getWidth()-1;
+            
+        }
+        if(YMayor >canvas.getHeight()-1){
+            YMayor=(int)canvas.getHeight()-1;
+            
+        }
         try{
+            BufferedImage tmp_Recorte = ((BufferedImage) recorte).getSubimage((int)XMenor -50 ,(int) YMenor - 50 ,(int) XMayor -XMenor+50  ,(int) YMayor -YMenor+ 50) ;
+        
             ImageIO.write(tmp_Recorte, "png",file);
-        } catch (IOException e) {
+        } catch (IOException | IllegalArgumentException e) {
             
         }
     }
@@ -324,13 +352,15 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         }catch( IllegalArgumentException r){
 
         }
-
+        recortar(file2);
         try{
-            Document doc = new Document(PageSize.A7,36,36,10,10);
+            Document doc = new Document(PageSize.A4,36,36,10,10);
             PdfWriter.getInstance(doc, archivo);
             Image img = Image.getInstance("chart.png");
-            img.scaleAbsolute(150, 150);
-            img.setAlignment(Element.ALIGN_CENTER);
+            img.setBorderWidth(1);
+            img.setBorderColor(BaseColor.BLACK);
+            img.scaleAbsolute(500, 500);
+            img.setAlignment(Element.ALIGN_LEFT);
             doc.open();
             doc.add(img);  
             doc.close();
