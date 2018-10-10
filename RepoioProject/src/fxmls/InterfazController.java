@@ -254,11 +254,13 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         }catch( IllegalArgumentException r){
             
         }
-        recortar(file);        
+        //recortar(file);        
         }
     
 
     public void puntosCorte(){
+        puntosDeCorte.clear();
+        
         int XMenor = (int) diagrama.getEntidades().get(0).getFigura().getCoordenadas().get(0).getX();
         int XMayor = (int) diagrama.getEntidades().get(0).getFigura().getCoordenadas().get(0).getX();
         int YMenor = (int) diagrama.getEntidades().get(0).getFigura().getCoordenadas().get(0).getY();
@@ -311,22 +313,22 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         int XMayor=(int)puntosDeCorte.get(1).getX();
         int YMayor=(int)puntosDeCorte.get(1).getY();
         if(XMenor-50<0){
-            XMenor+=50;
+            XMenor=3;
         }
         if(YMenor-50<0){
-            YMenor+=50;
+            YMenor=3;
         }
         if(XMayor >canvas.getWidth()-1){
             
-            XMayor=(int)canvas.getWidth()-1;
+            XMayor=(int)canvas.getWidth()-4;
             
         }
         if(YMayor >canvas.getHeight()-1){
-            YMayor=(int)canvas.getHeight()-1;
+            YMayor=(int)canvas.getHeight()-4;
             
         }
         try{
-            BufferedImage tmp_Recorte = ((BufferedImage) recorte).getSubimage((int)XMenor -50 ,(int) YMenor - 50 ,(int) XMayor -XMenor+50  ,(int) YMayor -YMenor+ 50) ;
+            BufferedImage tmp_Recorte = ((BufferedImage) recorte).getSubimage((int)XMenor -3 ,(int) YMenor -3 ,(int) XMayor -XMenor+3  ,(int) YMayor -YMenor+ 3) ;
         
             ImageIO.write(tmp_Recorte, "png",file);
         } catch (IOException | IllegalArgumentException e) {
@@ -356,7 +358,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         }catch( IllegalArgumentException r){
 
         }
-        recortar(file2);
+        //recortar(file2);
         try{
             Document doc = new Document(PageSize.A4,36,36,10,10);
             PdfWriter.getInstance(doc, archivo);
