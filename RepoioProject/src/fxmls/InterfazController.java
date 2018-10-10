@@ -13,6 +13,7 @@ import com.itextpdf.text.Element;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -37,6 +38,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -61,6 +63,12 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     public static boolean mostrarPuntos = false;
     public static Entidad entidadActual;
     public static Relacion relacionActual;
+    
+    public static int XMenor;
+    public static int XMayor;
+    public static int YMenor;
+    public static int YMayor;
+    
     
     
     Figura figuraMov;
@@ -234,7 +242,66 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         }catch( IllegalArgumentException r){
             
         }
+        recortar(file);        
         }
+    
+
+    public void puntosCorte(){
+        XMenor = (int) diagrama.getEntidades().get(0).getFigura().getCoordenadas().get(0).getX();
+        XMayor = (int) diagrama.getEntidades().get(0).getFigura().getCoordenadas().get(0).getX();
+        YMenor = (int) diagrama.getEntidades().get(0).getFigura().getCoordenadas().get(0).getY();
+        YMayor = (int) diagrama.getEntidades().get(0).getFigura().getCoordenadas().get(0).getY();
+        
+        for (Entidad entidad : diagrama.getEntidades()) {
+            for (Point2D cord : entidad.getFigura().getCoordenadas()) {
+                if(cord.getX()< XMenor){
+                    XMenor = (int)cord.getX();
+                }
+                if(cord.getX()> XMayor){
+                    XMayor = (int)cord.getX();
+                }
+                if(cord.getY()< YMenor){
+                    YMenor = (int)cord.getY();
+                }
+                if(cord.getY()> YMayor){
+                    YMayor = (int)cord.getY();
+                }
+                
+            }
+        }
+        for (Relacion relacion : diagrama.getRelaciones()) {
+            for (Point2D cord : relacion.getFigura().getCoordenadas()) {
+                if(cord.getX()< XMenor){
+                    XMenor = (int)cord.getX();
+                }
+                if(cord.getX()> XMayor){
+                    XMayor = (int)cord.getX();
+                }
+                if(cord.getY()< YMenor){
+                    YMenor = (int)cord.getY();
+                }
+                if(cord.getY()> YMayor){
+                    YMayor = (int)cord.getY();
+                }
+                
+            }
+        }
+        
+    }
+    
+    public void recortar(File file) throws IOException{
+        puntosCorte();
+        java.awt.Image image = new ImageIcon(file.getPath()).getImage();
+        BufferedImage recorte = ImageIO.read(file);
+        
+        BufferedImage tmp_Recorte = ((BufferedImage) recorte).getSubimage((int)XMenor -50 ,(int) YMenor - 50 ,(int) XMayor - XMenor+100  ,(int) YMayor - YMenor +100) ;
+        try{
+            ImageIO.write(tmp_Recorte, "png",file);
+        } catch (IOException e) {
+            
+        }
+    }
+    
     @FXML
     private void exportPDF() throws IOException, DocumentException {
         FileChooser fileChooser = new FileChooser();
