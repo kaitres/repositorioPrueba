@@ -48,11 +48,9 @@ import javax.swing.ImageIcon;
 public class InterfazController implements Initializable {//Lo hizo el Carlos UwU
     public static Diagrama diagrama;
     
-    public int posicionDefaultX = 370;
-    public int posicionDefaultY = 285;
+    public static int posicionDefaultX = 370;
+    public static int posicionDefaultY = 285;
     
-    public static String newEntidadNombre;
-    public static boolean entidadValidacion;
     
     public static String newRelacionNombre;
     public static boolean relacionValidacion;
@@ -110,18 +108,16 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
 
     @FXML
     private void crearEntidad(ActionEvent event) throws IOException {
-        entidadValidacion = false;
+        
         AbrirVentana.CargarVista(getClass().getResource("CrearEntidad.fxml"));
         
-        if (entidadValidacion){
-        
-            Figura rec = new Figura();
-            rec.rectangulo(posicionDefaultX, posicionDefaultY,25);
-
-            Entidad ent = new Entidad(newEntidadNombre);
-            ent.setFigura(rec);
-            diagrama.addEntidad(ent);
-            rec.dibujar(gc,mostrarPuntos);
+        if (entidadActual!=null){
+            
+          
+            diagrama.addEntidad(entidadActual);
+            
+            entidadActual.getFigura().dibujar(gc,mostrarPuntos);
+            entidadActual=null;
         }
         
         if (!diagrama.getEntidades().isEmpty()){

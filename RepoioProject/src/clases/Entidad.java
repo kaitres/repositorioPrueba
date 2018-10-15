@@ -5,6 +5,8 @@
  */
 package clases;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author IP-ROUTE
@@ -12,11 +14,19 @@ package clases;
 public class Entidad {
     String nombre;
     Figura figura; //puede ser Rectangulo ya que solo se puede representar de esa manera
+    ArrayList<String> propiedades;
 
     public Entidad(String nombre) {//Lo hizo el Carlos UwU
         this.nombre = nombre;
     }
+    public ArrayList<String> getPropiedades() {
+        return propiedades;
+    }
 
+    public void setPropiedades(ArrayList<String> propiedades) {
+        this.propiedades = (ArrayList<String>) propiedades.clone();
+        this.figura.propiedades = this.propiedades;
+    }
     public String getNombre() {
         return nombre;
     }
