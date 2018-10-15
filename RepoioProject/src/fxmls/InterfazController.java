@@ -13,6 +13,7 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
@@ -250,7 +251,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         }catch( IllegalArgumentException r){
             
         }
-        //recortar(file);        
+        recortar(file);        
         }
     
 
@@ -354,17 +355,18 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         }catch( IllegalArgumentException r){
 
         }
-        //recortar(file2);
+        recortar(file2);
         try{
-            Document doc = new Document(PageSize.A4,36,36,10,10);
+            float ancho = (float) (puntosDeCorte.get(1).getX() - puntosDeCorte.get(0).getX());
+            float alto =(float) (puntosDeCorte.get(1).getY() - puntosDeCorte.get(0).getY());
+            Rectangle rectangle = new Rectangle( ancho + 5 , alto +5);
+            Document doc = new Document(rectangle);
             PdfWriter.getInstance(doc, archivo);
             Image img = Image.getInstance("chart.png");
-            img.setBorderWidth(1);
-            img.setBorderColor(BaseColor.BLACK);
-            img.scaleAbsolute(500, 500);
-            img.setAlignment(Element.ALIGN_LEFT);
+            img.setBorderColor(BaseColor.BLACK);           
+            doc.setMargins(0, ancho, 0, alto);
             doc.open();
-            doc.add(img);  
+            doc.add(img);
             doc.close();
             file2.delete();
         }catch(Exception e){
