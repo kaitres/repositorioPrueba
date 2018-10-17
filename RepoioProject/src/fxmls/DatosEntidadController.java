@@ -41,6 +41,8 @@ public class DatosEntidadController implements Initializable {
     @FXML
     private ListView<String> listaPropiedades;
     
+    Alert alertEx = new Alert(Alert.AlertType.INFORMATION);
+    
     @FXML
     private TextField propiedadAEditar;
     @FXML
@@ -52,6 +54,10 @@ public class DatosEntidadController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        alertEx.setTitle("Error");
+        alertEx.setHeaderText(null);
+        alertEx.setContentText("Haz excedido el limite de 20 caracteres");
+        
         nombre.setText(entidadActual.getNombre());
         propiedades= (ArrayList<String>) entidadActual.getPropiedades().clone();
         listProp = FXCollections.observableArrayList(propiedades);
@@ -63,10 +69,14 @@ public class DatosEntidadController implements Initializable {
     @FXML
     public void modificar(){
         if(!(nombre.getText().equals(""))){
-           entidadActual.setNombre(nombre.getText());
-           entidadActual.setPropiedades(propiedades);
-           Stage stage = (Stage) canBtn.getScene().getWindow();
-           stage.close(); 
+            if (nombre.getText().length()>20){
+                alertEx.showAndWait();
+            }else{
+                entidadActual.setNombre(nombre.getText());
+                entidadActual.setPropiedades(propiedades);
+                Stage stage = (Stage) canBtn.getScene().getWindow();
+                stage.close(); 
+            }
         }
         else{
             Alert alert = new Alert(AlertType.ERROR);

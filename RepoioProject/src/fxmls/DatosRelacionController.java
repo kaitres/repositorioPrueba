@@ -39,12 +39,17 @@ public class DatosRelacionController implements Initializable {
     public ListView lista;
     ObservableList<EntidadCheck> entidadCheck = FXCollections.observableArrayList();
     
+    Alert alertEx = new Alert(Alert.AlertType.INFORMATION);
+    
     @FXML private Button canBtn;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        alertEx.setTitle("Error");
+        alertEx.setHeaderText(null);
+        alertEx.setContentText("Haz excedido el limite de 20 caracteres");
         
         nombre.setText(relacionActual.getNombre());
     }    
@@ -52,9 +57,13 @@ public class DatosRelacionController implements Initializable {
     @FXML
     public void modificar(){
         if(!(nombre.getText().equals(""))){
-           relacionActual.setNombre(nombre.getText());
-           Stage stage = (Stage) canBtn.getScene().getWindow();
-           stage.close(); 
+            if (nombre.getText().length()>20){
+                alertEx.showAndWait();
+            }else{
+                relacionActual.setNombre(nombre.getText());
+                Stage stage = (Stage) canBtn.getScene().getWindow();
+                stage.close();
+            } 
         }
         else{
             Alert alert = new Alert(Alert.AlertType.ERROR);

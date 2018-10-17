@@ -38,6 +38,7 @@ public class CrearEntidadController implements Initializable {
     private Button aceBtn;
     
     Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    Alert alertEx = new Alert(Alert.AlertType.INFORMATION);
     
     @FXML
     private TextField propiedadField;
@@ -54,6 +55,10 @@ public class CrearEntidadController implements Initializable {
         alert.setTitle("Error");
         alert.setHeaderText(null);
         alert.setContentText("Debes ponerle un nombre");
+        
+        alertEx.setTitle("Error");
+        alertEx.setHeaderText(null);
+        alertEx.setContentText("Haz excedido el limite de 20 caracteres");
         
         nombreE="";
         propiedades= new ArrayList<>();
@@ -75,15 +80,19 @@ public class CrearEntidadController implements Initializable {
     @FXML
     private void aceptar(ActionEvent event) {
         if (nombre.getText().length()!=0){
-            nombreE=nombre.getText();
-            InterfazController.entidadActual = new Entidad(nombreE);
-            Figura f = new Figura();
-            f.rectangulo(InterfazController.posicionDefaultX, InterfazController.posicionDefaultY, 25);
-            InterfazController.entidadActual.setFigura(f);
-            InterfazController.entidadActual.setPropiedades((ArrayList<String>) propiedades.clone());
-            Stage stage = (Stage) aceBtn.getScene().getWindow();
-            stage.close();
-        } else{
+            if(nombre.getText().length()>20){
+                alertEx.showAndWait();
+            } else{
+                nombreE=nombre.getText();
+                InterfazController.entidadActual = new Entidad(nombreE);
+                Figura f = new Figura();
+                f.rectangulo(InterfazController.posicionDefaultX, InterfazController.posicionDefaultY, 25);
+                InterfazController.entidadActual.setFigura(f);
+                InterfazController.entidadActual.setPropiedades((ArrayList<String>) propiedades.clone());
+                Stage stage = (Stage) aceBtn.getScene().getWindow();
+                stage.close();  
+            }  
+        }else{
             alert.showAndWait();
         }
         
@@ -92,9 +101,18 @@ public class CrearEntidadController implements Initializable {
     @FXML
     private void txtField(ActionEvent event) {
         if (nombre.getText().length()!=0){
-            
-            Stage stage = (Stage) nombre.getScene().getWindow();
-            stage.close();
+            if(nombre.getText().length()>20){
+                alertEx.showAndWait();
+            } else{
+                nombreE=nombre.getText();
+                InterfazController.entidadActual = new Entidad(nombreE);
+                Figura f = new Figura();
+                f.rectangulo(InterfazController.posicionDefaultX, InterfazController.posicionDefaultY, 25);
+                InterfazController.entidadActual.setFigura(f);
+                InterfazController.entidadActual.setPropiedades((ArrayList<String>) propiedades.clone());
+                Stage stage = (Stage) aceBtn.getScene().getWindow();
+                stage.close();  
+            } 
         } else{
             alert.showAndWait();
         }
