@@ -111,7 +111,7 @@ public  class Figura {
         this.coordenadas.add(new Point2D(centroX+escala/2, centroY-alto/2));
         this.coordenadas.add(new Point2D(centroX+escala/2, centroY+alto/2));
         this.coordenadas.add(new Point2D(centroX-escala/2, centroY+alto/2));
-        coordenadasConeccion=coordenadas;
+        coordenadasConeccion=(ArrayList<Point2D>) coordenadas.clone();
     }
     
     /**
@@ -175,7 +175,7 @@ public  class Figura {
             }
             angulo+=360/lados;
         }
-        coordenadasConeccion=coordenadas;
+        coordenadasConeccion=(ArrayList<Point2D>) coordenadas.clone();
     }
     
     /**
