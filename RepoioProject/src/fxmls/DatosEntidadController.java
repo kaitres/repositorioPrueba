@@ -5,6 +5,7 @@
  */
 package fxmls;
 
+import clases.Propiedad;
 import static fxmls.InterfazController.entidadActual;
 import java.net.URL;
 import java.util.ArrayList;
@@ -31,7 +32,8 @@ import javafx.stage.Stage;
 public class DatosEntidadController implements Initializable {
     
     int propiedadEditada;
-    ArrayList<String> propiedades;
+    ArrayList<Propiedad> propiedades;
+    ArrayList <String> propsObs;
     ObservableList<String> listProp;
     
     @FXML
@@ -59,8 +61,13 @@ public class DatosEntidadController implements Initializable {
         alertEx.setContentText("Haz excedido el limite de 20 caracteres");
         
         nombre.setText(entidadActual.getNombre());
-        propiedades= (ArrayList<String>) entidadActual.getPropiedades().clone();
-        listProp = FXCollections.observableArrayList(propiedades);
+        propiedades = entidadActual.getPropiedades();
+        System.out.println(propiedades.get(0).getNombre());
+        propsObs = new ArrayList<>();
+        for (Propiedad prop : propiedades){
+            propsObs.add(prop.getNombre());
+        }
+        listProp = FXCollections.observableArrayList(propsObs);
         listaPropiedades.setItems(listProp);
         listaPropiedades.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         btEditar.setDisable(true);
@@ -97,8 +104,8 @@ public class DatosEntidadController implements Initializable {
     @FXML
     private void editar(ActionEvent event) {
         if (!"".equals(propiedadAEditar.getText())) {
-            propiedades.set(propiedadEditada, propiedadAEditar.getText());
-            listProp = FXCollections.observableArrayList(propiedades);
+            propsObs.set(propiedadEditada, propiedadAEditar.getText());
+            listProp = FXCollections.observableArrayList(propsObs);
             listaPropiedades.setItems(listProp);
             btEditar.setDisable(true);
         }
@@ -110,7 +117,7 @@ public class DatosEntidadController implements Initializable {
             try{
                ObservableList<Integer> modificado = listaPropiedades.getSelectionModel().getSelectedIndices();
                 propiedadEditada = (int) modificado.get(0);
-                propiedadAEditar.setText(propiedades.get(propiedadEditada));
+                propiedadAEditar.setText(propsObs.get(propiedadEditada));
                 btEditar.setDisable(false); 
             }catch(Exception e){
                 System.out.println("Error salvaje aparece, pero try catch salva el dia denuevo");
@@ -123,8 +130,8 @@ public class DatosEntidadController implements Initializable {
     @FXML
     private void aniadir(ActionEvent event) {
         if (!"".equals(propiedadAEditar.getText())) {
-            propiedades.add(propiedadAEditar.getText());
-            listProp = FXCollections.observableArrayList(propiedades);
+            propsObs.add(propiedadAEditar.getText());
+            listProp = FXCollections.observableArrayList(propsObs);
             listaPropiedades.setItems(listProp);
             btEditar.setDisable(true);
             btEliminar.setDisable(false);
@@ -137,7 +144,7 @@ public class DatosEntidadController implements Initializable {
         if(eliminados.size()>0){
             eliminados.forEach((eliminado) -> {
 
-                propiedades.set((int)eliminado,"");
+                propsObs.set((int)eliminado,"");
             });
             int i=0;
             while(i<propiedades.size()){
@@ -147,7 +154,7 @@ public class DatosEntidadController implements Initializable {
                     i+=1;
                 }
             }
-            listProp = FXCollections.observableArrayList(propiedades);
+            listProp = FXCollections.observableArrayList(propsObs);
             listaPropiedades.setItems(listProp);
             btEditar.setDisable(true);
             if(propiedades.isEmpty()){

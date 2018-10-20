@@ -14,17 +14,17 @@ import java.util.ArrayList;
 public class Entidad {
     String nombre;
     Figura figura; //puede ser Rectangulo ya que solo se puede representar de esa manera
-    ArrayList<String> propiedades;
+    ArrayList<Propiedad> propiedades;
 
     public Entidad(String nombre) {//Lo hizo el Carlos UwU
         this.nombre = nombre;
     }
-    public ArrayList<String> getPropiedades() {
+    public ArrayList<Propiedad> getPropiedades() {
         return propiedades;
     }
 
-    public void setPropiedades(ArrayList<String> propiedades) {
-        this.propiedades = (ArrayList<String>) propiedades.clone();
+    public void setPropiedades(ArrayList<Propiedad> propiedades) {
+        this.propiedades = (ArrayList<Propiedad>) propiedades.clone();
         this.figura.propiedades = this.propiedades;
     }
     public String getNombre() {
