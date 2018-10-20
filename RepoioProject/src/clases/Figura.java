@@ -84,14 +84,7 @@ public  class Figura {
             
         }
         gc.setStroke(Color.BLACK);
-        gc.setTextAlign(TextAlignment.CENTER);
-        gc.setTextBaseline(VPos.CENTER);
-        gc.setFont(Font.font(15));
         
-            
-        
-            
-            gc.fillText(nombre, (int)puntoCentral.getX(), (int)puntoCentral.getY());
                
     }
     
@@ -228,6 +221,129 @@ public  class Figura {
             return (int)text.getLayoutBounds().getHeight();
         }
         return (int)text.getLayoutBounds().getWidth();
+    }
+    
+    public int[] getXP(int lados){
+        int[] aux = null;
+        switch (lados) {
+            case -1:
+                aux = new int[4];
+                aux[0]=1;
+                aux[1]=-1;
+                aux[2]=-1;
+                aux[3]=1;
+                break;
+            case 4:
+                aux = new int[4];
+                aux[0]=0;
+                aux[1]=-1;
+                aux[2]=0;
+                aux[3]=1;
+                break;
+            case 3:
+                aux = new int[3];
+                aux[0]=0;
+                aux[1]=-1;
+                aux[2]=1;
+                
+                break;
+            case 5:
+                aux = new int[5];
+                aux[0]=0;
+                aux[1]=-1;
+                aux[2]=-1;
+                aux[3]=1;
+                aux[4]=1;
+                break;
+            default:
+                aux = new int[6];
+                aux[0]=0;
+                aux[1]=-1;
+                aux[2]=-1;
+                aux[3]=0;
+                aux[4]=1;
+                aux[5]=1;
+                break;
+        }
+        return aux;
+    }
+    public int[] getYP(int lados){
+        int[] aux = null;
+        switch (lados) {
+            case -1:
+                aux = new int[4];
+                aux[0]=1;
+                aux[1]=1;
+                aux[2]=-1;
+                aux[3]=-1;
+                break;
+            case 4:
+                aux = new int[4];
+                aux[0]=1;
+                aux[1]=0;
+                aux[2]=-1;
+                aux[3]=0;
+                break;
+            case 3:
+                aux = new int[3];
+                aux[0]=1;
+                aux[1]=-1;
+                aux[2]=-1;
+                
+                break;
+            case 5:
+                aux = new int[5];
+                aux[0]=1;
+                aux[1]=0;
+                aux[2]=-1;
+                aux[3]=-1;
+                aux[4]=0;
+                break;
+            default:
+                aux = new int[6];
+                aux[0]=1;
+                aux[1]=1;
+                aux[2]=-1;
+                aux[3]=-1;
+                aux[4]=-1;
+                aux[5]=1;
+                break;
+        }
+        return aux;
+    }
+    
+    public void pintar(GraphicsContext gc){
+        gc.setStroke(Color.WHITE);
+        int[] xp = getXP(this.lados);
+        int[] yp = getYP(this.lados);
+        boolean ciclo = true;
+        
+        for (int i = 1; ciclo; i++) {
+            for (int x=0;x<coordenadas.size();x++) {
+                if(x+1<coordenadas.size()){
+                    gc.strokeLine(coordenadas.get(x).getX()+xp[x]*i, coordenadas.get(x).getY()+yp[x]*i
+                            ,coordenadas.get(x+1).getX()+xp[x+1]*i, coordenadas.get(x+1).getY()+yp[x+1]*i);
+                }else{
+                    gc.strokeLine(coordenadas.get(x).getX()+xp[x]*i, coordenadas.get(x).getY()+yp[x]*i
+                        ,coordenadas.get(0).getX()+xp[0]*i, coordenadas.get(0).getY()+yp[0]*i);
+                }
+                if(coordenadas.get(1).getX()+xp[x]*i==puntoCentral.getX()){
+                    gc.setStroke(Color.BLACK);
+                    ciclo=false;
+                    break;
+                }
+                if(this.lados==-1 && coordenadas.get(0).getY()+yp[x]*i==puntoCentral.getY()){
+                    gc.setStroke(Color.BLACK);
+                    ciclo=false;
+                    break;
+                }
+            }
+            
+        }
+        gc.setTextAlign(TextAlignment.CENTER);
+        gc.setTextBaseline(VPos.CENTER);
+        gc.setFont(Font.font(15));
+        gc.fillText(nombre, (int)puntoCentral.getX(), (int)puntoCentral.getY());
     }
 }
     

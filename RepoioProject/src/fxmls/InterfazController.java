@@ -234,6 +234,13 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             relacion.crearUniones();
             relacion.dibujarUniones(gc);
         }
+        for (Entidad entidade : diagrama.getEntidades()) {
+            entidade.getFigura().pintar(gc);
+        }
+        for (Relacion relacion : diagrama.getRelaciones()) {
+            relacion.getFigura().pintar(gc);
+            
+        }
     }    
     
     @FXML
