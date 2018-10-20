@@ -24,7 +24,7 @@ import javafx.scene.text.TextAlignment;
 public  class Figura {
     ArrayList<Point2D> coordenadas = new ArrayList();
     ArrayList<Point2D> coordenadasConeccion = new ArrayList();
-    ArrayList<String> propiedades;
+    ArrayList<Propiedad> propiedades;
     String nombre;
     Point2D puntoCentral; 
     int lados;

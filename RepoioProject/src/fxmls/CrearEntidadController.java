@@ -7,6 +7,8 @@ package fxmls;
 
 import clases.Entidad;
 import clases.Figura;
+import clases.Propiedad;
+import clases.Tipo;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -30,6 +32,7 @@ import javafx.stage.Stage;
 public class CrearEntidadController implements Initializable {
     public String nombreE;
     public ArrayList<String> propiedades;
+    public ArrayList<Propiedad> propiedadesObj;
     @FXML
     private TextField nombre;
     @FXML
@@ -62,6 +65,7 @@ public class CrearEntidadController implements Initializable {
         
         nombreE="";
         propiedades= new ArrayList<>();
+        propiedadesObj= new ArrayList<>();
         listProp = FXCollections.observableArrayList(propiedades);
         listaPropiedadesView.setItems(listProp);
         listaPropiedadesView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -88,7 +92,7 @@ public class CrearEntidadController implements Initializable {
                 Figura f = new Figura();
                 f.rectangulo(InterfazController.posicionDefaultX, InterfazController.posicionDefaultY, 25);
                 InterfazController.entidadActual.setFigura(f);
-                InterfazController.entidadActual.setPropiedades((ArrayList<String>) propiedades.clone());
+                InterfazController.entidadActual.setPropiedades(propiedadesObj);
                 Stage stage = (Stage) aceBtn.getScene().getWindow();
                 stage.close();  
             }  
@@ -109,7 +113,7 @@ public class CrearEntidadController implements Initializable {
                 Figura f = new Figura();
                 f.rectangulo(InterfazController.posicionDefaultX, InterfazController.posicionDefaultY, 25);
                 InterfazController.entidadActual.setFigura(f);
-                InterfazController.entidadActual.setPropiedades((ArrayList<String>) propiedades.clone());
+                InterfazController.entidadActual.setPropiedades(propiedadesObj);
                 Stage stage = (Stage) aceBtn.getScene().getWindow();
                 stage.close();  
             } 
@@ -122,6 +126,7 @@ public class CrearEntidadController implements Initializable {
     private void aniadir(ActionEvent event) {
         if(!"".equals(propiedadField.getText())){
             propiedades.add(propiedadField.getText());
+            propiedadesObj.add(new Propiedad(propiedadField.getText(), Tipo.generico));
             listProp = FXCollections.observableArrayList(propiedades);
             listaPropiedadesView.setItems(listProp);
             propiedadField.setText("");
@@ -141,6 +146,7 @@ public class CrearEntidadController implements Initializable {
         while(i<propiedades.size()){
             if("".equals(propiedades.get(i))){
                 propiedades.remove(i);
+                propiedadesObj.remove(i);
             }else{
                 i+=1;
             }
