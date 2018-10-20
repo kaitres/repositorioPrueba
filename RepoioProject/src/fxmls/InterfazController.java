@@ -118,7 +118,9 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             diagrama.addEntidad(entidadActual);
             
             entidadActual.getFigura().dibujar(gc,mostrarPuntos);
+            entidadActual.getFigura().pintar(gc);
             entidadActual=null;
+            
         }
         
         if (!diagrama.getEntidades().isEmpty()){
@@ -154,6 +156,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             rec.setComponentes(compRelacion);
             rec.crearUniones();
             rec.dibujarUniones(gc);
+            fig.pintar(gc);
         }
         InterfazController.compRelacion.clear();
     }
