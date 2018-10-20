@@ -107,10 +107,15 @@ public class DatosEntidadController implements Initializable {
     @FXML
     private void seleccionar(MouseEvent event) {
         if(!propiedades.isEmpty()){
-            ObservableList<Integer> modificado = listaPropiedades.getSelectionModel().getSelectedIndices();
-            propiedadEditada = (int) modificado.get(0);
-            propiedadAEditar.setText(propiedades.get(propiedadEditada));
-            btEditar.setDisable(false);
+            try{
+               ObservableList<Integer> modificado = listaPropiedades.getSelectionModel().getSelectedIndices();
+                propiedadEditada = (int) modificado.get(0);
+                propiedadAEditar.setText(propiedades.get(propiedadEditada));
+                btEditar.setDisable(false); 
+            }catch(Exception e){
+                System.out.println("Error salvaje aparece, pero try catch salva el dia denuevo");
+            }
+            
         }
         
     }
