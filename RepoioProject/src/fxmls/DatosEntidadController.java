@@ -6,6 +6,7 @@
 package fxmls;
 
 import clases.Propiedad;
+import clases.Tipo;
 import static fxmls.InterfazController.entidadActual;
 import java.net.URL;
 import java.util.ArrayList;
@@ -61,8 +62,8 @@ public class DatosEntidadController implements Initializable {
         alertEx.setContentText("Haz excedido el limite de 20 caracteres");
         
         nombre.setText(entidadActual.getNombre());
-        propiedades = entidadActual.getPropiedades();
-        System.out.println(propiedades.get(0).getNombre());
+        propiedades = (ArrayList<Propiedad>) entidadActual.getPropiedades().clone();
+        
         propsObs = new ArrayList<>();
         for (Propiedad prop : propiedades){
             propsObs.add(prop.getNombre());
@@ -79,7 +80,18 @@ public class DatosEntidadController implements Initializable {
             if (nombre.getText().length()>20){
                 alertEx.showAndWait();
             }else{
+                int i =0;
+                propiedades.clear();
+                while(i<listProp.size()){
+                    if(i<propiedades.size()){
+                        propiedades.get(i).setNombre(propsObs.get(i));
+                    }else{
+                        propiedades.add(new Propiedad(propsObs.get(i), Tipo.generico));
+                    }
+                    i++;    
+                }
                 entidadActual.setNombre(nombre.getText());
+                
                 entidadActual.setPropiedades(propiedades);
                 Stage stage = (Stage) canBtn.getScene().getWindow();
                 stage.close(); 
@@ -147,9 +159,10 @@ public class DatosEntidadController implements Initializable {
                 propsObs.set((int)eliminado,"");
             });
             int i=0;
-            while(i<propiedades.size()){
-                if("".equals(propiedades.get(i))){
-                    propiedades.remove(i);
+            while(i<propsObs.size()){
+                if("".equals(propsObs.get(i))){
+                    
+                    propsObs.remove(i);
                 }else{
                     i+=1;
                 }
