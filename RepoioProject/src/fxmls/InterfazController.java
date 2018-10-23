@@ -69,6 +69,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     
     
     Figura figuraMov;
+    Elipse elipseMov;
     
     
     
@@ -95,9 +96,6 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         diagrama = new Diagrama();
         gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.BLUE);
-        
-        Figura fig = new Figura();
-        fig.dibujarElipse(gc, posicionDefaultX, posicionDefaultY, 100);
     }    
 
     @FXML
@@ -122,6 +120,11 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             
             entidadActual.getFigura().dibujar(gc,mostrarPuntos);
             entidadActual.getFigura().pintar(gc);
+            
+            for (Propiedad prop : entidadActual.getPropiedades()){
+                prop.getElip().dibujarElipse(gc, posicionDefaultX, posicionDefaultY);
+            }
+                        
             entidadActual=null;
             
         }
@@ -174,7 +177,12 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         if(!editar){
             Point2D mouse=new Point2D(event.getX(), event.getY());
             if(arrastrando){
-                figuraMov.setPuntoCentral(mouse);
+                if(dentroDeAlgunaElipse(mouse)){
+                    elipseMov.setPuntoCentral(mouse);
+                }else if (dentroDeAlgunaFigura(mouse)){
+                    figuraMov.setPuntoCentral(mouse);
+                }
+                
                 gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                 reDibujarTodo();
             }
@@ -182,6 +190,13 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                 arrastrando=true;
                 figuraMov =figuraEnMovimiento(mouse);
                 figuraMov.setPuntoCentral(mouse);
+                gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+                reDibujarTodo();
+            }
+            else if (dentroDeAlgunaElipse(mouse)){
+                arrastrando = true;
+                elipseMov = elipseEnMovimiento(mouse);
+                elipseMov.setPuntoCentral(mouse);
                 gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                 reDibujarTodo();
             }
@@ -209,6 +224,16 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         return false;
     }
     
+    public boolean dentroDeAlgunaElipse(Point2D e){
+        for (Entidad entidade : diagrama.getEntidades()) {
+            for (Propiedad prop : entidade.getPropiedades()){
+                if ((e.getX() > prop.getElip().getX()) && (e.getX() < prop.getElip().getX() + prop.getElip().getAncho()) &&
+                        (e.getY() > prop.getElip().getY()) && (e.getY() < prop.getElip().getY() + 30)) return true;
+            }
+        }
+        return false;
+    }
+    
     
     public Figura figuraEnMovimiento(Point2D e){
         for (Entidad entidad : diagrama.getEntidades()) {
@@ -231,9 +256,23 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         }
         return new Figura();
     }
+    
+    public Elipse elipseEnMovimiento (Point2D e){
+        for (Entidad entidade : diagrama.getEntidades()) {
+            for (Propiedad prop : entidade.getPropiedades()){
+                if ((e.getX() > prop.getElip().getX()) && (e.getX() < prop.getElip().getX() + prop.getElip().getAncho()) &&
+                        (e.getY() > prop.getElip().getY()) && (e.getY() < prop.getElip().getY() + 30)) return prop.getElip();
+            }
+        }
+        return new Elipse("");
+    }
+    
     public void reDibujarTodo(){
         for (Entidad entidade : diagrama.getEntidades()) {
             entidade.getFigura().dibujar(gc,mostrarPuntos);
+            for (Propiedad prop : entidade.getPropiedades()){
+                prop.getElip().dibujarElipse(gc, prop.getElip().getX(), prop.getElip().getX());
+            }
         }
         for (Relacion relacion : diagrama.getRelaciones()) {
             relacion.getFigura().dibujar(gc,mostrarPuntos);
@@ -245,7 +284,6 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         }
         for (Relacion relacion : diagrama.getRelaciones()) {
             relacion.getFigura().pintar(gc);
-            
         }
     }    
     

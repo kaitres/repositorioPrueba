@@ -12,10 +12,20 @@ package clases;
 public class Propiedad {
     String nombre;
     Tipo tipo;
+    Elipse elip;
 
     public Propiedad(String nombre, Tipo tipo) {
         this.nombre = nombre;
         this.tipo = tipo;
+        elip = new Elipse(nombre);
+    }
+
+    public Elipse getElip() {
+        return elip;
+    }
+
+    public void setElip(Elipse elip) {
+        this.elip = elip;
     }
 
     public String getNombre() {
@@ -33,4 +43,6 @@ public class Propiedad {
     public void setTipo(Tipo tipo) {
         this.tipo = tipo;
     }
+    
+    
 }

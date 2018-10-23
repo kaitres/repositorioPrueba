@@ -89,12 +89,6 @@ public  class Figura {
                
     }
     
-    public void dibujarElipse (GraphicsContext gc, int x, int y, int escala){
-        gc.setStroke(Color.BLACK);
-        gc.strokeArc(x, y, escala, 40, 0, 180, ArcType.OPEN);
-        gc.strokeArc(x, y, escala, 40, 180, 360, ArcType.OPEN);
-    }
-    
     /**
      * metodo que obtien las cooredenas de los vertices correspondientes del rectanguo (entidad) 
      * @param centroX int con la coordenada (eje x) del centro del rectangulo deseeado
