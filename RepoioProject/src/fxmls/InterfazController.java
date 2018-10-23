@@ -95,6 +95,9 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         diagrama = new Diagrama();
         gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.BLUE);
+        
+        Figura fig = new Figura();
+        fig.dibujarElipse(gc, posicionDefaultX, posicionDefaultY, 100);
     }    
 
     @FXML

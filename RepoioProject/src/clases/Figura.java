@@ -13,6 +13,7 @@ import javafx.geometry.Point2D;
 import javafx.geometry.VPos;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.ArcType;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
@@ -86,6 +87,12 @@ public  class Figura {
         gc.setStroke(Color.BLACK);
         
                
+    }
+    
+    public void dibujarElipse (GraphicsContext gc, int x, int y, int escala){
+        gc.setStroke(Color.BLACK);
+        gc.strokeArc(x, y, escala, 40, 0, 180, ArcType.OPEN);
+        gc.strokeArc(x, y, escala, 40, 180, 360, ArcType.OPEN);
     }
     
     /**
