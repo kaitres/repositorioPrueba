@@ -182,7 +182,6 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                 }else if (dentroDeAlgunaFigura(mouse)){
                     figuraMov.setPuntoCentral(mouse);
                 }
-                
                 gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                 reDibujarTodo();
             }
@@ -271,7 +270,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         for (Entidad entidade : diagrama.getEntidades()) {
             entidade.getFigura().dibujar(gc,mostrarPuntos);
             for (Propiedad prop : entidade.getPropiedades()){
-                prop.getElip().dibujarElipse(gc, prop.getElip().getX(), prop.getElip().getX());
+                prop.getElip().dibujarElipse(gc, prop.getElip().getX(), prop.getElip().getY());
             }
         }
         for (Relacion relacion : diagrama.getRelaciones()) {
