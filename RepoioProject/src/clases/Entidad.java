@@ -6,6 +6,7 @@
 package clases;
 
 import java.util.ArrayList;
+import javafx.scene.canvas.GraphicsContext;
 
 /**
  *
@@ -44,6 +45,9 @@ public class Entidad {
     public Figura getFigura() {
         return figura;
     }
-    
+    public void f(GraphicsContext gc){
+        this.figura.tirarLinea(propiedades, gc);
+        
+    }
     
 }

@@ -27,6 +27,11 @@ public class Relacion {
             union.dibujarUnion(gc);
         }
     }
+
+    public ArrayList<Union> getUniones() {
+        return uniones;
+    }
+    
     /**
      * metodo que crea todas las uniones(objeto Union) del objeto Relacion 
      */

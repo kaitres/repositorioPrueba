@@ -346,6 +346,17 @@ public  class Figura {
         gc.setFont(Font.font(15));
         gc.fillText(nombre, (int)puntoCentral.getX(), (int)puntoCentral.getY());
     }
+    
+    
+    public void tirarLinea(ArrayList<Propiedad> e, GraphicsContext gc){
+        gc.setStroke(Color.BLACK);
+        for (Propiedad prop : e) {
+            
+            gc.strokeLine(this.puntoCentral.getX(), this.puntoCentral.getY(),
+                    prop.elip.x+prop.elip.ancho/2, prop.elip.y-3);
+        }
+        
+    }
 }
     
     

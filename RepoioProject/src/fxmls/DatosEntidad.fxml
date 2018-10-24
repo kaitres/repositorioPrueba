@@ -33,5 +33,6 @@
       <ListView fx:id="listaPropiedades" layoutX="14.0" layoutY="185.0" onMouseClicked="#seleccionar" prefHeight="125.0" prefWidth="173.0" />
       <Button layoutX="194.0" layoutY="185.0" mnemonicParsing="false" onAction="#aniadir" prefHeight="25.0" prefWidth="51.0" text="+" />
       <Button fx:id="btEliminar" layoutX="194.0" layoutY="223.0" mnemonicParsing="false" onAction="#eliminar" prefHeight="25.0" prefWidth="51.0" text="-" />
+      <Button layoutX="104.0" layoutY="319.0" mnemonicParsing="false" onAction="#eliminarEntidad" text="eliminar" />
    </children>
 </AnchorPane>

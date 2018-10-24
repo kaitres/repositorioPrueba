@@ -58,11 +58,14 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     public static ArrayList<Entidad> compRelacion; 
     
     public boolean arrastrando = false;
+    public boolean elipse = false;
+    public boolean figura = false;
     
     public static boolean editar = false;
     public static boolean mostrarPuntos = false;
     public static Entidad entidadActual;
     public static Relacion relacionActual;
+    
     
  
     public ArrayList<Point2D> puntosDeCorte;
@@ -174,30 +177,40 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     
     @FXML
     private void movimiento(MouseEvent event){
+        
+        
         if(!editar){
             Point2D mouse=new Point2D(event.getX(), event.getY());
+            
             if(arrastrando){
-                if(dentroDeAlgunaElipse(mouse)){
+                
+                if(elipse){
                     elipseMov.setPuntoCentral(mouse);
-                }else if (dentroDeAlgunaFigura(mouse)){
+                }else if (figura){
                     figuraMov.setPuntoCentral(mouse);
                 }
                 gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                 reDibujarTodo();
             }
-            else if(dentroDeAlgunaFigura(mouse)){
-                arrastrando=true;
-                figuraMov =figuraEnMovimiento(mouse);
-                figuraMov.setPuntoCentral(mouse);
-                gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-                reDibujarTodo();
-            }
-            else if (dentroDeAlgunaElipse(mouse)){
-                arrastrando = true;
-                elipseMov = elipseEnMovimiento(mouse);
-                elipseMov.setPuntoCentral(mouse);
-                gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-                reDibujarTodo();
+            else{
+                elipse=false;
+                figura=false;
+                if(dentroDeAlgunaFigura(mouse)){
+                    figura = true;
+                    arrastrando=true;
+                    figuraMov =figuraEnMovimiento(mouse);
+                    figuraMov.setPuntoCentral(mouse);
+                    gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+                    reDibujarTodo();
+                }
+                else if (dentroDeAlgunaElipse(mouse)){
+                    elipse = true;
+                    arrastrando = true;
+                    elipseMov = elipseEnMovimiento(mouse);
+                    elipseMov.setPuntoCentral(mouse);
+                    gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+                    reDibujarTodo();
+                }
             }
         }
     }
@@ -271,7 +284,10 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             entidade.getFigura().dibujar(gc,mostrarPuntos);
             for (Propiedad prop : entidade.getPropiedades()){
                 prop.getElip().dibujarElipse(gc, prop.getElip().getX(), prop.getElip().getY());
+                
             }
+            entidade.f(gc);
+            
         }
         for (Relacion relacion : diagrama.getRelaciones()) {
             relacion.getFigura().dibujar(gc,mostrarPuntos);
@@ -280,6 +296,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         }
         for (Entidad entidade : diagrama.getEntidades()) {
             entidade.getFigura().pintar(gc);
+            
         }
         for (Relacion relacion : diagrama.getRelaciones()) {
             relacion.getFigura().pintar(gc);
@@ -304,7 +321,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         recortar(file);        
         }
     
-
+    // importante agregar propiedades
     public void puntosCorte(){
         puntosDeCorte.clear();
         
@@ -425,6 +442,8 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         
         
     }
+    
+    
     @FXML
     private void mostrarPuntosDeControl(ActionEvent event) {
         this.mostrarPuntos = !mostrarPuntos;
@@ -448,21 +467,29 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                         (e.getY() < entidad.getFigura().getCoordenadas().get(2).getY())){
                     entidadActual=entidad;
                     AbrirVentana.CargarVista(getClass().getResource("DatosEntidad.fxml"));
+                    if(entidadActual.getPropiedades()!=null){
+                        for (Propiedad prop : entidadActual.getPropiedades()){
+                            prop.getElip().dibujarElipse(gc, posicionDefaultX, posicionDefaultY);
+                        }
+                    }
                     gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                     reDibujarTodo();
+                    break;
                 }
+                
             }
             for (Relacion relacion : diagrama.getRelaciones()) {
             
-            if ((e.getX() > relacion.getFigura().getPuntoCentral().getX()-relacion.getFigura().calEscala()) &&
-                    (e.getX() < relacion.getFigura().getPuntoCentral().getX()+relacion.getFigura().calEscala()) &&
-                    (e.getY() > relacion.getFigura().getPuntoCentral().getY()-relacion.getFigura().calEscala()) &&
-                    (e.getY() < relacion.getFigura().getPuntoCentral().getY()+relacion.getFigura().calEscala())){
-                    relacionActual = relacion;
-                    AbrirVentana.CargarVista(getClass().getResource("DatosRelacion.fxml"));
-                    gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-                    reDibujarTodo();
-            }
+                if ((e.getX() > relacion.getFigura().getPuntoCentral().getX()-relacion.getFigura().calEscala()) &&
+                        (e.getX() < relacion.getFigura().getPuntoCentral().getX()+relacion.getFigura().calEscala()) &&
+                        (e.getY() > relacion.getFigura().getPuntoCentral().getY()-relacion.getFigura().calEscala()) &&
+                        (e.getY() < relacion.getFigura().getPuntoCentral().getY()+relacion.getFigura().calEscala())){
+                        relacionActual = relacion;
+                        AbrirVentana.CargarVista(getClass().getResource("DatosRelacion.fxml"));
+                        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+                        reDibujarTodo();
+                        break;
+                }
             }
         
         

@@ -9,6 +9,12 @@ package fxmls;
 import clases.Diagrama;
 import static clases.Diagrama.entidades;
 import clases.Entidad;
+import clases.Figura;
+import clases.Relacion;
+import static fxmls.InterfazController.compRelacion;
+import static fxmls.InterfazController.entidadActual;
+import static fxmls.InterfazController.posicionDefaultX;
+import static fxmls.InterfazController.posicionDefaultY;
 import static fxmls.InterfazController.relacionActual;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -94,4 +100,14 @@ public class DatosRelacionController implements Initializable {
         public BooleanProperty getCheck() { return check; }
     }
     
+    @FXML
+    private void eliminarRelacion(){
+        InterfazController.diagrama.getRelaciones().remove(relacionActual);
+        
+        
+        Stage stage = (Stage) canBtn.getScene().getWindow();
+        stage.close();
+        
+                
+    }
 }
