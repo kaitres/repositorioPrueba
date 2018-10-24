@@ -5,9 +5,15 @@
  */
 package fxmls;
 
+import clases.Diagrama;
+import clases.Figura;
 import clases.Propiedad;
+import clases.Relacion;
 import clases.Tipo;
+import static fxmls.InterfazController.compRelacion;
 import static fxmls.InterfazController.entidadActual;
+import static fxmls.InterfazController.posicionDefaultX;
+import static fxmls.InterfazController.posicionDefaultY;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -175,4 +181,37 @@ public class DatosEntidadController implements Initializable {
             }
         }
     }
+    
+    
+    @FXML
+    private void eliminarEntidad(){
+    ArrayList <Relacion> eliminar = new ArrayList();
+        for (Relacion relacion : Diagrama.relaciones) {
+            if(relacion.getComponentes().contains(entidadActual)){
+                relacion.getComponentes().remove(entidadActual);
+                relacion.crearUniones();
+                
+                Figura fig = new Figura();
+                if(relacion.getComponentes().size() == 0){
+                    eliminar.add(relacion);
+                }
+                
+                else if (relacion.getComponentes().size()==1 || relacion.getComponentes().size()==2 || relacion.getComponentes().size()==4 ){
+                    fig.crearFigura(posicionDefaultX, posicionDefaultY, 20 , 4);
+                } else {
+                    fig.crearFigura(posicionDefaultX, posicionDefaultY, 20 , relacion.getComponentes().size());
+                }   
+                relacion.setFigura(fig);
+
+            }          
+        }
+        
+        Diagrama.relaciones.removeAll(eliminar);
+        Diagrama.entidades.remove(entidadActual);
+        entidadActual=null;
+        
+        Stage stage = (Stage) canBtn.getScene().getWindow();
+        stage.close(); 
+    }
+    
 }
