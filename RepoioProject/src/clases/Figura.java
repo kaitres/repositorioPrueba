@@ -89,6 +89,30 @@ public  class Figura {
                
     }
     
+    public void elipse (int x, int y){
+        int ancho = calEscala()+calEscala()/2;
+        lados = -2;
+        puntoCentral = new Point2D(x + (ancho/2), y + 15);
+        coordenadas.clear();
+        
+        coordenadas.add(new Point2D(x, y));
+        coordenadas.add(new Point2D(x + ancho, y));
+        coordenadas.add(new Point2D(x, y + 30));
+        coordenadas.add(new Point2D(x + ancho, y + 30));
+   
+    }
+    
+    public void dibujarElipse(GraphicsContext gc){
+        int ancho = calEscala()+calEscala()/2;
+        this.reCalcular();
+        gc.setStroke(Color.BLACK);
+        gc.strokeArc(coordenadas.get(0).getX(), coordenadas.get(0).getY(), ancho, 30, 0, 360, ArcType.OPEN);
+        gc.setTextAlign(TextAlignment.CENTER);
+        gc.setTextBaseline(VPos.CENTER);
+        gc.setFont(Font.font(15));
+        gc.fillText(nombre, coordenadas.get(0).getX()+ancho/2, coordenadas.get(0).getY()+15); 
+    }
+    
     /**
      * metodo que obtien las cooredenas de los vertices correspondientes del rectanguo (entidad) 
      * @param centroX int con la coordenada (eje x) del centro del rectangulo deseeado
@@ -190,6 +214,9 @@ public  class Figura {
         int centroY = (int)puntoCentral.getY();
         if(lados==-1){
             rectangulo(centroX, centroY, escala*2);
+        }else if(lados == -2){
+            int ancho = calEscala()+calEscala()/2;
+            elipse(centroX-ancho/2, centroY-15);
         }else{
             crearFigura(centroX, centroY, escala+2, lados);
         }
@@ -353,7 +380,7 @@ public  class Figura {
         for (Propiedad prop : e) {
             
             gc.strokeLine(this.puntoCentral.getX(), this.puntoCentral.getY(),
-                    prop.elip.x+prop.elip.ancho/2, prop.elip.y-3);
+                    prop.elip.getPuntoCentral().getX(), prop.elip.getPuntoCentral().getY()-15);
         }
         
     }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fxmls;
+package controladores;
 
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;

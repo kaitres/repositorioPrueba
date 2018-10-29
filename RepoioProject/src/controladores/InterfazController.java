@@ -4,7 +4,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fxmls;
+package controladores;
 
 import clases.*;
 import com.itextpdf.text.BaseColor;
@@ -72,11 +72,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     
     
     Figura figuraMov;
-    Elipse elipseMov;
-    
-    
-    
-    
+
     public GraphicsContext gc;
     
     @FXML
@@ -114,7 +110,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     @FXML
     private void crearEntidad(ActionEvent event) throws IOException {
         
-        AbrirVentana.CargarVista(getClass().getResource("CrearEntidad.fxml"));
+        AbrirVentana.CargarVista(getClass().getResource("/fxmls/CrearEntidad.fxml"));
         
         if (entidadActual!=null){
             
@@ -125,7 +121,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             entidadActual.getFigura().pintar(gc);
             
             for (Propiedad prop : entidadActual.getPropiedades()){
-                prop.getElip().dibujarElipse(gc, posicionDefaultX, posicionDefaultY);
+                prop.getElip().dibujarElipse(gc);
             }
                         
             entidadActual=null;
@@ -146,7 +142,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     @FXML
     private void crearRelacion(ActionEvent event) throws IOException {
         relacionValidacion = false;
-        AbrirVentana.CargarVista(getClass().getResource("CrearRelacion.fxml"));
+        AbrirVentana.CargarVista(getClass().getResource("/fxmls/CrearRelacion.fxml"));
         
         if (relacionValidacion){
             Figura fig = new Figura();
@@ -183,33 +179,18 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             Point2D mouse=new Point2D(event.getX(), event.getY());
             
             if(arrastrando){
-                
-                if(elipse){
-                    elipseMov.setPuntoCentral(mouse);
-                }else if (figura){
-                    figuraMov.setPuntoCentral(mouse);
-                }
+                figuraMov.setPuntoCentral(mouse);
                 gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                 reDibujarTodo();
             }
             else{
-                elipse=false;
-                figura=false;
                 if(dentroDeAlgunaFigura(mouse)){
-                    figura = true;
                     arrastrando=true;
                     figuraMov =figuraEnMovimiento(mouse);
                     figuraMov.setPuntoCentral(mouse);
                     gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                     reDibujarTodo();
-                }
-                else if (dentroDeAlgunaElipse(mouse)){
-                    elipse = true;
-                    arrastrando = true;
-                    elipseMov = elipseEnMovimiento(mouse);
-                    elipseMov.setPuntoCentral(mouse);
-                    gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-                    reDibujarTodo();
+                    System.out.println(figuraMov.getCoordenadas() + "..." + figuraMov.getPuntoCentral());
                 }
             }
         }
@@ -223,6 +204,14 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                     (e.getY() < entidade.getFigura().getCoordenadas().get(2).getY())){
                 return true;
             }
+            for (Propiedad prop: entidade.getPropiedades()){
+                if ((e.getX() > prop.getElip().getCoordenadas().get(0).getX()) &&
+                (e.getX() < prop.getElip().getCoordenadas().get(1).getX()) &&
+                (e.getY() > prop.getElip().getCoordenadas().get(0).getY()) &&
+                (e.getY() < prop.getElip().getCoordenadas().get(2).getY())) {
+                    return true;
+                }
+            }
         }
         for (Relacion entidade : diagrama.getRelaciones()) {
             
@@ -235,18 +224,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         }
         return false;
     }
-    
-    public boolean dentroDeAlgunaElipse(Point2D e){
-        for (Entidad entidade : diagrama.getEntidades()) {
-            for (Propiedad prop : entidade.getPropiedades()){
-                if ((e.getX() > prop.getElip().getX()) && (e.getX() < prop.getElip().getX() + prop.getElip().getAncho()) &&
-                        (e.getY() > prop.getElip().getY()) && (e.getY() < prop.getElip().getY() + 30)) return true;
-            }
-        }
-        return false;
-    }
-    
-    
+  
     public Figura figuraEnMovimiento(Point2D e){
         for (Entidad entidad : diagrama.getEntidades()) {
             if ((e.getX() > entidad.getFigura().getCoordenadas().get(0).getX()) &&
@@ -255,6 +233,14 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                     (e.getY() < entidad.getFigura().getCoordenadas().get(2).getY())){
                 
                 return entidad.getFigura();
+            }
+            for (Propiedad prop: entidad.getPropiedades()){
+                if ((e.getX() > prop.getElip().getCoordenadas().get(0).getX()) &&
+                (e.getX() < prop.getElip().getCoordenadas().get(1).getX()) &&
+                (e.getY() > prop.getElip().getCoordenadas().get(0).getY()) &&
+                (e.getY() < prop.getElip().getCoordenadas().get(2).getY())) {
+                    return prop.getElip();
+                }
             }
         }
         for (Relacion entidade : diagrama.getRelaciones()) {
@@ -269,22 +255,12 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         return new Figura();
     }
     
-    public Elipse elipseEnMovimiento (Point2D e){
-        for (Entidad entidade : diagrama.getEntidades()) {
-            for (Propiedad prop : entidade.getPropiedades()){
-                if ((e.getX() > prop.getElip().getX()) && (e.getX() < prop.getElip().getX() + prop.getElip().getAncho()) &&
-                        (e.getY() > prop.getElip().getY()) && (e.getY() < prop.getElip().getY() + 30)) return prop.getElip();
-            }
-        }
-        return new Elipse("");
-    }
     
     public void reDibujarTodo(){
         for (Entidad entidade : diagrama.getEntidades()) {
             entidade.getFigura().dibujar(gc,mostrarPuntos);
             for (Propiedad prop : entidade.getPropiedades()){
-                prop.getElip().dibujarElipse(gc, prop.getElip().getX(), prop.getElip().getY());
-                
+                prop.getElip().dibujarElipse(gc);
             }
             entidade.f(gc);
             
@@ -466,12 +442,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                         (e.getY() > entidad.getFigura().getCoordenadas().get(0).getY()) &&
                         (e.getY() < entidad.getFigura().getCoordenadas().get(2).getY())){
                     entidadActual=entidad;
-                    AbrirVentana.CargarVista(getClass().getResource("DatosEntidad.fxml"));
-                    if(entidadActual.getPropiedades()!=null){
-                        for (Propiedad prop : entidadActual.getPropiedades()){
-                            prop.getElip().dibujarElipse(gc, posicionDefaultX, posicionDefaultY);
-                        }
-                    }
+                    AbrirVentana.CargarVista(getClass().getResource("/fxmls/DatosEntidad.fxml"));
                     gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                     reDibujarTodo();
                     break;
@@ -485,7 +456,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                         (e.getY() > relacion.getFigura().getPuntoCentral().getY()-relacion.getFigura().calEscala()) &&
                         (e.getY() < relacion.getFigura().getPuntoCentral().getY()+relacion.getFigura().calEscala())){
                         relacionActual = relacion;
-                        AbrirVentana.CargarVista(getClass().getResource("DatosRelacion.fxml"));
+                        AbrirVentana.CargarVista(getClass().getResource("/fxmls/DatosRelacion.fxml"));
                         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                         reDibujarTodo();
                         break;

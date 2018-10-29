@@ -47,7 +47,8 @@ public class Union {
         relacion.coordenadasConeccion.remove(minimoRelacion);
         //entidad.coordenadasConeccion.remove(minimoEntidad);
         
-        unionEntidad = minimoEntidad;
+        //unionEntidad = minimoEntidad;
+        unionEntidad = entidad.getPuntoCentral();
         unionRelacion = minimoRelacion;
     }
     

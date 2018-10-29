@@ -8,12 +8,12 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="RepoioProject.jar" size="40086" download="eager" />
+    <jar href="RepoioProject.jar" size="40624" download="eager" />
     <jar href="lib\iText-5.0.5.jar" size="1599728" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="RepoioProject" >
     <param name="requiredFXVersion" value="8.0+"/>
   </applet-desc>
-  <jfx:javafx-desc  width="800" height="600" main-class="fxmls.JavaFXApplication5"  name="RepoioProject" />
+  <jfx:javafx-desc  width="800" height="600" main-class="controladores.JavaFXApplication5"  name="RepoioProject" />
   <update check="always"/>
 </jnlp>

@@ -8,7 +8,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="358.0" prefWidth="263.0" styleClass="canvasColor" stylesheets="@Estilo.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxmls.DatosEntidadController">
+<AnchorPane id="AnchorPane" prefHeight="358.0" prefWidth="263.0" styleClass="canvasColor" stylesheets="@Estilo.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.DatosEntidadController">
    <children>
       <Label layoutX="14.0" layoutY="72.0" text="Ingrese nombre de la entidad: ">
          <font>

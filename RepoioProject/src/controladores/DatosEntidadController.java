@@ -3,17 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fxmls;
+package controladores;
 
 import clases.Diagrama;
 import clases.Figura;
 import clases.Propiedad;
 import clases.Relacion;
 import clases.Tipo;
-import static fxmls.InterfazController.compRelacion;
-import static fxmls.InterfazController.entidadActual;
-import static fxmls.InterfazController.posicionDefaultX;
-import static fxmls.InterfazController.posicionDefaultY;
+import static controladores.InterfazController.compRelacion;
+import static controladores.InterfazController.entidadActual;
+import static controladores.InterfazController.posicionDefaultX;
+import static controladores.InterfazController.posicionDefaultY;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;

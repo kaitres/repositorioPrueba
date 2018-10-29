@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fxmls;
+package controladores;
 
 
 import clases.Diagrama;
@@ -11,11 +11,11 @@ import static clases.Diagrama.entidades;
 import clases.Entidad;
 import clases.Figura;
 import clases.Relacion;
-import static fxmls.InterfazController.compRelacion;
-import static fxmls.InterfazController.entidadActual;
-import static fxmls.InterfazController.posicionDefaultX;
-import static fxmls.InterfazController.posicionDefaultY;
-import static fxmls.InterfazController.relacionActual;
+import static controladores.InterfazController.compRelacion;
+import static controladores.InterfazController.entidadActual;
+import static controladores.InterfazController.posicionDefaultX;
+import static controladores.InterfazController.posicionDefaultY;
+import static controladores.InterfazController.relacionActual;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.property.BooleanProperty;

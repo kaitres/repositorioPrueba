@@ -12,19 +12,21 @@ package clases;
 public class Propiedad {
     String nombre;
     Tipo tipo;
-    Elipse elip;
+    Figura elip;
 
     public Propiedad(String nombre, Tipo tipo) {
         this.nombre = nombre;
         this.tipo = tipo;
-        elip = new Elipse(nombre);
+        elip = new Figura();
+        elip.nombre = nombre;
+        elip.elipse(370, 285);
     }
 
-    public Elipse getElip() {
+    public Figura getElip() {
         return elip;
     }
 
-    public void setElip(Elipse elip) {
+    public void setElip(Figura elip) {
         this.elip = elip;
     }
 

@@ -7,7 +7,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="208.0" prefWidth="292.0" styleClass="canvasColor" stylesheets="@Estilo.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxmls.DatosRelacionController">
+<AnchorPane id="AnchorPane" prefHeight="208.0" prefWidth="292.0" styleClass="canvasColor" stylesheets="@Estilo.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.DatosRelacionController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ececec" height="60.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" styleClass="canvasColor" width="292.0" />
       <Label layoutX="41.0" layoutY="77.0" text="Ingrese nombre de la relación: " />
