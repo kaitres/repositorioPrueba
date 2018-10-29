@@ -83,7 +83,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     private Button pngBtn;
     @FXML
     private Button pdfBtn;
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         puntosDeCorte = new ArrayList<>();
@@ -190,7 +190,6 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                     figuraMov.setPuntoCentral(mouse);
                     gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                     reDibujarTodo();
-                    System.out.println(figuraMov.getCoordenadas() + "..." + figuraMov.getPuntoCentral());
                 }
             }
         }
@@ -465,5 +464,17 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         
         
         }   
+    }
+
+    @FXML
+    private void zoomOut(ActionEvent event) {
+        canvas.setScaleX(canvas.getScaleX()/2);
+        canvas.setScaleY(canvas.getScaleY()/2);
+    }
+
+    @FXML
+    private void zoomIn(ActionEvent event) {
+        canvas.setScaleX(canvas.getScaleX()*2);
+        canvas.setScaleY(canvas.getScaleY()*2);
     }
 }
