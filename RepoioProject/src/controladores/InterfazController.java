@@ -65,7 +65,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     public static boolean mostrarPuntos = false;
     public static Entidad entidadActual;
     public static Relacion relacionActual;
-    
+    public static ArrayList<Propiedad> propiedadActual; 
     
  
     public ArrayList<Point2D> puntosDeCorte;
@@ -87,7 +87,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         puntosDeCorte = new ArrayList<>();
-        
+        propiedadActual = new ArrayList<>();
         compRelacion = new ArrayList<>();
         rBtn.setDisable(true);
         pngBtn.setDisable(true);
@@ -125,6 +125,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             }
                         
             entidadActual=null;
+            propiedadActual= new ArrayList<>();
             
         }
         
@@ -163,6 +164,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             rec.dibujarUniones(gc);
             fig.pintar(gc);
         }
+        propiedadActual= new ArrayList<>();
         InterfazController.compRelacion.clear();
     }
     

@@ -45,6 +45,9 @@ public class Propiedad {
     public void setTipo(Tipo tipo) {
         this.tipo = tipo;
     }
-    
+    @Override
+    public String toString() {
+        return nombre +" " +tipo;
+    }
     
 }
