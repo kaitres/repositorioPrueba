@@ -51,6 +51,7 @@ public class CrearEntidadController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        InterfazController.propiedadActual.clear();
         alert.setTitle("Error");
         alert.setHeaderText(null);
         alert.setContentText("Debes ponerle un nombre");
@@ -67,7 +68,6 @@ public class CrearEntidadController implements Initializable {
 
     @FXML
     private void cancelar(ActionEvent event) {
-        
         nombreE="";
         Stage stage = (Stage) canBtn.getScene().getWindow();
         stage.close();
