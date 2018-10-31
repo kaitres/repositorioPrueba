@@ -59,7 +59,7 @@ public  class Figura {
         if (dibujarPuntos) {
           dibujarPuntoControl(gc);  
         }
-        dobleLinea(gc);
+        //dobleLinea(gc);
         
         
     }
@@ -104,8 +104,10 @@ public  class Figura {
    
     }
     
-    public void dibujarElipse(GraphicsContext gc){
-        dobleLinea(gc); //revisar
+    public void dibujarElipse(GraphicsContext gc, Tipo tipo){
+        if(tipo==Tipo.multivaluado){
+            dobleLinea(gc); //revisar pene
+        }
         pintarElipse(gc);
         int ancho = calEscala()+calEscala()/2;
         this.reCalcular();
@@ -388,7 +390,7 @@ public  class Figura {
         for (Propiedad prop : e) {
             
             gc.strokeLine(this.puntoCentral.getX(), this.puntoCentral.getY(),
-                    prop.elip.getPuntoCentral().getX(), prop.elip.getPuntoCentral().getY()-15);
+                    prop.elip.getPuntoCentral().getX(), prop.elip.getPuntoCentral().getY());
         }
         
     }
@@ -492,22 +494,28 @@ public  class Figura {
         System.out.println("pintando elipse");
         int i=0;
         int alto=30;
-        while(i<=30){
+        this.reCalcular();
+        gc.setStroke(Color.WHITE);
+        for (int j = 1; j < 29; j++) {
+            gc.strokeArc(coordenadas.get(0).getX()+j, coordenadas.get(0).getY()+j, ancho-2*j, alto-2*j, 0, 360, ArcType.OPEN);
+        }
+        //while(i<=30){
             
-            System.out.println("ancho = "+ ancho);
-            this.reCalcular();
+            /**System.out.println("ancho = "+ ancho);
+            
             gc.setStroke(Color.RED);
             if (alto == 0){
                 gc.strokeArc(coordenadas.get(0).getX(), coordenadas.get(0).getY(), ancho, 0, 0, 360, ArcType.OPEN);
             }
             else{
                 alto-=1;
-            gc.strokeArc(coordenadas.get(0).getX(), coordenadas.get(0).getY(), ancho, alto, 0, 360, ArcType.OPEN);
+            gc.strokeArc(coordenadas.get(0).getX(), coordenadas.get(0).getY(), ancho-2*i, alto, 0, 360, ArcType.OPEN);
             }
-            ancho-=1;
+            ancho-=2;
             i+=1;
+            * */
             
-        }
+        //}
         
     }
 }

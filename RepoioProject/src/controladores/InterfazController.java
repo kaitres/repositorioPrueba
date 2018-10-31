@@ -121,7 +121,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             entidadActual.getFigura().pintar(gc);
             
             for (Propiedad prop : entidadActual.getPropiedades()){
-                prop.getElip().dibujarElipse(gc);
+                prop.getElip().dibujarElipse(gc, prop.getTipo());
             }
                         
             entidadActual=null;
@@ -260,10 +260,11 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     public void reDibujarTodo(){
         for (Entidad entidade : diagrama.getEntidades()) {
             entidade.getFigura().dibujar(gc,mostrarPuntos);
-            for (Propiedad prop : entidade.getPropiedades()){
-                prop.getElip().dibujarElipse(gc);
-            }
             entidade.f(gc);
+            for (Propiedad prop : entidade.getPropiedades()){
+                prop.getElip().dibujarElipse(gc, prop.getTipo());
+            }
+            
             
         }
         for (Relacion relacion : diagrama.getRelaciones()) {
@@ -464,7 +465,11 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                 }
             }
         
-        
+            if (diagrama.getEntidades().isEmpty()) {
+                rBtn.setDisable(true);
+                pngBtn.setDisable(true);
+                pdfBtn.setDisable(true);
+            }
         }   
     }
 
