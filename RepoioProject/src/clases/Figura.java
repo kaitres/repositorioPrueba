@@ -108,16 +108,20 @@ public  class Figura {
         if(tipo==Tipo.multivaluado){
             dobleLinea(gc); //revisar pene
         }
+        if(tipo==Tipo.derivado){
+            gc.setLineDashes(5);
+        }
         pintarElipse(gc);
         int ancho = calEscala()+calEscala()/2;
         this.reCalcular();
         gc.setStroke(Color.BLACK);
+        
         gc.strokeArc(coordenadas.get(0).getX(), coordenadas.get(0).getY(), ancho, 30, 0, 360, ArcType.OPEN);
         gc.setTextAlign(TextAlignment.CENTER);
         gc.setTextBaseline(VPos.CENTER);
         gc.setFont(Font.font(15));
         gc.fillText(nombre, coordenadas.get(0).getX()+ancho/2, coordenadas.get(0).getY()+15); 
-        
+        gc.setLineDashes(0);
         
     }
     
@@ -466,7 +470,7 @@ public  class Figura {
     
     public void dobleLinea(GraphicsContext gc){
         if(this.lados == -2){//elipse
-            System.out.println("elipse");
+            
             int ancho = (calEscala()+calEscala()/2);
             this.reCalcular();
             gc.setStroke(Color.BLACK);
@@ -491,7 +495,7 @@ public  class Figura {
     }
     public void pintarElipse(GraphicsContext gc){
         int ancho = (calEscala()+calEscala()/2);
-        System.out.println("pintando elipse");
+        
         int i=0;
         int alto=30;
         this.reCalcular();
