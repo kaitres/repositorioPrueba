@@ -59,6 +59,8 @@ public  class Figura {
         if (dibujarPuntos) {
           dibujarPuntoControl(gc);  
         }
+        dobleLinea(gc);
+        
         
     }
     
@@ -103,6 +105,8 @@ public  class Figura {
     }
     
     public void dibujarElipse(GraphicsContext gc){
+        dobleLinea(gc); //revisar
+        pintarElipse(gc);
         int ancho = calEscala()+calEscala()/2;
         this.reCalcular();
         gc.setStroke(Color.BLACK);
@@ -111,6 +115,8 @@ public  class Figura {
         gc.setTextBaseline(VPos.CENTER);
         gc.setFont(Font.font(15));
         gc.fillText(nombre, coordenadas.get(0).getX()+ancho/2, coordenadas.get(0).getY()+15); 
+        
+        
     }
     
     /**
@@ -345,7 +351,9 @@ public  class Figura {
         int[] xp = getXP(this.lados);
         int[] yp = getYP(this.lados);
         boolean ciclo = true;
-        
+        if(this.lados ==-2){
+            pintarElipse(gc);
+        }
         for (int i = 1; ciclo; i++) {
             for (int x=0;x<coordenadas.size();x++) {
                 if(x+1<coordenadas.size()){
@@ -381,6 +389,124 @@ public  class Figura {
             
             gc.strokeLine(this.puntoCentral.getX(), this.puntoCentral.getY(),
                     prop.elip.getPuntoCentral().getX(), prop.elip.getPuntoCentral().getY()-15);
+        }
+        
+    }
+    
+    public void poligonoDoble(GraphicsContext gc){
+        int escala= calEscala()+4;
+        int centroX = (int) this.puntoCentral.getX();
+        int centroY = (int) this.puntoCentral.getY();
+        
+        double angulo = 0;
+        double anguloAux;
+        int movX;
+        int movY;
+        coordenadas = new ArrayList<>();
+        
+        for (int i = 0; i < lados; i++ ) {
+            if(angulo==0){
+                coordenadas.add(new Point2D(centroX , centroY - escala));
+            }
+            else if (angulo > 0 && angulo < 90) {
+                anguloAux = gradosRadianes(angulo);
+                movX= (int) (escala * (sin(anguloAux)));
+                movY= (int) ( (escala*  (cos(anguloAux))));
+                coordenadas.add(new Point2D(centroX + movX , centroY - movY));
+            }
+            
+            else if(angulo==90){
+                coordenadas.add(new Point2D(centroX + escala , centroY));
+            }
+            
+            else if (angulo >90 && angulo < 180) {
+                anguloAux = gradosRadianes(180-angulo);
+                movX= ((int) (escala*(sin(anguloAux))));
+                movY= ((int) (escala*(cos(anguloAux))));
+                coordenadas.add(new Point2D(centroX + movX , centroY + movY));
+            }
+            
+            else if(angulo==180){
+                coordenadas.add(new Point2D(centroX , centroY + escala));
+            }
+            
+            else if (angulo >180 && angulo < 270) {
+                anguloAux = gradosRadianes(angulo - 180);
+                movX= ((int) (escala*(sin(anguloAux))));
+                movY= ((int) (escala*(cos(anguloAux))));
+                coordenadas.add(new Point2D(centroX - movX , centroY + movY));
+            }
+            
+            else if(angulo==270){
+                coordenadas.add(new Point2D(centroX - escala , centroY));
+            }
+            
+            else if(angulo> 270 && angulo <360){
+                anguloAux = gradosRadianes(360-angulo);
+                movX= abs((int) (escala*sin((anguloAux))));
+                movY= ((int) (escala*cos((anguloAux))));
+                coordenadas.add(new Point2D(centroX - movX , centroY - movY));
+            }
+            angulo+=360/lados;
+        }
+        for (int x=0;x<coordenadas.size();x++) {
+            if(x+1<coordenadas.size()){
+                gc.strokeLine(coordenadas.get(x).getX(), coordenadas.get(x).getY()
+                        ,coordenadas.get(x+1).getX(), coordenadas.get(x+1).getY());
+            }else{
+                gc.strokeLine(coordenadas.get(x).getX(), coordenadas.get(x).getY()
+                    ,coordenadas.get(0).getX(), coordenadas.get(0).getY());
+            }
+            
+        }
+
+    }
+    
+    public void dobleLinea(GraphicsContext gc){
+        if(this.lados == -2){//elipse
+            System.out.println("elipse");
+            int ancho = (calEscala()+calEscala()/2);
+            this.reCalcular();
+            gc.setStroke(Color.BLACK);
+            gc.strokeArc(coordenadas.get(0).getX() - 2, coordenadas.get(0).getY() -2 , ancho + 4 , 30 + 4 , 0, 360, ArcType.OPEN);
+        }
+        if(this.lados == -1){//rectangulo
+            int alto=20;
+            int escala=calEscala()*2;
+            gc.strokeLine(this.puntoCentral.getX()- escala/2 -2 , this.puntoCentral.getY() - alto/2 -2, this.puntoCentral.getX()+ escala/2 +2, this.puntoCentral.getY() - alto/2 -2);
+            gc.strokeLine(this.puntoCentral.getX()+ escala/2 +2, this.puntoCentral.getY() - alto/2 -2, this.puntoCentral.getX()+ escala/2 +2, this.puntoCentral.getY() + alto/2 +2);
+            gc.strokeLine(this.puntoCentral.getX()+ escala/2 +2, this.puntoCentral.getY() + alto/2 +2, this.puntoCentral.getX()- escala/2 -2, this.puntoCentral.getY() + alto/2 +2);
+            gc.strokeLine(this.puntoCentral.getX()- escala/2 -2, this.puntoCentral.getY() + alto/2 +2, this.puntoCentral.getX()- escala/2 -2, this.puntoCentral.getY() - alto/2 -2);
+
+
+        }
+        else{//figura
+            poligonoDoble(gc);
+            
+            
+        }
+        
+    }
+    public void pintarElipse(GraphicsContext gc){
+        int ancho = (calEscala()+calEscala()/2);
+        System.out.println("pintando elipse");
+        int i=0;
+        int alto=30;
+        while(i<=30){
+            
+            System.out.println("ancho = "+ ancho);
+            this.reCalcular();
+            gc.setStroke(Color.RED);
+            if (alto == 0){
+                gc.strokeArc(coordenadas.get(0).getX(), coordenadas.get(0).getY(), ancho, 0, 0, 360, ArcType.OPEN);
+            }
+            else{
+                alto-=1;
+            gc.strokeArc(coordenadas.get(0).getX(), coordenadas.get(0).getY(), ancho, alto, 0, 360, ArcType.OPEN);
+            }
+            ancho-=1;
+            i+=1;
+            
         }
         
     }
