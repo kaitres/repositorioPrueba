@@ -122,6 +122,12 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             
             for (Propiedad prop : entidadActual.getPropiedades()){
                 prop.getElip().dibujarElipse(gc, prop.getTipo());
+                if(prop.getPropiedades()!=null){
+                    for(Propiedad prop2 : prop.getPropiedades()){
+                        prop2.getElip().dibujarElipse(gc, prop2.getTipo());
+                    
+                    }
+                }
             }
                         
             entidadActual=null;
@@ -212,6 +218,16 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                 (e.getY() < prop.getElip().getCoordenadas().get(2).getY())) {
                     return true;
                 }
+                if(prop.getPropiedades()!=null){
+                    for(Propiedad prop2 : prop.getPropiedades()){
+                        if ((e.getX() > prop2.getElip().getCoordenadas().get(0).getX()) &&
+                        (e.getX() < prop2.getElip().getCoordenadas().get(1).getX()) &&
+                        (e.getY() > prop2.getElip().getCoordenadas().get(0).getY()) &&
+                        (e.getY() < prop2.getElip().getCoordenadas().get(2).getY())) {
+                            return true;
+                        }
+                    }
+                }
             }
         }
         for (Relacion entidade : diagrama.getRelaciones()) {
@@ -242,6 +258,16 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                 (e.getY() < prop.getElip().getCoordenadas().get(2).getY())) {
                     return prop.getElip();
                 }
+                if(prop.getPropiedades()!=null){
+                    for(Propiedad prop2 : prop.getPropiedades()){
+                        if ((e.getX() > prop2.getElip().getCoordenadas().get(0).getX()) &&
+                        (e.getX() < prop2.getElip().getCoordenadas().get(1).getX()) &&
+                        (e.getY() > prop2.getElip().getCoordenadas().get(0).getY()) &&
+                        (e.getY() < prop2.getElip().getCoordenadas().get(2).getY())) {
+                            return prop2.getElip();
+                        }
+                    }
+                }
             }
         }
         for (Relacion entidade : diagrama.getRelaciones()) {
@@ -263,6 +289,12 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             entidade.f(gc);
             for (Propiedad prop : entidade.getPropiedades()){
                 prop.getElip().dibujarElipse(gc, prop.getTipo());
+                if(prop.getPropiedades()!=null){
+                    for(Propiedad prop2 : prop.getPropiedades()){
+                        prop2.getElip().dibujarElipse(gc, prop2.getTipo());
+                    
+                    }
+                }
             }
             
             

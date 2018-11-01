@@ -10,5 +10,5 @@ package clases;
  * @author cmsan
  */
 public enum Tipo {
-    generico, clave, multivaluado, derivado, compuesto
+    generico, clave, multivaluado, derivado, compuesto, parcial
 }

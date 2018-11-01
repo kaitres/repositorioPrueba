@@ -121,6 +121,16 @@ public  class Figura {
         gc.setTextBaseline(VPos.CENTER);
         gc.setFont(Font.font(15));
         gc.fillText(nombre, coordenadas.get(0).getX()+ancho/2, coordenadas.get(0).getY()+15); 
+        if (tipo==Tipo.clave) {
+            gc.strokeLine(coordenadas.get(0).getX()+7, coordenadas.get(0).getY()+23,
+                    coordenadas.get(1).getX()-7, coordenadas.get(0).getY()+23);
+        }
+        if (tipo==Tipo.parcial){
+            gc.setLineDashes(5);
+            gc.strokeLine(coordenadas.get(0).getX()+7, coordenadas.get(0).getY()+23,
+                    coordenadas.get(1).getX()-7, coordenadas.get(0).getY()+23);
+            gc.setLineDashes(0);
+        }
         gc.setLineDashes(0);
         
     }
@@ -395,6 +405,13 @@ public  class Figura {
             
             gc.strokeLine(this.puntoCentral.getX(), this.puntoCentral.getY(),
                     prop.elip.getPuntoCentral().getX(), prop.elip.getPuntoCentral().getY());
+            if(prop.getPropiedades()!=null){
+                for (Propiedad prop2 : prop.getPropiedades()) {
+                    gc.strokeLine(prop.elip.getPuntoCentral().getX(), prop.elip.getPuntoCentral().getY(),
+                        prop2.elip.getPuntoCentral().getX(), prop2.elip.getPuntoCentral().getY());
+            
+                }
+            }
         }
         
     }

@@ -7,6 +7,7 @@ package controladores;
 
 import clases.Propiedad;
 import clases.Tipo;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -74,17 +75,26 @@ public class EditarPropiedadController implements Initializable {
         btEditar.setDisable(true);
         bQuitar.setDisable(true);
         ObservableList<Tipo> items = FXCollections.observableArrayList();
-        items.addAll(Tipo.clave , Tipo.compuesto , Tipo.derivado , Tipo.generico , Tipo.multivaluado);
+        items.addAll(Tipo.parcial,Tipo.clave , Tipo.compuesto , Tipo.derivado , Tipo.generico , Tipo.multivaluado);
 
         comboBox.setItems(items);
         comboBox.setValue(Tipo.generico);
     }    
 
     @FXML
-    private void aniadir(ActionEvent event) {
+    private void aniadir(ActionEvent event) throws IOException {
         if(!"".equals(propiedadField.getText())){
             
-            propiedadesObj.add(new Propiedad(propiedadField.getText(), comboBox.getValue()));
+            
+            if(comboBox.getValue()==Tipo.compuesto){
+                InterfazController.propiedadActual.clear();
+                InterfazController.propiedadActual=null;
+                AbrirVentana.CargarVista(getClass().getResource("/fxmls/EditarPropiedad.fxml"));
+                ArrayList<Propiedad> auxiliar=InterfazController.propiedadActual;
+                propiedadesObj.add(new Propiedad(propiedadField.getText(), comboBox.getValue(), auxiliar));
+            }else{
+                propiedadesObj.add(new Propiedad(propiedadField.getText(), comboBox.getValue()));
+            }
             ObservableList<Propiedad> item = FXCollections.observableArrayList();
             item.addAll(propiedadesObj);
             listaPropiedadesView.setItems(item);
@@ -115,12 +125,18 @@ public class EditarPropiedadController implements Initializable {
     }
 
     @FXML
-    private void editar(ActionEvent event) {
+    private void editar(ActionEvent event) throws IOException {
         if ((!"".equals(propiedadField.getText())) 
                 || !propiedadesObj.get(propiedadEditada).getTipo().equals(comboBox.getValue())) {
             
-            
-            propiedadesObj.set(propiedadEditada, new Propiedad(propiedadField.getText(), comboBox.getValue()));
+            if(propiedadesObj.get(propiedadEditada).getPropiedades()!=null){
+                InterfazController.propiedadActual=propiedadesObj.get(propiedadEditada).getPropiedades();
+                AbrirVentana.CargarVista(getClass().getResource("/fxmls/EditarPropiedad.fxml"));
+                propiedadesObj.set(propiedadEditada, new Propiedad(propiedadField.getText(),
+                        comboBox.getValue(),InterfazController.propiedadActual));
+            }else{
+                propiedadesObj.set(propiedadEditada, new Propiedad(propiedadField.getText(), comboBox.getValue()));
+            }
             ObservableList<Propiedad> item = FXCollections.observableArrayList();
             item.addAll(propiedadesObj);
             

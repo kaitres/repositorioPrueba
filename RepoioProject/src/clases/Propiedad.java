@@ -5,6 +5,8 @@
  */
 package clases;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author cmsan
@@ -13,6 +15,7 @@ public class Propiedad {
     String nombre;
     Tipo tipo;
     Figura elip;
+    ArrayList<Propiedad> propiedades;
 
     public Propiedad(String nombre, Tipo tipo) {
         this.nombre = nombre;
@@ -21,7 +24,15 @@ public class Propiedad {
         elip.nombre = nombre;
         elip.elipse(370, 285);
     }
-
+    
+    public Propiedad(String nombre, Tipo tipo, ArrayList<Propiedad> propiedad) {
+        this.nombre = nombre;
+        this.tipo = tipo;
+        this.propiedades = propiedad;
+        elip = new Figura();
+        elip.nombre = nombre;
+        elip.elipse(370, 285);
+    }
     public Figura getElip() {
         return elip;
     }
@@ -45,6 +56,11 @@ public class Propiedad {
     public void setTipo(Tipo tipo) {
         this.tipo = tipo;
     }
+
+    public ArrayList<Propiedad> getPropiedades() {
+        return propiedades;
+    }
+    
     @Override
     public String toString() {
         return nombre +" " +tipo;
