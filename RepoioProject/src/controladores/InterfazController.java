@@ -52,6 +52,8 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     public static int posicionDefaultX = 370;
     public static int posicionDefaultY = 285;
     
+    double canvasTX = 773;
+    double canvasTY = 522;
     
     public static String newRelacionNombre;
     public static boolean relacionValidacion;
@@ -190,6 +192,15 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                 figuraMov.setPuntoCentral(mouse);
                 gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                 reDibujarTodo();
+                
+                if (figuraMov.getCoordenadas().get(2).getX()>canvasTX){
+                    canvasTX = figuraMov.getCoordenadas().get(2).getX();
+                    canvas.setWidth(canvasTX+20);
+                }
+                if (figuraMov.getCoordenadas().get(2).getY()>canvasTY){
+                    canvasTY = figuraMov.getCoordenadas().get(2).getY();
+                    canvas.setHeight(canvasTY+20);
+                }
             }
             else{
                 if(dentroDeAlgunaFigura(mouse)){
@@ -198,6 +209,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                     figuraMov.setPuntoCentral(mouse);
                     gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                     reDibujarTodo();
+                    
                 }
             }
         }

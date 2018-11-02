@@ -99,8 +99,8 @@ public  class Figura {
         
         coordenadas.add(new Point2D(x, y));
         coordenadas.add(new Point2D(x + ancho, y));
-        coordenadas.add(new Point2D(x, y + 30));
         coordenadas.add(new Point2D(x + ancho, y + 30));
+        coordenadas.add(new Point2D(x, y + 30));
    
     }
     
