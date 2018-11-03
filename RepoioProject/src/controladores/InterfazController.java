@@ -164,6 +164,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             }   
             Relacion rec = new Relacion(newRelacionNombre);
             rec.setFigura(fig);
+            rec.setPropiedades(propiedadActual);
             diagrama.addRelacion(rec);
             fig.dibujar(gc,mostrarPuntos);
             
@@ -171,7 +172,17 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             rec.crearUniones();
             rec.dibujarUniones(gc);
             fig.pintar(gc);
+            for (Propiedad prop : rec.getPropiedades()){
+                prop.getElip().dibujarElipse(gc, prop.getTipo());
+                if(prop.getPropiedades()!=null){
+                    for(Propiedad prop2 : prop.getPropiedades()){
+                        prop2.getElip().dibujarElipse(gc, prop2.getTipo());
+                    
+                    }
+                }
+            }
         }
+        relacionActual= null;
         propiedadActual= new ArrayList<>();
         InterfazController.compRelacion.clear();
     }
@@ -250,6 +261,24 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                     (e.getY() < entidade.getFigura().getPuntoCentral().getY()+entidade.getFigura().calEscala())){
                 return true;
             }
+            for (Propiedad prop: entidade.getPropiedades()){
+                if ((e.getX() > prop.getElip().getCoordenadas().get(0).getX()) &&
+                (e.getX() < prop.getElip().getCoordenadas().get(1).getX()) &&
+                (e.getY() > prop.getElip().getCoordenadas().get(0).getY()) &&
+                (e.getY() < prop.getElip().getCoordenadas().get(2).getY())) {
+                    return true;
+                }
+                if(prop.getPropiedades()!=null){
+                    for(Propiedad prop2 : prop.getPropiedades()){
+                        if ((e.getX() > prop2.getElip().getCoordenadas().get(0).getX()) &&
+                        (e.getX() < prop2.getElip().getCoordenadas().get(1).getX()) &&
+                        (e.getY() > prop2.getElip().getCoordenadas().get(0).getY()) &&
+                        (e.getY() < prop2.getElip().getCoordenadas().get(2).getY())) {
+                            return true;
+                        }
+                    }
+                }
+            }
         }
         return false;
     }
@@ -290,6 +319,24 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                     (e.getY() < entidade.getFigura().getPuntoCentral().getY()+entidade.getFigura().calEscala())){
                 return entidade.getFigura();
             }
+            for (Propiedad prop: entidade.getPropiedades()){
+                if ((e.getX() > prop.getElip().getCoordenadas().get(0).getX()) &&
+                (e.getX() < prop.getElip().getCoordenadas().get(1).getX()) &&
+                (e.getY() > prop.getElip().getCoordenadas().get(0).getY()) &&
+                (e.getY() < prop.getElip().getCoordenadas().get(2).getY())) {
+                    return prop.getElip();
+                }
+                if(prop.getPropiedades()!=null){
+                    for(Propiedad prop2 : prop.getPropiedades()){
+                        if ((e.getX() > prop2.getElip().getCoordenadas().get(0).getX()) &&
+                        (e.getX() < prop2.getElip().getCoordenadas().get(1).getX()) &&
+                        (e.getY() > prop2.getElip().getCoordenadas().get(0).getY()) &&
+                        (e.getY() < prop2.getElip().getCoordenadas().get(2).getY())) {
+                            return prop2.getElip();
+                        }
+                    }
+                }
+            }
         }
         return new Figura();
     }
@@ -315,6 +362,16 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             relacion.getFigura().dibujar(gc,mostrarPuntos);
             relacion.crearUniones();
             relacion.dibujarUniones(gc);
+            relacion.f(gc);
+            for (Propiedad prop : relacion.getPropiedades()){
+                prop.getElip().dibujarElipse(gc, prop.getTipo());
+                if(prop.getPropiedades()!=null){
+                    for(Propiedad prop2 : prop.getPropiedades()){
+                        prop2.getElip().dibujarElipse(gc, prop2.getTipo());
+                    
+                    }
+                }
+            }
         }
         for (Entidad entidade : diagrama.getEntidades()) {
             entidade.getFigura().pintar(gc);

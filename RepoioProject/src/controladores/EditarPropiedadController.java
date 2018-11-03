@@ -129,11 +129,13 @@ public class EditarPropiedadController implements Initializable {
         if ((!"".equals(propiedadField.getText())) 
                 || !propiedadesObj.get(propiedadEditada).getTipo().equals(comboBox.getValue())) {
             
-            if(propiedadesObj.get(propiedadEditada).getPropiedades()!=null){
+            if( comboBox.getValue()==Tipo.compuesto){
                 InterfazController.propiedadActual=propiedadesObj.get(propiedadEditada).getPropiedades();
                 AbrirVentana.CargarVista(getClass().getResource("/fxmls/EditarPropiedad.fxml"));
-                propiedadesObj.set(propiedadEditada, new Propiedad(propiedadField.getText(),
-                        comboBox.getValue(),InterfazController.propiedadActual));
+                
+                    propiedadesObj.set(propiedadEditada, new Propiedad(propiedadField.getText(),
+                            comboBox.getValue(),InterfazController.propiedadActual));
+                
             }else{
                 propiedadesObj.set(propiedadEditada, new Propiedad(propiedadField.getText(), comboBox.getValue()));
             }

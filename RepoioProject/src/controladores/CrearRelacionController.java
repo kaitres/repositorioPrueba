@@ -6,6 +6,7 @@
 package controladores;
 
 import clases.Entidad;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -112,6 +113,11 @@ public class CrearRelacionController implements Initializable {
                 stage.close();
             }
         }
+    }
+
+    @FXML
+    private void haciaPropiedad(ActionEvent event) throws IOException {
+        AbrirVentana.CargarVista(getClass().getResource("/fxmls/EditarPropiedad.fxml"));
     }
     
 }

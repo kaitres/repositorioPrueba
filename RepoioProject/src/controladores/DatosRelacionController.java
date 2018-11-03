@@ -10,13 +10,16 @@ import clases.Diagrama;
 import static clases.Diagrama.entidades;
 import clases.Entidad;
 import clases.Figura;
+import clases.Propiedad;
 import clases.Relacion;
 import static controladores.InterfazController.compRelacion;
 import static controladores.InterfazController.entidadActual;
 import static controladores.InterfazController.posicionDefaultX;
 import static controladores.InterfazController.posicionDefaultY;
 import static controladores.InterfazController.relacionActual;
+import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -53,6 +56,7 @@ public class DatosRelacionController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        InterfazController.propiedadActual = (ArrayList<Propiedad>) relacionActual.getPropiedades().clone();
         alertEx.setTitle("Error");
         alertEx.setHeaderText(null);
         alertEx.setContentText("Haz excedido el limite de 20 caracteres");
@@ -67,6 +71,7 @@ public class DatosRelacionController implements Initializable {
                 alertEx.showAndWait();
             }else{
                 relacionActual.setNombre(nombre.getText());
+                relacionActual.setPropiedades((ArrayList<Propiedad>) InterfazController.propiedadActual.clone());
                 Stage stage = (Stage) canBtn.getScene().getWindow();
                 stage.close();
             } 
@@ -85,6 +90,11 @@ public class DatosRelacionController implements Initializable {
         Stage stage = (Stage) canBtn.getScene().getWindow();
         stage.close();
         
+    }
+
+    @FXML
+    private void haciaPropiedad(ActionEvent event) throws IOException {
+        AbrirVentana.CargarVista(getClass().getResource("/fxmls/EditarPropiedad.fxml"));
     }
     
     class EntidadCheck {
