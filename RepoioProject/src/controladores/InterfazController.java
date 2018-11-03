@@ -63,6 +63,8 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     public boolean elipse = false;
     public boolean figura = false;
     
+    public static boolean nivelPropiedadCompuesta=true;
+    
     public static boolean editar = false;
     public static boolean mostrarPuntos = false;
     public static Entidad entidadActual;
