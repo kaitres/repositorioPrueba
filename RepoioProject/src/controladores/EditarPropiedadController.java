@@ -75,7 +75,12 @@ public class EditarPropiedadController implements Initializable {
         btEditar.setDisable(true);
         bQuitar.setDisable(true);
         ObservableList<Tipo> items = FXCollections.observableArrayList();
-        items.addAll(Tipo.parcial,Tipo.clave , Tipo.compuesto , Tipo.derivado , Tipo.generico , Tipo.multivaluado);
+        if(InterfazController.nivelPropiedadCompuesta){
+            items.addAll(Tipo.parcial,Tipo.clave , Tipo.compuesto , Tipo.derivado , Tipo.generico , Tipo.multivaluado);
+        }else{
+            items.addAll(Tipo.parcial,Tipo.clave , Tipo.derivado , Tipo.generico , Tipo.multivaluado);
+        }
+        
 
         comboBox.setItems(items);
         comboBox.setValue(Tipo.generico);
@@ -86,7 +91,7 @@ public class EditarPropiedadController implements Initializable {
         if(!"".equals(propiedadField.getText())){
             
             
-            if(comboBox.getValue()==Tipo.compuesto && InterfazController.nivelPropiedadCompuesta){
+            if(comboBox.getValue()==Tipo.compuesto ){
                 InterfazController.nivelPropiedadCompuesta=false;
                 InterfazController.propiedadActual.clear();
                 InterfazController.propiedadActual=null;
@@ -95,11 +100,9 @@ public class EditarPropiedadController implements Initializable {
                 ArrayList<Propiedad> auxiliar=InterfazController.propiedadActual;
                 propiedadesObj.add(new Propiedad(propiedadField.getText(), comboBox.getValue(), (ArrayList<Propiedad>) auxiliar.clone()));
             }else{
-                if(InterfazController.nivelPropiedadCompuesta==false && comboBox.getValue()==Tipo.compuesto){
-                    propiedadesObj.add(new Propiedad(propiedadField.getText(), Tipo.generico));
-                }else{
+                
                     propiedadesObj.add(new Propiedad(propiedadField.getText(), comboBox.getValue()));
-                }
+                
             }
             ObservableList<Propiedad> item = FXCollections.observableArrayList();
             item.addAll(propiedadesObj);
@@ -135,7 +138,7 @@ public class EditarPropiedadController implements Initializable {
         if ((!"".equals(propiedadField.getText())) 
                 || !propiedadesObj.get(propiedadEditada).getTipo().equals(comboBox.getValue())) {
             
-            if( comboBox.getValue()==Tipo.compuesto && InterfazController.nivelPropiedadCompuesta){
+            if( comboBox.getValue()==Tipo.compuesto){
                 
                 InterfazController.nivelPropiedadCompuesta=false;
                 InterfazController.propiedadActual=propiedadesObj.get(propiedadEditada).getPropiedades();
@@ -145,11 +148,9 @@ public class EditarPropiedadController implements Initializable {
                             comboBox.getValue(), (ArrayList<Propiedad>) InterfazController.propiedadActual.clone()));
                 
             }else{
-                if(InterfazController.nivelPropiedadCompuesta==false && comboBox.getValue()==Tipo.compuesto){
-                    propiedadesObj.set(propiedadEditada, new Propiedad(propiedadField.getText(), Tipo.generico));
-                }else{
+                
                     propiedadesObj.set(propiedadEditada, new Propiedad(propiedadField.getText(), comboBox.getValue()));
-                }
+                
             }
             ObservableList<Propiedad> item = FXCollections.observableArrayList();
             item.addAll(propiedadesObj);
