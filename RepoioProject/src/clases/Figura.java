@@ -417,7 +417,7 @@ public  class Figura {
     }
     
     public void poligonoDoble(GraphicsContext gc){
-        int escala= calEscala()+4;
+        int escala= calEscala()+5;
         int centroX = (int) this.puntoCentral.getX();
         int centroY = (int) this.puntoCentral.getY();
         
@@ -425,60 +425,61 @@ public  class Figura {
         double anguloAux;
         int movX;
         int movY;
-        coordenadas = new ArrayList<>();
+        ArrayList<Point2D>coordenadasPintar = new ArrayList<>();
         
         for (int i = 0; i < lados; i++ ) {
             if(angulo==0){
-                coordenadas.add(new Point2D(centroX , centroY - escala));
+                coordenadasPintar.add(new Point2D(centroX , centroY - escala));
             }
             else if (angulo > 0 && angulo < 90) {
                 anguloAux = gradosRadianes(angulo);
                 movX= (int) (escala * (sin(anguloAux)));
                 movY= (int) ( (escala*  (cos(anguloAux))));
-                coordenadas.add(new Point2D(centroX + movX , centroY - movY));
+                coordenadasPintar.add(new Point2D(centroX + movX , centroY - movY));
             }
             
             else if(angulo==90){
-                coordenadas.add(new Point2D(centroX + escala , centroY));
+                coordenadasPintar.add(new Point2D(centroX + escala , centroY));
             }
             
             else if (angulo >90 && angulo < 180) {
                 anguloAux = gradosRadianes(180-angulo);
                 movX= ((int) (escala*(sin(anguloAux))));
                 movY= ((int) (escala*(cos(anguloAux))));
-                coordenadas.add(new Point2D(centroX + movX , centroY + movY));
+                coordenadasPintar.add(new Point2D(centroX + movX , centroY + movY));
             }
             
             else if(angulo==180){
-                coordenadas.add(new Point2D(centroX , centroY + escala));
+                coordenadasPintar.add(new Point2D(centroX , centroY + escala));
             }
             
             else if (angulo >180 && angulo < 270) {
                 anguloAux = gradosRadianes(angulo - 180);
                 movX= ((int) (escala*(sin(anguloAux))));
                 movY= ((int) (escala*(cos(anguloAux))));
-                coordenadas.add(new Point2D(centroX - movX , centroY + movY));
+                coordenadasPintar.add(new Point2D(centroX - movX , centroY + movY));
             }
             
             else if(angulo==270){
-                coordenadas.add(new Point2D(centroX - escala , centroY));
+                coordenadasPintar.add(new Point2D(centroX - escala , centroY));
             }
             
             else if(angulo> 270 && angulo <360){
                 anguloAux = gradosRadianes(360-angulo);
                 movX= abs((int) (escala*sin((anguloAux))));
                 movY= ((int) (escala*cos((anguloAux))));
-                coordenadas.add(new Point2D(centroX - movX , centroY - movY));
+                coordenadasPintar.add(new Point2D(centroX - movX , centroY - movY));
             }
             angulo+=360/lados;
         }
-        for (int x=0;x<coordenadas.size();x++) {
-            if(x+1<coordenadas.size()){
-                gc.strokeLine(coordenadas.get(x).getX(), coordenadas.get(x).getY()
-                        ,coordenadas.get(x+1).getX(), coordenadas.get(x+1).getY());
+        
+        for (int x=0;x<coordenadasPintar.size();x++) {
+            if(x+1<coordenadasPintar.size()){
+                gc.strokeLine(coordenadasPintar.get(x).getX(), coordenadasPintar.get(x).getY()
+                        ,coordenadasPintar.get(x+1).getX(), coordenadasPintar.get(x+1).getY());
             }else{
-                gc.strokeLine(coordenadas.get(x).getX(), coordenadas.get(x).getY()
-                    ,coordenadas.get(0).getX(), coordenadas.get(0).getY());
+                gc.strokeLine(coordenadasPintar.get(x).getX(), coordenadasPintar.get(x).getY()
+                    ,coordenadasPintar.get(0).getX(), coordenadasPintar.get(0).getY());
             }
             
         }
@@ -504,6 +505,7 @@ public  class Figura {
 
         }
         else{//figura
+            
             poligonoDoble(gc);
             
             

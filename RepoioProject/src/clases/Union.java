@@ -5,24 +5,27 @@
  */
 package clases;
 
+import static java.lang.Math.abs;
 import java.util.ArrayList;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.shape.ArcType;
 
 /**
  *
  * @author The.N
  */
 public class Union {
-    Figura relacion;
-    Figura entidad;
-    Point2D unionEntidad;
-    Point2D unionRelacion;
+    boolean herencia=false;
+    Figura fig1;
+    Figura fig2;
+    Point2D unionFig2;
+    Point2D unionFig1;
 
     
-    public Union(Figura relacion,Figura entidad ){
-        this.entidad = entidad;
-        this.relacion = relacion;
+    public Union(Figura fig1,Figura fig2 ){
+        this.fig2 = fig2;
+        this.fig1 = fig1;
         ConeccionEntidadRelacion();
     }
 
@@ -30,26 +33,26 @@ public class Union {
      * metodo que busca los puntos (coordenadas) mas cercanos entre una entidad y una relacion (puntos de control)
      */
     public void ConeccionEntidadRelacion(){       
-        Point2D minimoEntidad=new Point2D(0,0);
-        Point2D minimoRelacion=new Point2D(0,0);
-        for (int i = 0; i < relacion.coordenadasConeccion.size() ; i++) {
-            for (int j = 0; j < entidad.coordenadasConeccion.size(); j++) {
+        Point2D minFig2=new Point2D(0,0);
+        Point2D minFig1=new Point2D(0,0);
+        for (int i = 0; i < fig1.coordenadasConeccion.size() ; i++) {
+            for (int j = 0; j < fig2.coordenadasConeccion.size(); j++) {
                 if(j==0 && i==0){
-                    minimoRelacion = relacion.coordenadasConeccion.get(i);
-                    minimoEntidad = entidad.coordenadasConeccion.get(j) ;
+                    minFig1 = fig1.coordenadasConeccion.get(i);
+                    minFig2 = fig2.coordenadasConeccion.get(j) ;
                 }
-                if(minimoEntidad.distance(minimoRelacion) > relacion.coordenadasConeccion.get(i).distance(entidad.coordenadasConeccion.get(j) )){                 
-                   minimoRelacion = relacion.coordenadasConeccion.get(i);
-                   minimoEntidad = entidad.coordenadasConeccion.get(j);
+                if(minFig2.distance(minFig1) > fig1.coordenadasConeccion.get(i).distance(fig2.coordenadasConeccion.get(j) )){                 
+                   minFig1 = fig1.coordenadasConeccion.get(i);
+                   minFig2 = fig2.coordenadasConeccion.get(j);
                 }
             }
         }
-        relacion.coordenadasConeccion.remove(minimoRelacion);
-        //entidad.coordenadasConeccion.remove(minimoEntidad);
+        fig1.coordenadasConeccion.remove(minFig1);
+        //entidad.coordenadasConeccion.remove(minFig2);
         
-        //unionEntidad = minimoEntidad;
-        unionEntidad = entidad.getPuntoCentral();
-        unionRelacion = minimoRelacion;
+        //unionFig2 = minFig2;
+        unionFig2 = fig2.getPuntoCentral();
+        unionFig1 = minFig1;
     }
     
 
@@ -58,7 +61,52 @@ public class Union {
      * @param gc GraphicsContext del diagrama
      */
     public void dibujarUnion(GraphicsContext gc){
-        gc.strokeLine(unionRelacion.getX() , unionRelacion.getY() , unionEntidad.getX() , unionEntidad.getY());
+        herencia=false;
+        gc.strokeLine(unionFig1.getX() , unionFig1.getY() , unionFig2.getX() , unionFig2.getY());
+        if(herencia){
+            unionHerencia(gc);
+        }
         
+    }
+
+   //queda el circulo abierto a la figura1 fig1
+    public void unionHerencia(GraphicsContext gc){
+        int x1 = (int) unionFig1.getX();
+        int y1 = (int) unionFig1.getY();
+        int x2 = (int) unionFig2.getX();
+        int y2 = (int) unionFig2.getY();
+        
+        Point2D pM = unionFig1.midpoint(unionFig2);
+        Point2D aux = new Point2D(x1, y2);
+       
+        double angulo = 0;
+        
+        if( x2 > x1 && y2 < y1){
+            angulo = (unionFig2.angle(unionFig1, aux)-90);
+        }
+
+        else if( x2 < x1 && y2 < y1 ){
+            angulo = (unionFig1.angle(unionFig2, aux));
+        }
+        
+        else if(x2 < x1 && y2 == y1){
+            angulo=90;
+        }     
+        else if( x2 < x1 && y2 > y1){
+            angulo = (unionFig2.angle(unionFig1, aux)+90);
+        }
+        else if(x2 == x1 && y2 > y1){
+            angulo=180;
+        }  
+        else if( x2 > x1 && y2 > y1){
+            angulo = (unionFig1.angle(unionFig2, aux)+180);        
+        }
+        else if(x2 > x1 && y2 == y1){
+            angulo=270;
+        }  
+        if(angulo <0){
+                angulo=360 - abs(angulo);
+            }
+        gc.strokeArc(pM.getX()-15, pM.getY()-15, 30, 30, angulo, 180, ArcType.OPEN);      
     }
 }

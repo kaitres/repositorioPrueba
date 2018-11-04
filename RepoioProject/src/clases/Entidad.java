@@ -16,6 +16,7 @@ public class Entidad {
     String nombre;
     Figura figura; //puede ser Rectangulo ya que solo se puede representar de esa manera
     ArrayList<Propiedad> propiedades;
+    ArrayList<Entidad> hijos;
 
     public Entidad(String nombre) {//Lo hizo el Carlos UwU
         this.nombre = nombre;
