@@ -87,6 +87,8 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     private Button pngBtn;
     @FXML
     private Button pdfBtn;
+    @FXML
+    private Button hBtn;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -94,6 +96,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         propiedadActual = new ArrayList<>();
         compRelacion = new ArrayList<>();
         rBtn.setDisable(true);
+        hBtn.setDisable(true);
         pngBtn.setDisable(true);
         pdfBtn.setDisable(true);
         diagrama = new Diagrama();
@@ -143,10 +146,16 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             rBtn.setDisable(false);
             pngBtn.setDisable(false);
             pdfBtn.setDisable(false);
+            if (diagrama.getEntidades().size()>1) {
+                hBtn.setDisable(false);
+            }
         } else {
             rBtn.setDisable(true);
             pngBtn.setDisable(true);
             pdfBtn.setDisable(true);
+            if (diagrama.getEntidades().size()<=1) {
+                hBtn.setDisable(true);
+            }
         }
     }
     
@@ -573,6 +582,11 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                 pngBtn.setDisable(true);
                 pdfBtn.setDisable(true);
             }
+            
+            if (diagrama.getEntidades().size()<=1) {
+                hBtn.setDisable(true);
+            }
+        
         }   
     }
 
@@ -586,5 +600,11 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     private void zoomIn(ActionEvent event) {
         canvas.setScaleX(canvas.getScaleX()*2);
         canvas.setScaleY(canvas.getScaleY()*2);
+    }
+
+    @FXML
+    private void crearHerencia(ActionEvent event) throws IOException {
+        AbrirVentana.CargarVista(getClass().getResource("/fxmls/crearHerencia.fxml"));
+        
     }
 }

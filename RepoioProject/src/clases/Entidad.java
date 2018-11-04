@@ -50,5 +50,17 @@ public class Entidad {
         this.figura.tirarLinea(propiedades, gc);
         
     }
+    @Override
+    public String toString() {
+        return nombre;
+    }
+
+    public void setHijos(ArrayList<Entidad> hijos) {
+        this.hijos = hijos;
+    }
+
+    public ArrayList<Entidad> getHijos() {
+        return hijos;
+    }
     
 }
