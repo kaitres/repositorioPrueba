@@ -6,6 +6,9 @@
 package controladores;
 
 import clases.Entidad;
+import clases.Herencia;
+import clases.Diagrama;
+import clases.Figura;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -15,6 +18,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
@@ -28,7 +32,8 @@ import javafx.stage.Stage;
  * @author IP-ROUTE
  */
 public class CrearHerenciaController implements Initializable {
-
+    Alert alertName = new Alert(Alert.AlertType.INFORMATION);
+    Alert alertEmpty = new Alert(Alert.AlertType.INFORMATION);
     @FXML
     private ComboBox<Entidad> entChoice;
     @FXML
@@ -51,9 +56,14 @@ public class CrearHerenciaController implements Initializable {
         ObservableList<String> itemTip = FXCollections.observableArrayList();
         itemTip.addAll("D","S");
         tipChoice.setItems(itemTip);
-        
+        tipChoice.setValue("D");
         menuEntHijes.setDisable(true);
-        
+        alertName.setTitle("Error");
+        alertName.setHeaderText(null);
+        alertName.setContentText("Debes seleccionar una entidad");
+        alertEmpty.setTitle("Error");
+        alertEmpty.setHeaderText(null);
+        alertEmpty.setContentText("Debe tener entidades");
     
     }    
 
@@ -85,14 +95,23 @@ public class CrearHerenciaController implements Initializable {
 
     @FXML
     private void aceptar(ActionEvent event) {
-        int index = InterfazController.diagrama.getEntidades().indexOf(entChoice.getValue());
-        ArrayList<Entidad> aux = new ArrayList<>();
-        for (Entidad object : listEntView.getItems()) {
-            aux.add(object);
+        if (entChoice.getValue()==null){
+            alertName.showAndWait();
+        } else if (listEntView.getItems().isEmpty()){
+            alertEmpty.showAndWait();
+        } else{
+            int index = InterfazController.diagrama.getEntidades().indexOf(entChoice.getValue());
+            ArrayList<Entidad> aux = new ArrayList<>();
+            for (Entidad object : listEntView.getItems()) {
+                aux.add(object);
+            }
+            InterfazController.diagrama.getEntidades().get(index).setHijos(aux);
+            Figura f = new Figura();
+            f.circulo(InterfazController.posicionDefaultX, InterfazController.posicionDefaultY);
+            InterfazController.herenciaActual=new Herencia(tipChoice.getValue(),
+                    aux, f, entChoice.getValue());
+            Stage stage = (Stage) canBtn.getScene().getWindow();
+            stage.close();
         }
-        InterfazController.diagrama.getEntidades().get(index).setHijos(aux);
-        Stage stage = (Stage) canBtn.getScene().getWindow();
-        stage.close();
-        
     }
 }

@@ -7,6 +7,7 @@ package controladores;
 
 import clases.Diagrama;
 import clases.Figura;
+import clases.Herencia;
 import clases.Propiedad;
 import clases.Relacion;
 import clases.Tipo;
@@ -106,7 +107,7 @@ public class DatosEntidadController implements Initializable {
     
     @FXML
     private void eliminarEntidad(){
-    ArrayList <Relacion> eliminar = new ArrayList();
+        ArrayList <Relacion> eliminar = new ArrayList();
         for (Relacion relacion : Diagrama.relaciones) {
             if(relacion.getComponentes().contains(entidadActual)){
                 relacion.getComponentes().remove(entidadActual);
@@ -126,7 +127,20 @@ public class DatosEntidadController implements Initializable {
 
             }          
         }
-        
+        ArrayList <Herencia> eliminar2 = new ArrayList();
+        for (Herencia herencia : InterfazController.diagrama.getHerencias()) {
+            if(herencia.getEntidades().contains(entidadActual)){
+                herencia.getEntidades().remove(entidadActual);
+            }
+            if(herencia.getPadre().getNombre() == null ? entidadActual.getNombre() == null :
+                    herencia.getPadre().getNombre().equals(entidadActual.getNombre())){
+                eliminar2.add(herencia);
+            }
+            if(herencia.getEntidades().size()<1){
+                eliminar2.add(herencia);
+            }
+        }
+        Diagrama.herencias.removeAll(eliminar2);
         Diagrama.relaciones.removeAll(eliminar);
         Diagrama.entidades.remove(entidadActual);
         entidadActual=null;

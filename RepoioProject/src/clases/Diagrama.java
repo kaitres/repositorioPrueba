@@ -14,12 +14,22 @@ import java.util.ArrayList;
 public class Diagrama {
     public static ArrayList<Entidad> entidades;
     public static ArrayList<Relacion> relaciones;
+    public static ArrayList<Herencia> herencias;
 
     public Diagrama() {
         this.entidades = new ArrayList<>();
-        this.relaciones = new ArrayList<>(); 
+        this.relaciones = new ArrayList<>();
+        this.herencias = new ArrayList<>();
     }
 
+    public ArrayList<Herencia> getHerencias() {
+        return herencias;
+    }
+
+    public void setHerencias(ArrayList<Herencia> herencias) {
+        Diagrama.herencias = herencias;
+    }
+    
     public ArrayList<Entidad> getEntidades() {
         return entidades;
     }
@@ -47,5 +57,6 @@ public class Diagrama {
     public void clear(){//Lo hizo el Carlos UwU
         entidades.clear();
         relaciones.clear();
+        herencias.clear();
     }
 }

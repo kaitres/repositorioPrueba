@@ -239,8 +239,10 @@ public  class Figura {
         }else if(lados == -2){
             int ancho = calEscala()+calEscala()/2;
             elipse(centroX-ancho/2, centroY-15);
-        }else{
-            crearFigura(centroX, centroY, escala+2, lados);
+        }else if(lados== -3){
+                circulo(centroX, centroY);
+            }else{
+                crearFigura(centroX, centroY, escala+2, lados);
         }
         
     }
@@ -398,7 +400,10 @@ public  class Figura {
         gc.fillText(nombre, (int)puntoCentral.getX(), (int)puntoCentral.getY());
     }
     
-    
+    public void tirarLinea(GraphicsContext gc, Entidad e){
+         gc.strokeLine(this.puntoCentral.getX(), this.puntoCentral.getY(),
+                    e.getFigura().getPuntoCentral().getX(), e.getFigura().getPuntoCentral().getY());
+    }
     public void tirarLinea(ArrayList<Propiedad> e, GraphicsContext gc){
         gc.setStroke(Color.BLACK);
         for (Propiedad prop : e) {
@@ -415,7 +420,63 @@ public  class Figura {
         }
         
     }
-    
+
+    /**
+     *
+     * @param a
+     * @param gc
+     */
+    public void tirarLinea(GraphicsContext gc,ArrayList<Entidad> a){
+        gc.setStroke(Color.BLACK);
+        int x1 = 0;
+        int y1 = 0;
+        int x2 = 0;
+        int y2 = 0;
+        Point2D pM ;
+        Point2D aux ;
+        for (int i = 0; i < a.size(); i++) {
+            gc.strokeLine(this.puntoCentral.getX(), this.puntoCentral.getY(),
+                    a.get(i).getFigura().getPuntoCentral().getX(), a.get(i).getFigura().getPuntoCentral().getY());
+            
+                x1 = (int) this.puntoCentral.getX();
+                y1 = (int) this.puntoCentral.getY();
+                x2 = (int) a.get(i).figura.puntoCentral.getX();
+                y2 = (int) a.get(i).figura.puntoCentral.getY();
+                pM = this.puntoCentral.midpoint(a.get(i).figura.puntoCentral);
+                aux = new Point2D(x1, y2);
+                double angulo = 0;
+
+                if( x2 > x1 && y2 < y1){
+                    angulo = (a.get(i).figura.puntoCentral.angle(this.puntoCentral, aux)-90);
+                }
+
+                else if( x2 < x1 && y2 < y1 ){
+                    angulo = (this.puntoCentral.angle(a.get(i).figura.puntoCentral, aux));
+                }
+
+                else if(x2 < x1 && y2 == y1){
+                    angulo=90;
+                }     
+                else if( x2 < x1 && y2 > y1){
+                    angulo = (a.get(i).figura.puntoCentral.angle(this.puntoCentral, aux)+90);
+                }
+                else if(x2 == x1 && y2 > y1){
+                    angulo=180;
+                }  
+                else if( x2 > x1 && y2 > y1){
+                    angulo = (this.puntoCentral.angle(a.get(i).figura.puntoCentral, aux)+180);        
+                }
+                else if(x2 > x1 && y2 == y1){
+                    angulo=270;
+                }  
+                if(angulo <0){
+                        angulo=360 - abs(angulo);
+                    }
+                gc.strokeArc(pM.getX()-15, pM.getY()-15, 30, 30, angulo, 180, ArcType.OPEN);
+            
+        }
+       
+    }
     public void poligonoDoble(GraphicsContext gc){
         int escala= calEscala()+5;
         int centroX = (int) this.puntoCentral.getX();
@@ -514,31 +575,40 @@ public  class Figura {
     }
     public void pintarElipse(GraphicsContext gc){
         int ancho = (calEscala()+calEscala()/2);
-        
-        int i=0;
         int alto=30;
         this.reCalcular();
         gc.setStroke(Color.WHITE);
         for (int j = 1; j < 29; j++) {
             gc.strokeArc(coordenadas.get(0).getX()+j, coordenadas.get(0).getY()+j, ancho-2*j, alto-2*j, 0, 360, ArcType.OPEN);
         }
-        //while(i<=30){
-            
-            /**System.out.println("ancho = "+ ancho);
-            
-            gc.setStroke(Color.RED);
-            if (alto == 0){
-                gc.strokeArc(coordenadas.get(0).getX(), coordenadas.get(0).getY(), ancho, 0, 0, 360, ArcType.OPEN);
-            }
-            else{
-                alto-=1;
-            gc.strokeArc(coordenadas.get(0).getX(), coordenadas.get(0).getY(), ancho-2*i, alto, 0, 360, ArcType.OPEN);
-            }
-            ancho-=2;
-            i+=1;
-            * */
-            
-        //}
+        
+        
+    }
+    public void circulo(int x, int y){
+        this.lados=-3;
+        this.puntoCentral= new Point2D(x, y);
+        int largo = calEscala();
+        coordenadas.clear();
+        coordenadas.add(new Point2D(puntoCentral.getX()-largo, puntoCentral.getY()-largo));
+        coordenadas.add(new Point2D(puntoCentral.getX()+largo, puntoCentral.getY()-largo));
+        coordenadas.add(new Point2D(puntoCentral.getX()+largo, puntoCentral.getY()+largo));
+        coordenadas.add(new Point2D(puntoCentral.getX()-largo, puntoCentral.getY()+largo));
+        
+    }
+    public void dibujarCirculo(GraphicsContext gc){
+        reCalcular();
+        int largo = (int) (coordenadas.get(1).getX()-coordenadas.get(0).getX());
+        gc.strokeArc(coordenadas.get(0).getX(), coordenadas.get(0).getY(), largo, largo, 0, 360, ArcType.OPEN);
+        gc.setStroke(Color.WHITE);
+        for (int j = 1; j < largo-1; j++) {
+            gc.strokeArc(coordenadas.get(0).getX()+j, coordenadas.get(0).getY()+j, largo-2*j, largo-2*j, 0, 360, ArcType.OPEN);
+        }
+        gc.setStroke(Color.BLACK);
+        gc.setFill(Color.BLACK);
+        gc.setTextAlign(TextAlignment.CENTER);
+        gc.setTextBaseline(VPos.CENTER);
+        gc.setFont(Font.font(15));
+        gc.fillText(nombre, (int)puntoCentral.getX(), (int)puntoCentral.getY());
         
     }
 }

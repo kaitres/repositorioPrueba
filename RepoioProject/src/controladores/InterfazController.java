@@ -67,8 +67,11 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     
     public static boolean editar = false;
     public static boolean mostrarPuntos = false;
+    
     public static Entidad entidadActual;
     public static Relacion relacionActual;
+    public static Herencia herenciaActual;
+
     public static ArrayList<Propiedad> propiedadActual; 
     
  
@@ -146,16 +149,17 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             rBtn.setDisable(false);
             pngBtn.setDisable(false);
             pdfBtn.setDisable(false);
-            if (diagrama.getEntidades().size()>1) {
+            if (diagrama.getEntidades().size()>=2) {
                 hBtn.setDisable(false);
+            }else{
+                hBtn.setDisable(true);
             }
         } else {
             rBtn.setDisable(true);
             pngBtn.setDisable(true);
             pdfBtn.setDisable(true);
-            if (diagrama.getEntidades().size()<=1) {
-                hBtn.setDisable(true);
-            }
+            hBtn.setDisable(true);
+            
         }
     }
     
@@ -291,6 +295,14 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                 }
             }
         }
+        for (Herencia herencia : diagrama.getHerencias()) {
+            if ((e.getX() > herencia.getFigura().getPuntoCentral().getX()-herencia.getFigura().calEscala()) &&
+                    (e.getX() < herencia.getFigura().getPuntoCentral().getX()+herencia.getFigura().calEscala()) &&
+                    (e.getY() > herencia.getFigura().getPuntoCentral().getY()-herencia.getFigura().calEscala()) &&
+                    (e.getY() < herencia.getFigura().getPuntoCentral().getY()+herencia.getFigura().calEscala())){
+                return true;
+            }
+        }
         return false;
     }
   
@@ -349,6 +361,14 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                 }
             }
         }
+        for (Herencia herencia : diagrama.getHerencias()) {
+            if ((e.getX() > herencia.getFigura().getPuntoCentral().getX()-herencia.getFigura().calEscala()) &&
+                    (e.getX() < herencia.getFigura().getPuntoCentral().getX()+herencia.getFigura().calEscala()) &&
+                    (e.getY() > herencia.getFigura().getPuntoCentral().getY()-herencia.getFigura().calEscala()) &&
+                    (e.getY() < herencia.getFigura().getPuntoCentral().getY()+herencia.getFigura().calEscala())){
+                return herencia.getFigura();
+            }
+        }
         return new Figura();
     }
     
@@ -383,6 +403,10 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                     }
                 }
             }
+        }
+        for (Herencia herencia : diagrama.getHerencias()) {
+            herencia.f(gc);
+            herencia.getFigura().dibujarCirculo(gc);
         }
         for (Entidad entidade : diagrama.getEntidades()) {
             entidade.getFigura().pintar(gc);
@@ -581,9 +605,10 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                 rBtn.setDisable(true);
                 pngBtn.setDisable(true);
                 pdfBtn.setDisable(true);
+                hBtn.setDisable(true);
             }
             
-            if (diagrama.getEntidades().size()<=1) {
+            if (diagrama.getEntidades().size()<2) {
                 hBtn.setDisable(true);
             }
         
@@ -605,6 +630,10 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     @FXML
     private void crearHerencia(ActionEvent event) throws IOException {
         AbrirVentana.CargarVista(getClass().getResource("/fxmls/crearHerencia.fxml"));
+        InterfazController.diagrama.getHerencias().add(herenciaActual);
+        herenciaActual.f(gc);
+        herenciaActual.getFigura().dibujarCirculo(gc);
         
+        herenciaActual=null;
     }
 }

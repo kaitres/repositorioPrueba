@@ -63,50 +63,9 @@ public class Union {
     public void dibujarUnion(GraphicsContext gc){
         herencia=false;
         gc.strokeLine(unionFig1.getX() , unionFig1.getY() , unionFig2.getX() , unionFig2.getY());
-        if(herencia){
-            unionHerencia(gc);
-        }
+        
         
     }
 
-   //queda el circulo abierto a la figura1 fig1
-    public void unionHerencia(GraphicsContext gc){
-        int x1 = (int) unionFig1.getX();
-        int y1 = (int) unionFig1.getY();
-        int x2 = (int) unionFig2.getX();
-        int y2 = (int) unionFig2.getY();
-        
-        Point2D pM = unionFig1.midpoint(unionFig2);
-        Point2D aux = new Point2D(x1, y2);
-       
-        double angulo = 0;
-        
-        if( x2 > x1 && y2 < y1){
-            angulo = (unionFig2.angle(unionFig1, aux)-90);
-        }
-
-        else if( x2 < x1 && y2 < y1 ){
-            angulo = (unionFig1.angle(unionFig2, aux));
-        }
-        
-        else if(x2 < x1 && y2 == y1){
-            angulo=90;
-        }     
-        else if( x2 < x1 && y2 > y1){
-            angulo = (unionFig2.angle(unionFig1, aux)+90);
-        }
-        else if(x2 == x1 && y2 > y1){
-            angulo=180;
-        }  
-        else if( x2 > x1 && y2 > y1){
-            angulo = (unionFig1.angle(unionFig2, aux)+180);        
-        }
-        else if(x2 > x1 && y2 == y1){
-            angulo=270;
-        }  
-        if(angulo <0){
-                angulo=360 - abs(angulo);
-            }
-        gc.strokeArc(pM.getX()-15, pM.getY()-15, 30, 30, angulo, 180, ArcType.OPEN);      
-    }
+   
 }
