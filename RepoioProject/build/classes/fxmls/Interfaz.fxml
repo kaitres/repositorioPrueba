@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -12,7 +14,14 @@
 
 <AnchorPane id="AnchorPane" prefHeight="570.0" prefWidth="900.0" style="-fx-background-color: #e6e9ed;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.InterfazController">
    <children>
-      <Canvas fx:id="canvas" height="525.0" layoutX="124.0" layoutY="45.0" onMouseClicked="#modificar" onMouseDragged="#movimiento" onMouseReleased="#ratonSinPresionar" width="775.0" />
+      <ScrollPane layoutX="124.0" layoutY="45.0" prefHeight="525.0" prefWidth="775.0">
+         <content>
+            <Canvas fx:id="canvas" height="522.0" onMouseClicked="#modificar" onMouseDragged="#movimiento" onMouseReleased="#ratonSinPresionar" width="773.0">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Canvas>
+         </content>
+      </ScrollPane>
       <Pane layoutY="37.0" prefHeight="535.0" prefWidth="124.0" style="-fx-background-color: #aab2bd;">
          <children>
             <Text layoutX="37.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Crear">
@@ -32,6 +41,25 @@
                   </ImageView>
                </graphic></Button>
             <CheckBox layoutX="9.0" layoutY="248.0" mnemonicParsing="false" onAction="#editar" text="Editar" />
+            <Button layoutX="24.0" layoutY="426.0" mnemonicParsing="false" onAction="#zoomOut" prefHeight="35.0" prefWidth="37.0">
+               <graphic>
+                  <ImageView fitHeight="24.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/zoom-out.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="65.0" layoutY="426.0" mnemonicParsing="false" onAction="#zoomIn" prefHeight="35.0" prefWidth="37.0">
+               <graphic>
+                  <ImageView fitHeight="24.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/zoom-in.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="hBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="25.0" layoutY="182.0" mnemonicParsing="false" onAction="#crearHerencia" prefHeight="30.0" prefWidth="68.0" styleClass="boton" stylesheets="@Estilo.css" text="Herencia" textAlignment="CENTER" />
          </children>
       </Pane>
       <Pane layoutY="-2.0" prefHeight="46.0" prefWidth="902.0" style="-fx-background-color: #aab2bd;">

@@ -38,57 +38,20 @@ public  class Figura {
         this.coordenadas = coordenadas;
     }
     
-    /**
-     * metodo que crear los circulos de los puntos de control, a partir de la lista con las cooredenadas de la figura
-     * @param gc GraphicsContext del diagrama
-     */
-    public void dibujarPuntoControl(GraphicsContext gc){
-        Figura circulo = new Figura();
-        for (Point2D coordenada : coordenadas) {
-            circulo.crearFigura((int)(coordenada.getX()),(int)(coordenada.getY()), 2, 20);
-            circulo.dibujarPoligono(gc,true);
-        }
+    public void setPuntoCentral(Point2D puntoCentral) {
+        this.puntoCentral = puntoCentral;
     }
-    /**
-     * metodo que dibuja el poligono correspndiente en la lista de coordenas del objeto de clase Figura
-     * tambien dibuja los puntos de control que coinciden con los vertices de las figuras
-     * @param gc GraphicsContext donde se trabaja el diagrama del programa
-     */
-    public void dibujar(GraphicsContext gc, boolean dibujarPuntos){
-        dibujarPoligono(gc,false);
-        if (dibujarPuntos) {
-          dibujarPuntoControl(gc);  
-        }
-        //dobleLinea(gc);
-        
-        
+
+    public String getNombre() {
+        return nombre;
     }
-    
-    /**
-     * metodo que conecta graficamente los puntos de la lista de coordenas de la figura
-     * @param gc GraphicsContext del diagrama
-     * @param circulo booelan con el cual se puede identificar si se esta dibujando un circulo para no recalcular el tamaño de la figura
-     */
-    public void dibujarPoligono(GraphicsContext gc ,boolean circulo ){
-        if(!circulo){
-            this.reCalcular();
-        }else{
-            gc.setStroke(Color.RED);
-        }
-        
-        for (int x=0;x<coordenadas.size();x++) {
-            if(x+1<coordenadas.size()){
-                gc.strokeLine(coordenadas.get(x).getX(), coordenadas.get(x).getY()
-                        ,coordenadas.get(x+1).getX(), coordenadas.get(x+1).getY());
-            }else{
-                gc.strokeLine(coordenadas.get(x).getX(), coordenadas.get(x).getY()
-                    ,coordenadas.get(0).getX(), coordenadas.get(0).getY());
-            }
-            
-        }
-        gc.setStroke(Color.BLACK);
-        
-               
+
+    public Point2D getPuntoCentral() {
+        return puntoCentral;
+    }
+
+    public int getLados() {
+        return lados;
     }
     
     public void elipse (int x, int y){
@@ -102,39 +65,18 @@ public  class Figura {
         coordenadas.add(new Point2D(x + ancho, y + 30));
         coordenadas.add(new Point2D(x, y + 30));
    
-    }
-    
-    public void dibujarElipse(GraphicsContext gc, Tipo tipo){
-        if(tipo==Tipo.multivaluado){
-            dobleLinea(gc); //revisar pene
-        }
-        if(tipo==Tipo.derivado){
-            gc.setLineDashes(5);
-        }
-        pintarElipse(gc);
-        int ancho = calEscala()+calEscala()/2;
-        this.reCalcular();
-        gc.setStroke(Color.BLACK);
-        
-        gc.strokeArc(coordenadas.get(0).getX(), coordenadas.get(0).getY(), ancho, 30, 0, 360, ArcType.OPEN);
-        gc.setTextAlign(TextAlignment.CENTER);
-        gc.setTextBaseline(VPos.CENTER);
-        gc.setFont(Font.font(15));
-        gc.fillText(nombre, coordenadas.get(0).getX()+ancho/2, coordenadas.get(0).getY()+15); 
-        if (tipo==Tipo.clave) {
-            gc.strokeLine(coordenadas.get(0).getX()+7, coordenadas.get(0).getY()+23,
-                    coordenadas.get(1).getX()-7, coordenadas.get(0).getY()+23);
-        }
-        if (tipo==Tipo.parcial){
-            gc.setLineDashes(5);
-            gc.strokeLine(coordenadas.get(0).getX()+7, coordenadas.get(0).getY()+23,
-                    coordenadas.get(1).getX()-7, coordenadas.get(0).getY()+23);
-            gc.setLineDashes(0);
-        }
-        gc.setLineDashes(0);
+    }    
+    public void circulo(int x, int y){
+        this.lados=-3;
+        this.puntoCentral= new Point2D(x, y);
+        int largo = calEscala();
+        coordenadas.clear();
+        coordenadas.add(new Point2D(puntoCentral.getX()-largo, puntoCentral.getY()-largo));
+        coordenadas.add(new Point2D(puntoCentral.getX()+largo, puntoCentral.getY()-largo));
+        coordenadas.add(new Point2D(puntoCentral.getX()+largo, puntoCentral.getY()+largo));
+        coordenadas.add(new Point2D(puntoCentral.getX()-largo, puntoCentral.getY()+largo));
         
     }
-    
     /**
      * metodo que obtien las cooredenas de los vertices correspondientes del rectanguo (entidad) 
      * @param centroX int con la coordenada (eje x) del centro del rectangulo deseeado
@@ -153,7 +95,6 @@ public  class Figura {
         this.coordenadas.add(new Point2D(centroX-escala/2, centroY+alto/2));
         coordenadasConeccion=(ArrayList<Point2D>) coordenadas.clone();
     }
-    
     /**
      * metodo que obtien las cooredenas de los vertices correspondientes de la figura deseada (relacion)
      * @param centroX int con la coordenada (eje x) del centro de la figura deseeada
@@ -225,8 +166,7 @@ public  class Figura {
      */
     public double gradosRadianes(double grados){
         return (grados*Math.PI)/180;
-    }
-    
+    }  
     /**
      * metodo que llama a calEscala() con lo cual crear las figuras con la escala perfecta segun lo que se encuentre en su interior
      */
@@ -246,23 +186,6 @@ public  class Figura {
         }
         
     }
-
-    public void setPuntoCentral(Point2D puntoCentral) {
-        this.puntoCentral = puntoCentral;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public Point2D getPuntoCentral() {
-        return puntoCentral;
-    }
-
-    public int getLados() {
-        return lados;
-    }
-
     /**
      * metodo que encuentra la escala de la figura a partir del texto que esta tendra dentro de su interior
      * @return int con la escala calculada
@@ -274,6 +197,7 @@ public  class Figura {
         }
         return (int)text.getLayoutBounds().getWidth();
     }
+    
     
     public int[] getXP(int lados){
         int[] aux = null;
@@ -364,6 +288,104 @@ public  class Figura {
         return aux;
     }
     
+    /**
+     * metodo que crear los circulos de los puntos de control, a partir de la lista con las cooredenadas de la figura
+     * @param gc GraphicsContext del diagrama
+     */
+    public void dibujarPuntoControl(GraphicsContext gc){
+        Figura circulo = new Figura();
+        for (Point2D coordenada : coordenadas) {
+            circulo.crearFigura((int)(coordenada.getX()),(int)(coordenada.getY()), 2, 20);
+            circulo.dibujarPoligono(gc,true);
+        }
+    }
+    /**
+     * metodo que dibuja el poligono correspndiente en la lista de coordenas del objeto de clase Figura
+     * tambien dibuja los puntos de control que coinciden con los vertices de las figuras
+     * @param gc GraphicsContext donde se trabaja el diagrama del programa
+     */
+    public void dibujar(GraphicsContext gc, boolean dibujarPuntos){
+        dibujarPoligono(gc,false);
+        if (dibujarPuntos) {
+          dibujarPuntoControl(gc);  
+        }
+        //dobleLinea(gc);
+        
+        
+    }
+    /**
+     * metodo que conecta graficamente los puntos de la lista de coordenas de la figura
+     * @param gc GraphicsContext del diagrama
+     * @param circulo booelan con el cual se puede identificar si se esta dibujando un circulo para no recalcular el tamaño de la figura
+     */
+    public void dibujarPoligono(GraphicsContext gc ,boolean circulo ){
+        if(!circulo){
+            this.reCalcular();
+        }else{
+            gc.setStroke(Color.RED);
+        }
+        
+        for (int x=0;x<coordenadas.size();x++) {
+            if(x+1<coordenadas.size()){
+                gc.strokeLine(coordenadas.get(x).getX(), coordenadas.get(x).getY()
+                        ,coordenadas.get(x+1).getX(), coordenadas.get(x+1).getY());
+            }else{
+                gc.strokeLine(coordenadas.get(x).getX(), coordenadas.get(x).getY()
+                    ,coordenadas.get(0).getX(), coordenadas.get(0).getY());
+            }
+            
+        }
+        gc.setStroke(Color.BLACK);
+        
+               
+    }
+    public void dibujarElipse(GraphicsContext gc, Tipo tipo){
+        if(tipo==Tipo.multivaluado){
+            dobleLinea(gc); //revisar pene
+        }
+        if(tipo==Tipo.derivado){
+            gc.setLineDashes(5);
+        }
+        pintarElipse(gc);
+        int ancho = calEscala()+calEscala()/2;
+        this.reCalcular();
+        gc.setStroke(Color.BLACK);
+        
+        gc.strokeArc(coordenadas.get(0).getX(), coordenadas.get(0).getY(), ancho, 30, 0, 360, ArcType.OPEN);
+        gc.setTextAlign(TextAlignment.CENTER);
+        gc.setTextBaseline(VPos.CENTER);
+        gc.setFont(Font.font(15));
+        gc.fillText(nombre, coordenadas.get(0).getX()+ancho/2, coordenadas.get(0).getY()+15); 
+        if (tipo==Tipo.clave) {
+            gc.strokeLine(coordenadas.get(0).getX()+7, coordenadas.get(0).getY()+23,
+                    coordenadas.get(1).getX()-7, coordenadas.get(0).getY()+23);
+        }
+        if (tipo==Tipo.parcial){
+            gc.setLineDashes(5);
+            gc.strokeLine(coordenadas.get(0).getX()+7, coordenadas.get(0).getY()+23,
+                    coordenadas.get(1).getX()-7, coordenadas.get(0).getY()+23);
+            gc.setLineDashes(0);
+        }
+        gc.setLineDashes(0);
+        
+    }
+    public void dibujarCirculo(GraphicsContext gc){
+        reCalcular();
+        int largo = (int) (coordenadas.get(1).getX()-coordenadas.get(0).getX());
+        gc.strokeArc(coordenadas.get(0).getX(), coordenadas.get(0).getY(), largo, largo, 0, 360, ArcType.OPEN);
+        gc.setStroke(Color.WHITE);
+        for (int j = 1; j < largo-1; j++) {
+            gc.strokeArc(coordenadas.get(0).getX()+j, coordenadas.get(0).getY()+j, largo-2*j, largo-2*j, 0, 360, ArcType.OPEN);
+        }
+        gc.setStroke(Color.BLACK);
+        //gc.setFill(Color.BLACK);
+        gc.setTextAlign(TextAlignment.CENTER);
+        gc.setTextBaseline(VPos.CENTER);
+        gc.setFont(Font.font(15));
+        gc.fillText(nombre, (int)puntoCentral.getX(), (int)puntoCentral.getY());
+        
+    }
+    
     public void pintar(GraphicsContext gc){
         gc.setStroke(Color.WHITE);
         int[] xp = getXP(this.lados);
@@ -399,6 +421,15 @@ public  class Figura {
         gc.setFont(Font.font(15));
         gc.fillText(nombre, (int)puntoCentral.getX(), (int)puntoCentral.getY());
     }
+    public void pintarElipse(GraphicsContext gc){
+        int ancho = (calEscala()+calEscala()/2);
+        int alto=30;
+        this.reCalcular();
+        gc.setStroke(Color.WHITE);
+        for (int j = 1; j < 29; j++) {
+            gc.strokeArc(coordenadas.get(0).getX()+j, coordenadas.get(0).getY()+j, ancho-2*j, alto-2*j, 0, 360, ArcType.OPEN);
+        }
+    }
     
     public void tirarLinea(GraphicsContext gc, Entidad e){
          gc.strokeLine(this.puntoCentral.getX(), this.puntoCentral.getY(),
@@ -419,15 +450,9 @@ public  class Figura {
             }
         }
         
-    }
-
-    /**
-     *
-     * @param a
-     * @param gc
-     */
+    }  
     public void tirarLinea(GraphicsContext gc,ArrayList<Entidad> a){
-        gc.setStroke(Color.BLACK);
+        //gc.setStroke(Color.BLACK);
         int x1 = 0;
         int y1 = 0;
         int x2 = 0;
@@ -477,6 +502,10 @@ public  class Figura {
         }
        
     }
+    public void tirarLinea(GraphicsContext gc, Union u){
+        gc.strokeLine(u.getUnionFig1().getX() , u.getUnionFig1().getY() , u.getUnionFig2().getX() , u.getUnionFig2().getY());
+    }
+    
     public void poligonoDoble(GraphicsContext gc){
         int escala= calEscala()+5;
         int centroX = (int) this.puntoCentral.getX();
@@ -545,8 +574,7 @@ public  class Figura {
             
         }
 
-    }
-    
+    }   
     public void dobleLinea(GraphicsContext gc){
         if(this.lados == -2){//elipse
             
@@ -573,45 +601,4 @@ public  class Figura {
         }
         
     }
-    public void pintarElipse(GraphicsContext gc){
-        int ancho = (calEscala()+calEscala()/2);
-        int alto=30;
-        this.reCalcular();
-        gc.setStroke(Color.WHITE);
-        for (int j = 1; j < 29; j++) {
-            gc.strokeArc(coordenadas.get(0).getX()+j, coordenadas.get(0).getY()+j, ancho-2*j, alto-2*j, 0, 360, ArcType.OPEN);
-        }
-        
-        
-    }
-    public void circulo(int x, int y){
-        this.lados=-3;
-        this.puntoCentral= new Point2D(x, y);
-        int largo = calEscala();
-        coordenadas.clear();
-        coordenadas.add(new Point2D(puntoCentral.getX()-largo, puntoCentral.getY()-largo));
-        coordenadas.add(new Point2D(puntoCentral.getX()+largo, puntoCentral.getY()-largo));
-        coordenadas.add(new Point2D(puntoCentral.getX()+largo, puntoCentral.getY()+largo));
-        coordenadas.add(new Point2D(puntoCentral.getX()-largo, puntoCentral.getY()+largo));
-        
-    }
-    public void dibujarCirculo(GraphicsContext gc){
-        reCalcular();
-        int largo = (int) (coordenadas.get(1).getX()-coordenadas.get(0).getX());
-        gc.strokeArc(coordenadas.get(0).getX(), coordenadas.get(0).getY(), largo, largo, 0, 360, ArcType.OPEN);
-        gc.setStroke(Color.WHITE);
-        for (int j = 1; j < largo-1; j++) {
-            gc.strokeArc(coordenadas.get(0).getX()+j, coordenadas.get(0).getY()+j, largo-2*j, largo-2*j, 0, 360, ArcType.OPEN);
-        }
-        gc.setStroke(Color.BLACK);
-        gc.setFill(Color.BLACK);
-        gc.setTextAlign(TextAlignment.CENTER);
-        gc.setTextBaseline(VPos.CENTER);
-        gc.setFont(Font.font(15));
-        gc.fillText(nombre, (int)puntoCentral.getX(), (int)puntoCentral.getY());
-        
-    }
 }
-    
-    
-

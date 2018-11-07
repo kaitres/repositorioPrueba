@@ -18,15 +18,6 @@ public class Relacion {
     ArrayList<Entidad> componentes = new ArrayList();
     ArrayList<Union> uniones = new ArrayList();
     ArrayList<Propiedad> propiedades = new ArrayList<>();
-    /**
-     * metodo que dibuja todas las uniones del objeto Relacion 
-     * @param gc GraphicsContext del diagrama
-     */
-    public void dibujarUniones(GraphicsContext gc){
-        for (Union union : uniones) {
-            union.dibujarUnion(gc);
-        }
-    }
 
     public ArrayList<Union> getUniones() {
         return uniones;
@@ -106,7 +97,9 @@ public class Relacion {
     }
     public void f(GraphicsContext gc){
         this.figura.tirarLinea(propiedades, gc);
-        
+        for (Union u: uniones){
+            this.figura.tirarLinea(gc, u);
+        }
     }
     
 }

@@ -16,11 +16,18 @@ import javafx.scene.shape.ArcType;
  * @author The.N
  */
 public class Union {
-    boolean herencia=false;
     Figura fig1;
     Figura fig2;
     Point2D unionFig2;
     Point2D unionFig1;
+
+    public Point2D getUnionFig2() {
+        return unionFig2;
+    }
+
+    public Point2D getUnionFig1() {
+        return unionFig1;
+    }
 
     
     public Union(Figura fig1,Figura fig2 ){
@@ -54,18 +61,4 @@ public class Union {
         unionFig2 = fig2.getPuntoCentral();
         unionFig1 = minFig1;
     }
-    
-
-    /**
-     * dibuja graficamente la union de dos puntos, lo cual corresponde a la union de la entidad y relacion
-     * @param gc GraphicsContext del diagrama
-     */
-    public void dibujarUnion(GraphicsContext gc){
-        herencia=false;
-        gc.strokeLine(unionFig1.getX() , unionFig1.getY() , unionFig2.getX() , unionFig2.getY());
-        
-        
-    }
-
-   
 }

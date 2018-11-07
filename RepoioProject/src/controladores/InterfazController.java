@@ -185,7 +185,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             
             rec.setComponentes(compRelacion);
             rec.crearUniones();
-            rec.dibujarUniones(gc);
+            rec.f(gc);
             fig.pintar(gc);
             for (Propiedad prop : rec.getPropiedades()){
                 prop.getElip().dibujarElipse(gc, prop.getTipo());
@@ -218,14 +218,9 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                 figuraMov.setPuntoCentral(mouse);
                 gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                 reDibujarTodo();
-                
-                if (figuraMov.getCoordenadas().get(2).getX()>canvasTX){
-                    canvasTX = figuraMov.getCoordenadas().get(2).getX();
-                    canvas.setWidth(canvasTX+20);
-                }
-                if (figuraMov.getCoordenadas().get(2).getY()>canvasTY){
-                    canvasTY = figuraMov.getCoordenadas().get(2).getY();
-                    canvas.setHeight(canvasTY+20);
+                if (getMayores().getX()>770 && getMayores().getY()>520){
+                    canvas.setWidth(getMayores().getX());
+                    canvas.setHeight(getMayores().getY());
                 }
             }
             else{
@@ -392,7 +387,6 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         for (Relacion relacion : diagrama.getRelaciones()) {
             relacion.getFigura().dibujar(gc,mostrarPuntos);
             relacion.crearUniones();
-            relacion.dibujarUniones(gc);
             relacion.f(gc);
             for (Propiedad prop : relacion.getPropiedades()){
                 prop.getElip().dibujarElipse(gc, prop.getTipo());
@@ -435,51 +429,83 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         recortar(file);        
         }
     
-    // importante agregar propiedades
     public void puntosCorte(){
         puntosDeCorte.clear();
-        
-        int XMenor = (int) diagrama.getEntidades().get(0).getFigura().getCoordenadas().get(0).getX();
-        int XMayor = (int) diagrama.getEntidades().get(0).getFigura().getCoordenadas().get(0).getX();
-        int YMenor = (int) diagrama.getEntidades().get(0).getFigura().getCoordenadas().get(0).getY();
-        int YMayor = (int) diagrama.getEntidades().get(0).getFigura().getCoordenadas().get(0).getY();
-        
+        puntosDeCorte.add(getMenores());
+        puntosDeCorte.add(getMayores());
+    }
+    
+    private Point2D getMayores(){
+        double XMayor = diagrama.getEntidades().get(0).getFigura().getCoordenadas().get(0).getX();
+        double YMayor = diagrama.getEntidades().get(0).getFigura().getCoordenadas().get(0).getY();;
         for (Entidad entidad : diagrama.getEntidades()) {
             for (Point2D cord : entidad.getFigura().getCoordenadas()) {
-                if(cord.getX()< XMenor){
-                    XMenor = (int)cord.getX();
+                if(cord.getX()> XMayor){
+                    XMayor = cord.getX();
                 }
+                if(cord.getY()> YMayor){
+                    YMayor = cord.getY();
+                }  
+            }
+            for (Propiedad prop : entidad.getPropiedades()){
+                for (Point2D cord : prop.getElip().getCoordenadas()) {
+                    if(cord.getX()> XMayor){
+                        XMayor = cord.getX();
+                    }
+                    if(cord.getY()> YMayor){
+                        YMayor = cord.getY();
+                    }  
+                }
+            }
+        }
+        for (Relacion relacion : diagrama.getRelaciones()) {
+            for (Point2D cord : relacion.getFigura().getCoordenadas()) {
                 if(cord.getX()> XMayor){
                     XMayor = (int)cord.getX();
-                }
-                if(cord.getY()< YMenor){
-                    YMenor = (int)cord.getY();
                 }
                 if(cord.getY()> YMayor){
                     YMayor = (int)cord.getY();
                 }
-                
+            }
+        }
+        return new Point2D (XMayor+5, YMayor+5);
+    }
+    
+    private Point2D getMenores(){
+        double XMenor = diagrama.getEntidades().get(0).getFigura().getCoordenadas().get(0).getX();
+        double YMenor = diagrama.getEntidades().get(0).getFigura().getCoordenadas().get(0).getY();
+        
+        for (Entidad entidad : diagrama.getEntidades()) {
+            for (Point2D cord : entidad.getFigura().getCoordenadas()) {
+                if(cord.getX()< XMenor){
+                    XMenor = cord.getX();
+                }
+                if(cord.getY()< YMenor){
+                    YMenor = cord.getY();
+                }
+            }
+            for (Propiedad prop : entidad.getPropiedades()){
+                for (Point2D cord : prop.getElip().getCoordenadas()) {
+                    if(cord.getX()< XMenor){
+                        XMenor = cord.getX();
+                    }
+                    if(cord.getY()< YMenor){
+                        YMenor = cord.getY();
+                    }  
+                }
             }
         }
         for (Relacion relacion : diagrama.getRelaciones()) {
             for (Point2D cord : relacion.getFigura().getCoordenadas()) {
                 if(cord.getX()< XMenor){
-                    XMenor = (int)cord.getX();
-                }
-                if(cord.getX()> XMayor){
-                    XMayor = (int)cord.getX();
+                    XMenor = cord.getX();
                 }
                 if(cord.getY()< YMenor){
-                    YMenor = (int)cord.getY();
-                }
-                if(cord.getY()> YMayor){
-                    YMayor = (int)cord.getY();
-                }
-                
+                    YMenor = cord.getY();
+                }              
             }
         }
-        puntosDeCorte.add(new Point2D(XMenor, YMenor));
-        puntosDeCorte.add(new Point2D(XMayor, YMayor));
+        return new Point2D(XMenor-5, YMenor-5);
     }
     
     public void recortar(File file) throws IOException{
@@ -631,9 +657,10 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     private void crearHerencia(ActionEvent event) throws IOException {
         AbrirVentana.CargarVista(getClass().getResource("/fxmls/crearHerencia.fxml"));
         InterfazController.diagrama.getHerencias().add(herenciaActual);
-        herenciaActual.f(gc);
-        herenciaActual.getFigura().dibujarCirculo(gc);
-        
-        herenciaActual=null;
+        if (herenciaActual!=null){
+            herenciaActual.f(gc);
+            herenciaActual.getFigura().dibujarCirculo(gc);
+            herenciaActual=null;
+        }
     }
 }
