@@ -140,8 +140,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                 }
             }
                         
-            entidadActual=null;
-            propiedadActual= new ArrayList<>();
+            
             
         }
         
@@ -161,6 +160,8 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             hBtn.setDisable(true);
             
         }
+        entidadActual=null;
+        propiedadActual= new ArrayList<>();
     }
     
     @FXML
@@ -656,11 +657,22 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     @FXML
     private void crearHerencia(ActionEvent event) throws IOException {
         AbrirVentana.CargarVista(getClass().getResource("/fxmls/crearHerencia.fxml"));
-        InterfazController.diagrama.getHerencias().add(herenciaActual);
         if (herenciaActual!=null){
+            for (Herencia ad : diagrama.getHerencias()) {
+                if (ad.getPadre().getNombre()==herenciaActual.getPadre().getNombre()
+                    && ad.getTipo()==herenciaActual.getTipo()) {
+                    ad.getEntidades().addAll(herenciaActual.getEntidades());
+                    ad.f(gc);
+                    ad.getFigura().dibujarCirculo(gc);
+                    return;
+                }
+            }
+            InterfazController.diagrama.getHerencias().add(herenciaActual);
+        
             herenciaActual.f(gc);
             herenciaActual.getFigura().dibujarCirculo(gc);
             herenciaActual=null;
+            
         }
     }
 }

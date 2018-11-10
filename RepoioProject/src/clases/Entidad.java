@@ -20,6 +20,7 @@ public class Entidad {
 
     public Entidad(String nombre) {//Lo hizo el Carlos UwU
         this.nombre = nombre;
+        this.hijos= new ArrayList<>();
     }
     public ArrayList<Propiedad> getPropiedades() {
         return propiedades;

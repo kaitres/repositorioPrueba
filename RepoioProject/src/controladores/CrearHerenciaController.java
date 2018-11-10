@@ -52,6 +52,7 @@ public class CrearHerenciaController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         ObservableList<Entidad> itemEnt = FXCollections.observableArrayList();
         itemEnt.addAll(InterfazController.diagrama.getEntidades());
+        
         entChoice.setItems(itemEnt);
         ObservableList<String> itemTip = FXCollections.observableArrayList();
         itemTip.addAll("D","S");
@@ -73,7 +74,7 @@ public class CrearHerenciaController implements Initializable {
         menuEntHijes.getItems().clear();
         ArrayList<Entidad> opciones = (ArrayList<Entidad>) InterfazController.diagrama.getEntidades().clone();
         opciones.remove(entChoice.getValue());
-        
+        removerHijos(opciones,entChoice.getValue());
         for (Entidad e: opciones){
             MenuItem m = new MenuItem(e.getNombre());
             menuEntHijes.getItems().add(m);
@@ -105,7 +106,9 @@ public class CrearHerenciaController implements Initializable {
             for (Entidad object : listEntView.getItems()) {
                 aux.add(object);
             }
-            InterfazController.diagrama.getEntidades().get(index).setHijos(aux);
+            InterfazController.diagrama.getEntidades().get(index).getHijos().addAll(aux);
+            //InterfazController.diagrama.getEntidades().get(index).setHijos(aux);
+            
             Figura f = new Figura();
             f.circulo(InterfazController.posicionDefaultX, InterfazController.posicionDefaultY);
             InterfazController.herenciaActual=new Herencia(tipChoice.getValue(),
@@ -114,4 +117,9 @@ public class CrearHerenciaController implements Initializable {
             stage.close();
         }
     }
+    private void removerHijos(ArrayList<Entidad> opciones, Entidad e){
+        for (Entidad obj : e.getHijos()) {
+            opciones.remove(obj);
+        }
+    } 
 }
