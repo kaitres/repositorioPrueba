@@ -23,9 +23,9 @@ public class AbrirVentana {
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         if(InterfazController.nivelPropiedadCompuesta){
-            stage.setTitle("Creación de propiedad compuesta");
+            stage.setTitle("Creación");
         }else{
-           stage.setTitle("Creación"); 
+           stage.setTitle("Creación de propiedad compuesta"); 
         }
         stage.setScene(new Scene(root1));  
         stage.showAndWait();
