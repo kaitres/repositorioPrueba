@@ -33,6 +33,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
@@ -55,6 +56,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     double canvasTX = 773;
     double canvasTY = 522;
     
+    public static boolean relacionDebil = false;
     public static String newRelacionNombre;
     public static boolean relacionValidacion;
     public static ArrayList<Entidad> compRelacion; 
@@ -181,6 +183,12 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             Relacion rec = new Relacion(newRelacionNombre);
             rec.setFigura(fig);
             rec.setPropiedades(propiedadActual);
+
+            if(hayClave(compRelacion) && hayDebil(compRelacion)){
+                AbrirVentana.CargarVista(getClass().getResource("/fxmls/RelacionDebil.fxml"));
+                rec.getFigura().setDebil(relacionDebil);
+                relacionDebil=false;
+            }
             diagrama.addRelacion(rec);
             fig.dibujar(gc,mostrarPuntos);
             
@@ -197,10 +205,34 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                     }
                 }
             }
+           
         }
+        
         relacionActual= null;
         propiedadActual= new ArrayList<>();
         InterfazController.compRelacion.clear();
+        
+        
+    }
+    
+    private boolean hayDebil(ArrayList<Entidad> componentes ){
+        for (Entidad componente : componentes) {
+            if(componente.getFigura().isDebil()){
+                return true;
+               
+            }
+        }
+        return false;
+    }
+    private boolean hayClave(ArrayList<Entidad> componentes){
+        for (Entidad componente : componentes) {
+            for (Propiedad propiedad : componente.getPropiedades()) {
+                if(propiedad.getTipo().equals(Tipo.clave)){
+                    return true;
+                }
+            }
+        }
+        return false;     
     }
     
     @FXML

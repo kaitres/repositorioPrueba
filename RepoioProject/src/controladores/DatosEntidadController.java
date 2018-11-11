@@ -43,7 +43,7 @@ public class DatosEntidadController implements Initializable {
     int propiedadEditada;
     
     
-    
+       
     @FXML
     public TextField nombre;
     @FXML 
@@ -154,5 +154,7 @@ public class DatosEntidadController implements Initializable {
         
         AbrirVentana.CargarVista(getClass().getResource("/fxmls/EditarPropiedad.fxml"));
     }
+    
+    
     
 }

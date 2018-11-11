@@ -44,6 +44,7 @@ public class CrearEntidadController implements Initializable {
     Alert alert = new Alert(Alert.AlertType.INFORMATION);
     Alert alertEx = new Alert(Alert.AlertType.INFORMATION);
     
+    private boolean debil = false;
     
     
     /**
@@ -65,6 +66,11 @@ public class CrearEntidadController implements Initializable {
         
         
     }    
+    
+    @FXML
+    private void debil(ActionEvent event) {
+        this.debil = !debil;
+    }
 
     @FXML
     private void cancelar(ActionEvent event) {
@@ -82,6 +88,7 @@ public class CrearEntidadController implements Initializable {
                 nombreE=nombre.getText();
                 InterfazController.entidadActual = new Entidad(nombreE);
                 Figura f = new Figura();
+                f.setDebil(debil);
                 f.rectangulo(InterfazController.posicionDefaultX, InterfazController.posicionDefaultY, 25);
                 InterfazController.entidadActual.setFigura(f);
                 InterfazController.entidadActual.setPropiedades((ArrayList<Propiedad>) InterfazController.propiedadActual.clone());
@@ -92,6 +99,7 @@ public class CrearEntidadController implements Initializable {
             nombreE="e"+(InterfazController.diagrama.getEntidades().size()+1);
             InterfazController.entidadActual = new Entidad(nombreE);
             Figura f = new Figura();
+            f.setDebil(debil);
             f.rectangulo(InterfazController.posicionDefaultX, InterfazController.posicionDefaultY, 25);
             InterfazController.entidadActual.setFigura(f);
             InterfazController.entidadActual.setPropiedades((ArrayList<Propiedad>) InterfazController.propiedadActual.clone());

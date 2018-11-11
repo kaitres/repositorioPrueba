@@ -29,6 +29,17 @@ public  class Figura {
     String nombre;
     Point2D puntoCentral; 
     int lados;
+    boolean debil = false;
+
+    public void setDebil(boolean debil) {
+        this.debil = debil;
+    }
+
+    public boolean isDebil() {
+        return debil;
+    }
+    
+    
     
     public ArrayList<Point2D> getCoordenadas() {
         return coordenadas;
@@ -309,7 +320,9 @@ public  class Figura {
         if (dibujarPuntos) {
           dibujarPuntoControl(gc);  
         }
-        //dobleLinea(gc);
+        if (debil){
+            dobleLinea(gc);
+        }
         
         
     }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -24,5 +25,6 @@
          </font>
       </Label>
       <Button layoutX="14.0" layoutY="147.0" mnemonicParsing="false" onAction="#haciaPropiedad" styleClass="boton" stylesheets="@Estilo.css" text="Propiedades" />
+      <CheckBox layoutX="201.0" layoutY="154.0" mnemonicParsing="false" onAction="#debil" text="Débil" />
    </children>
 </AnchorPane>
