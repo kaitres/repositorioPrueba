@@ -82,7 +82,14 @@ public class CrearRelacionController implements Initializable {
     @FXML
     private void aceptar(ActionEvent event) {
         if (nombre.getText().length()==0){
-            alertName.showAndWait();
+            if (!InterfazController.compRelacion.isEmpty()){
+                InterfazController.newRelacionNombre = "r"+(InterfazController.diagrama.getRelaciones().size()+1);
+                InterfazController.relacionValidacion = true;
+                Stage stage = (Stage) nombre.getScene().getWindow();
+                stage.close();
+            }else{
+                alertEmpty.showAndWait();
+            }
         } else if (InterfazController.compRelacion.isEmpty()){
             alertEmpty.showAndWait();
         } else{
@@ -100,7 +107,14 @@ public class CrearRelacionController implements Initializable {
     @FXML
     private void txtField(ActionEvent event) {
         if (nombre.getText().length()==0){
-            alertName.showAndWait();
+            if (!InterfazController.compRelacion.isEmpty()){
+                InterfazController.newRelacionNombre = "r"+(InterfazController.diagrama.getRelaciones().size()+1);
+                InterfazController.relacionValidacion = true;
+                Stage stage = (Stage) nombre.getScene().getWindow();
+                stage.close();
+            }else{
+                alertEmpty.showAndWait();
+            }
         } else if (InterfazController.compRelacion.isEmpty()){
             alertEmpty.showAndWait();
         } else{

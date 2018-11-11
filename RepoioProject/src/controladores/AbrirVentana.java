@@ -22,7 +22,11 @@ public class AbrirVentana {
         Parent root1 = (Parent) FXMLLoader.load(resource);
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("Creación");
+        if(InterfazController.nivelPropiedadCompuesta){
+            stage.setTitle("Creación de propiedad compuesta");
+        }else{
+           stage.setTitle("Creación"); 
+        }
         stage.setScene(new Scene(root1));  
         stage.showAndWait();
     }

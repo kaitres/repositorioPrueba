@@ -89,7 +89,14 @@ public class CrearEntidadController implements Initializable {
                 stage.close();  
             }  
         }else{
-            alert.showAndWait();
+            nombreE="e"+(InterfazController.diagrama.getEntidades().size()+1);
+            InterfazController.entidadActual = new Entidad(nombreE);
+            Figura f = new Figura();
+            f.rectangulo(InterfazController.posicionDefaultX, InterfazController.posicionDefaultY, 25);
+            InterfazController.entidadActual.setFigura(f);
+            InterfazController.entidadActual.setPropiedades((ArrayList<Propiedad>) InterfazController.propiedadActual.clone());
+            Stage stage = (Stage) aceBtn.getScene().getWindow();
+            stage.close();
         }
         
     }
@@ -110,7 +117,14 @@ public class CrearEntidadController implements Initializable {
                 stage.close();  
             } 
         } else{
-            alert.showAndWait();
+            nombreE="e"+(InterfazController.diagrama.getEntidades().size()+1);
+            InterfazController.entidadActual = new Entidad(nombreE);
+            Figura f = new Figura();
+            f.rectangulo(InterfazController.posicionDefaultX, InterfazController.posicionDefaultY, 25);
+            InterfazController.entidadActual.setFigura(f);
+            InterfazController.entidadActual.setPropiedades((ArrayList<Propiedad>) InterfazController.propiedadActual.clone());
+            Stage stage = (Stage) aceBtn.getScene().getWindow();
+            stage.close();
         }
     }
 
