@@ -659,7 +659,24 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                         break;
                 }
             }
-        
+            for (Herencia relacion : diagrama.getHerencias()) {
+            
+                if ((e.getX() > relacion.getFigura().getPuntoCentral().getX()-relacion.getFigura().calEscala()) &&
+                        (e.getX() < relacion.getFigura().getPuntoCentral().getX()+relacion.getFigura().calEscala()) &&
+                        (e.getY() > relacion.getFigura().getPuntoCentral().getY()-relacion.getFigura().calEscala()) &&
+                        (e.getY() < relacion.getFigura().getPuntoCentral().getY()+relacion.getFigura().calEscala())){
+                        herenciaActual = relacion;
+                        
+                        
+                        break;
+                }
+            }
+            if(herenciaActual!=null){
+                diagrama.getHerencias().remove(herenciaActual);
+                herenciaActual=null;
+                gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+                reDibujarTodo();
+            }
             if (diagrama.getEntidades().isEmpty()) {
                 rBtn.setDisable(true);
                 pngBtn.setDisable(true);
