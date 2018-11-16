@@ -4,10 +4,10 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="129.0" prefWidth="244.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.RelacionDebilController">
+<AnchorPane id="AnchorPane" prefHeight="129.0" prefWidth="244.0" styleClass="canvasColor" stylesheets="@Estilo.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.RelacionDebilController">
    <children>
-      <Text layoutX="43.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="¿Desea que la relación sea débi?l" />
-      <Button fx:id="canBtn" layoutX="141.0" layoutY="71.0" mnemonicParsing="false" onAction="#no" text="no" />
-      <Button fx:id="aceBtn" layoutX="68.0" layoutY="71.0" mnemonicParsing="false" onAction="#si" text="si" />
+      <Text fx:id="texto" layoutX="14.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="¿Desea que la relación sea débi?" wrappingWidth="220.005859375" />
+      <Button fx:id="canBtn" layoutX="141.0" layoutY="71.0" mnemonicParsing="false" onAction="#no" styleClass="boton" stylesheets="@Estilo.css" text="no" />
+      <Button fx:id="aceBtn" layoutX="62.0" layoutY="71.0" mnemonicParsing="false" onAction="#si" prefHeight="31.0" prefWidth="28.0" styleClass="boton" stylesheets="@Estilo.css" text="si" />
    </children>
 </AnchorPane>

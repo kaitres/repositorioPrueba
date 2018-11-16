@@ -518,6 +518,14 @@ public  class Figura {
     public void tirarLinea(GraphicsContext gc, Union u){
         gc.strokeLine(u.getUnionFig1().getX() , u.getUnionFig1().getY() , u.getUnionFig2().getX() , u.getUnionFig2().getY());
     }
+    public void tirarDobleLinea(GraphicsContext gc , Union u){
+        gc.setLineWidth(3);
+        gc.strokeLine(u.getUnionFig1().getX() , u.getUnionFig1().getY() , u.getUnionFig2().getX() , u.getUnionFig2().getY());
+        gc.setLineWidth(1);
+        gc.setStroke(Color.WHITE);
+        gc.strokeLine(u.getUnionFig1().getX() , u.getUnionFig1().getY() , u.getUnionFig2().getX() , u.getUnionFig2().getY());
+        gc.setStroke(Color.BLACK);
+    }
     
     public void poligonoDoble(GraphicsContext gc){
         int escala= calEscala()+5;

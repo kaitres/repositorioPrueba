@@ -18,9 +18,13 @@ public class Relacion {
     ArrayList<Entidad> componentes = new ArrayList();
     ArrayList<Union> uniones = new ArrayList();
     ArrayList<Propiedad> propiedades = new ArrayList<>();
-
+    ArrayList<Integer> posicionDebiles = new ArrayList<>();
     public ArrayList<Union> getUniones() {
         return uniones;
+    }
+
+    public void setPosicionDebiles(ArrayList<Integer> posicionDebiles) {
+        this.posicionDebiles = (ArrayList<Integer>) posicionDebiles.clone();
     }
     
     /**
@@ -38,8 +42,34 @@ public class Relacion {
                 uniones.add(new Union(this.figura , e.figura));
             }
         }
+        for(int x =0; x<posicionDebiles.size();x++){
+            uniones.get(posicionDebiles.get(x)).setDebil(true);
+        }
     }
-
+    public void eliminarDebil(Entidad c){
+        for(int x =0; x<posicionDebiles.size();x++){
+            if(componentes.indexOf(c)==posicionDebiles.get(x)){
+                uniones.get(posicionDebiles.get(x)).setDebil(true);
+                for(int y=x+1;y<posicionDebiles.size();y++){
+                    posicionDebiles.set(y, ((Integer) posicionDebiles.get(y)-1));
+                }
+                posicionDebiles.remove(x);
+                System.out.println(posicionDebiles);
+                break;
+            }
+        }
+        
+        System.out.println(posicionDebiles);
+    }
+    public void metamorfosear(){
+        for (Entidad componente : componentes) {
+            if(componente.getFigura().debil){
+                this.figura.setDebil(true);
+                return;
+            }
+        }
+        this.figura.setDebil(false);
+    }
     public Relacion(String nombre) {
         this.nombre = nombre;
     }
@@ -98,7 +128,11 @@ public class Relacion {
     public void f(GraphicsContext gc){
         this.figura.tirarLinea(propiedades, gc);
         for (Union u: uniones){
-            this.figura.tirarLinea(gc, u);
+            if(u.debil){
+                this.figura.tirarDobleLinea(gc, u);
+            }else{
+                this.figura.tirarLinea(gc, u);
+            }
         }
     }
     

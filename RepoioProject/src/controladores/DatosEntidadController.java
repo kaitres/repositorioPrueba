@@ -110,6 +110,11 @@ public class DatosEntidadController implements Initializable {
         ArrayList <Relacion> eliminar = new ArrayList();
         for (Relacion relacion : Diagrama.relaciones) {
             if(relacion.getComponentes().contains(entidadActual)){
+                if (entidadActual.getFigura().isDebil()) {
+                    relacion.eliminarDebil(entidadActual);
+                    relacion.metamorfosear();
+                }
+                
                 relacion.getComponentes().remove(entidadActual);
                 relacion.crearUniones();
                 

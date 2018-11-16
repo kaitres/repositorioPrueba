@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -24,16 +25,19 @@ public class RelacionDebilController implements Initializable {
     private Button canBtn;
     @FXML
     private Button aceBtn;
+    @FXML
+    private Text texto;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        texto.setText("¿Desea que la entidad: "+InterfazController.entidadActual.getNombre()+" dependa en esta relación?");
     }    
     @FXML
     private void si(ActionEvent event) {
         relacionDebil=true;
+        
         Stage stage = (Stage) aceBtn.getScene().getWindow();
         stage.close();
     }

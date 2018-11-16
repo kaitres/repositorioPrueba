@@ -27,6 +27,7 @@ public class AbrirVentana {
         }else{
            stage.setTitle("Creación de propiedad compuesta"); 
         }
+        
         stage.setScene(new Scene(root1));  
         stage.showAndWait();
     }

@@ -20,6 +20,11 @@ public class Union {
     Figura fig2;
     Point2D unionFig2;
     Point2D unionFig1;
+    boolean debil;
+
+    public void setDebil(boolean debil) {
+        this.debil = debil;
+    }
 
     public Point2D getUnionFig2() {
         return unionFig2;

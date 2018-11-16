@@ -184,15 +184,19 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             rec.setFigura(fig);
             rec.setPropiedades(propiedadActual);
 
-            if(hayClave(compRelacion) && hayDebil(compRelacion)){
-                AbrirVentana.CargarVista(getClass().getResource("/fxmls/RelacionDebil.fxml"));
-                rec.getFigura().setDebil(relacionDebil);
+            if(hayClave(compRelacion) && 0<hayDebil(compRelacion)){
+                ArrayList<Integer> debiles =cualesDependeran(compRelacion);
+                if(!debiles.isEmpty()){
+                    
+                    rec.setPosicionDebiles(debiles);
+                }
                 relacionDebil=false;
             }
             diagrama.addRelacion(rec);
             fig.dibujar(gc,mostrarPuntos);
             
             rec.setComponentes(compRelacion);
+            rec.metamorfosear();
             rec.crearUniones();
             rec.f(gc);
             fig.pintar(gc);
@@ -215,14 +219,15 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         
     }
     
-    private boolean hayDebil(ArrayList<Entidad> componentes ){
+    private int hayDebil(ArrayList<Entidad> componentes ){
+        int i=0;
         for (Entidad componente : componentes) {
             if(componente.getFigura().isDebil()){
-                return true;
+                i++;
                
             }
         }
-        return false;
+        return i;
     }
     private boolean hayClave(ArrayList<Entidad> componentes){
         for (Entidad componente : componentes) {
@@ -234,7 +239,23 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         }
         return false;     
     }
-    
+    private ArrayList<Integer> cualesDependeran(ArrayList<Entidad> componentes) throws IOException{
+        ArrayList<Integer> debiles = new ArrayList<>();
+        for (Entidad componente : componentes) {
+            if(componente.getFigura().isDebil()){
+                
+                entidadActual=componente;
+                AbrirVentana.CargarVista(getClass().getResource("/fxmls/RelacionDebil.fxml"));
+                
+                entidadActual=null;
+                if(relacionDebil){
+                    debiles.add(componentes.indexOf(componente));
+                }
+                
+            }
+        }
+        return debiles;
+    }
     @FXML
     private void ratonSinPresionar(MouseEvent event) {
         this.arrastrando=false;       
@@ -671,6 +692,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                         break;
                 }
             }
+            propiedadActual= new ArrayList<>();
             if(herenciaActual!=null){
                 diagrama.getHerencias().remove(herenciaActual);
                 herenciaActual=null;
