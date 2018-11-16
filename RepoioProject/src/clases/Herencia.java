@@ -14,7 +14,7 @@ import javafx.scene.canvas.GraphicsContext;
  */
 public class Herencia {
     private String tipo;
-    private ArrayList<Entidad> entidades;
+    private ArrayList<Entidad> entidades = new ArrayList<>();
     private Figura figura;
     private Entidad padre;
 
@@ -27,6 +27,21 @@ public class Herencia {
         this.figura.nombre = tipo;
         this.padre = padre;
     }
+
+    private Herencia() {
+    }
+    
+    public Herencia clon(){
+        Herencia aux = new Herencia();
+        setTipo(tipo);
+        for (Entidad entidad : entidades) {
+            aux.entidades.add(entidad.clon());
+        }
+        aux.setFigura(figura.clon());
+        aux.setPadre(padre.clon());
+        return aux;
+    }
+        
     public Entidad getPadre() {
         return padre;
     }

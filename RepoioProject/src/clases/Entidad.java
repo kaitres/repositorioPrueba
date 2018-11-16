@@ -15,13 +15,27 @@ import javafx.scene.canvas.GraphicsContext;
 public class Entidad {
     String nombre;
     Figura figura; //puede ser Rectangulo ya que solo se puede representar de esa manera
-    ArrayList<Propiedad> propiedades;
-    ArrayList<Entidad> hijos;
+    ArrayList<Propiedad> propiedades = new ArrayList<>();
+    ArrayList<Entidad> hijos = new ArrayList<>();
 
     public Entidad(String nombre) {//Lo hizo el Carlos UwU
         this.nombre = nombre;
         this.hijos= new ArrayList<>();
     }
+    
+    public Entidad clon(){
+        Entidad aux = new Entidad(nombre);
+        aux.setFigura(figura.clon());
+        for (Propiedad propiedade : propiedades) {
+            aux.propiedades.add(propiedade.clon());                 
+        }
+        
+        for (Entidad entidad : hijos) {
+            aux.hijos.add(entidad.clon());
+        }
+        return aux;
+    }
+    
     public ArrayList<Propiedad> getPropiedades() {
         return propiedades;
     }

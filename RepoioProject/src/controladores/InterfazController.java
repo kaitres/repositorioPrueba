@@ -50,6 +50,9 @@ import javax.swing.ImageIcon;
 public class InterfazController implements Initializable {//Lo hizo el Carlos UwU
     public static Diagrama diagrama;
     
+    public static int indiceD =-1;
+    public ArrayList<Diagrama> diagramas = new ArrayList();
+    
     public static int posicionDefaultX = 370;
     public static int posicionDefaultY = 285;
     
@@ -105,8 +108,10 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         pngBtn.setDisable(true);
         pdfBtn.setDisable(true);
         diagrama = new Diagrama();
+        puntoGuardado();
         gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.BLUE);
+        
     }    
 
     @FXML
@@ -118,7 +123,59 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         
     }
+//---------------------------------------------------------------------------------------------
+     private void puntoGuardado() {
 
+        
+        if(indiceD != diagramas.size() ){
+            for (int i = indiceD + 1; i < diagramas.size(); i++) {
+                diagramas.remove(diagramas.size()-1);
+            }
+        }
+
+        
+        
+        if(diagramas.size() > 10 ){
+            diagramas.remove(0);
+        }
+        else{ 
+            indiceD +=1;      
+        }
+        diagramas.add(diagrama.clon());
+        
+     }
+        
+        
+    
+    @FXML 
+    private void deshacer(){
+       
+        if(indiceD > 0 ){
+            System.out.println("deshacer");
+            indiceD-=1;
+            diagrama = diagramas.get(indiceD);
+            gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+            reDibujarTodo();
+        }
+        System.out.println(indiceD);
+        
+    }
+    
+    @FXML
+    private void rehacer() throws IOException{
+        
+        
+        if(indiceD < 9){
+            indiceD += 1;
+            System.out.println("rehacer");
+            diagrama = diagramas.get(indiceD);
+            gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+            reDibujarTodo();
+        }
+        System.out.println(indiceD);
+        
+    }
+    //-----------------------------------------------------------------------------------
     @FXML
     private void crearEntidad(ActionEvent event) throws IOException {
         
@@ -164,6 +221,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         }
         entidadActual=null;
         propiedadActual= new ArrayList<>();
+        puntoGuardado();
     }
     
     @FXML
@@ -215,6 +273,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         relacionActual= null;
         propiedadActual= new ArrayList<>();
         InterfazController.compRelacion.clear();
+        puntoGuardado();
         
         
     }
@@ -258,6 +317,9 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     }
     @FXML
     private void ratonSinPresionar(MouseEvent event) {
+        if(arrastrando){
+            puntoGuardado();
+        }
         this.arrastrando=false;       
     }
     
@@ -743,6 +805,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             herenciaActual.f(gc);
             herenciaActual.getFigura().dibujarCirculo(gc);
             herenciaActual=null;
+            puntoGuardado();
             
         }
     }

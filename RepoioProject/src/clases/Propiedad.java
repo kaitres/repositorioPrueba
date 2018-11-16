@@ -15,7 +15,7 @@ public class Propiedad {
     String nombre;
     Tipo tipo;
     Figura elip;
-    ArrayList<Propiedad> propiedades;
+    ArrayList<Propiedad> propiedades  = new ArrayList<>();
 
     public Propiedad(String nombre, Tipo tipo) {
         this.nombre = nombre;
@@ -23,6 +23,15 @@ public class Propiedad {
         elip = new Figura();
         elip.nombre = nombre;
         elip.elipse(370, 285);
+    }
+    
+    public Propiedad clon(){
+        Propiedad aux = new Propiedad(nombre , tipo);
+        aux.setElip(elip.clon());
+        for (Propiedad propiedade : propiedades) {
+            aux.propiedades.add(propiedade.clon());
+        }
+        return aux;
     }
     
     public Propiedad(String nombre, Tipo tipo, ArrayList<Propiedad> propiedad) {

@@ -60,6 +60,8 @@
                </graphic>
             </Button>
             <Button fx:id="hBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="25.0" layoutY="182.0" mnemonicParsing="false" onAction="#crearHerencia" prefHeight="30.0" prefWidth="68.0" styleClass="boton" stylesheets="@Estilo.css" text="Herencia" textAlignment="CENTER" />
+            <Button layoutX="11.0" layoutY="336.0" mnemonicParsing="false" onAction="#deshacer" text="&lt;" />
+            <Button layoutX="67.0" layoutY="336.0" mnemonicParsing="false" onAction="#rehacer" text="&gt;" />
          </children>
       </Pane>
       <Pane layoutY="-2.0" prefHeight="46.0" prefWidth="902.0" style="-fx-background-color: #aab2bd;">

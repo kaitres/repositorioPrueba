@@ -108,7 +108,7 @@ public class DatosEntidadController implements Initializable {
     @FXML
     private void eliminarEntidad(){
         ArrayList <Relacion> eliminar = new ArrayList();
-        for (Relacion relacion : Diagrama.relaciones) {
+        for (Relacion relacion : InterfazController.diagrama.relaciones) {
             if(relacion.getComponentes().contains(entidadActual)){
                 if (entidadActual.getFigura().isDebil()) {
                     relacion.eliminarDebil(entidadActual);
@@ -145,9 +145,9 @@ public class DatosEntidadController implements Initializable {
                 eliminar2.add(herencia);
             }
         }
-        Diagrama.herencias.removeAll(eliminar2);
-        Diagrama.relaciones.removeAll(eliminar);
-        Diagrama.entidades.remove(entidadActual);
+        InterfazController.diagrama.herencias.removeAll(eliminar2);
+        InterfazController.diagrama.relaciones.removeAll(eliminar);
+        InterfazController.diagrama.entidades.remove(entidadActual);
         entidadActual=null;
         
         Stage stage = (Stage) canBtn.getScene().getWindow();

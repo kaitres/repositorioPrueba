@@ -25,12 +25,42 @@ import javafx.scene.text.TextAlignment;
 public  class Figura {
     ArrayList<Point2D> coordenadas = new ArrayList();
     ArrayList<Point2D> coordenadasConeccion = new ArrayList();
-    ArrayList<Propiedad> propiedades;
+    ArrayList<Propiedad> propiedades =  new ArrayList();
     String nombre;
     Point2D puntoCentral; 
     int lados;
     boolean debil = false;
 
+    
+    
+    public Figura clon(){
+        Figura aux = new Figura();
+  
+        //aux.setCoordenadas((ArrayList<Point2D>) coordenadas.clone());
+        for (Point2D coordenada : coordenadas) {
+            Point2D pAux = new Point2D(coordenada.getX(), coordenada.getY());
+            aux.coordenadas.add(pAux);
+        }
+        for (Point2D coordenada : coordenadasConeccion) {
+            Point2D pAux = new Point2D(coordenada.getX(), coordenada.getY());
+            aux.coordenadasConeccion.add(pAux);
+        }
+        //aux.setCoordenadasConeccion((ArrayList<Point2D>) coordenadasConeccion.clone());
+        for (Propiedad propiedad : propiedades) {
+            aux.propiedades.add(propiedad.clon());
+        }
+        
+        aux.setPuntoCentral(puntoCentral);
+        aux.setDebil(debil);
+        aux.setLados(lados);
+        return aux;
+        
+    }
+
+    public void setLados(int lados) {
+        this.lados = lados;
+    }
+    
     public void setDebil(boolean debil) {
         this.debil = debil;
     }

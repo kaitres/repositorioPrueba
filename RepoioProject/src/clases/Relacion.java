@@ -30,6 +30,22 @@ public class Relacion {
     /**
      * metodo que crea todas las uniones(objeto Union) del objeto Relacion 
      */
+    
+    public Relacion clon(){
+        Relacion aux = new Relacion(nombre);
+        aux.setFigura(figura.clon());
+        for (Entidad componente : componentes) {
+            aux.componentes.add(componente.clon());
+        }
+        for (Union union : uniones) {
+            aux.uniones.add(union.clon());
+        }
+        for (Propiedad propiedad : propiedades) {
+            aux.propiedades.add(propiedad.clon());
+        }
+        return aux;
+    }
+    
     public void crearUniones(){
         
         uniones.clear();
@@ -54,12 +70,12 @@ public class Relacion {
                     posicionDebiles.set(y, ((Integer) posicionDebiles.get(y)-1));
                 }
                 posicionDebiles.remove(x);
-                System.out.println(posicionDebiles);
+                
                 break;
             }
         }
         
-        System.out.println(posicionDebiles);
+
     }
     public void metamorfosear(){
         for (Entidad componente : componentes) {

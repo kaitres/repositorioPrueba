@@ -22,6 +22,20 @@ public class Union {
     Point2D unionFig1;
     boolean debil;
 
+    
+    public Union clon(){
+        Union aux = new Union(fig1.clon(), fig2.clon());
+        aux.setUnionFig1(unionFig1);
+        aux.setUnionFig2(unionFig2);
+        return aux;
+    }
+    public void setUnionFig2(Point2D unionFig2) {
+        this.unionFig2 = unionFig2;
+    }
+
+    public void setUnionFig1(Point2D unionFig1) {
+        this.unionFig1 = unionFig1;
+    }
     public void setDebil(boolean debil) {
         this.debil = debil;
     }

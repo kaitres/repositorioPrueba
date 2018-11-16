@@ -7,7 +7,6 @@ package controladores;
 
 
 import clases.Diagrama;
-import static clases.Diagrama.entidades;
 import clases.Entidad;
 import clases.Figura;
 import clases.Propiedad;
