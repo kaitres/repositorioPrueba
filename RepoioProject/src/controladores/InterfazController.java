@@ -128,10 +128,13 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
 
         
         if(indiceD != diagramas.size() ){
-            for (int i = indiceD + 1; i < diagramas.size(); i++) {
+            while(indiceD + 1 < diagramas.size()){
+                System.out.println("borre");
                 diagramas.remove(diagramas.size()-1);
+                System.out.println(diagramas.size());
             }
         }
+        
 
         
         
@@ -162,10 +165,10 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     }
     
     @FXML
-    private void rehacer() throws IOException{
+    private void rehacer(){
         
         
-        if(indiceD < 9){
+        if(indiceD < diagramas.size()-1){
             indiceD += 1;
             System.out.println("rehacer");
             diagrama = diagramas.get(indiceD);

@@ -29,13 +29,15 @@ public class Diagrama {
             aux.addEntidad(entidad.clon());
         }
         for (Relacion relacion : relaciones) {
-            aux.addRelacion(relacion.clon());
+            aux.addRelacion(relacion.clon(aux.getEntidades()));
         }
         for (Herencia herencia : herencias) {
             aux.addHerencia(herencia.clon());
         }
         return aux;
     }
+     
+    
     public ArrayList<Herencia> getHerencias() {
         return herencias;
     }

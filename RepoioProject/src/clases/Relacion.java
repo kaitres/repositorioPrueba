@@ -31,7 +31,24 @@ public class Relacion {
      * metodo que crea todas las uniones(objeto Union) del objeto Relacion 
      */
     
-    public Relacion clon(){
+    public Relacion clon(ArrayList<Entidad> entidadesClon){
+        Relacion aux = new Relacion(nombre);
+        aux.setFigura(figura.clon());
+        for (Entidad componente : componentes) {
+            int indexClon = componentes.lastIndexOf(componente);
+            aux.componentes.add(entidadesClon.get(indexClon));
+        }
+        for (Union union : uniones) {
+            aux.uniones.add(union.clon());
+        }
+        for (Propiedad propiedad : propiedades) {
+            aux.propiedades.add(propiedad.clon());
+        }
+        return aux;
+    }
+    
+    
+    /*public Relacion clon(){
         Relacion aux = new Relacion(nombre);
         aux.setFigura(figura.clon());
         for (Entidad componente : componentes) {
@@ -45,6 +62,8 @@ public class Relacion {
         }
         return aux;
     }
+*/
+    
     
     public void crearUniones(){
         
