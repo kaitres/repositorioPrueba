@@ -31,11 +31,12 @@ public class Herencia {
     private Herencia() {
     }
     
-    public Herencia clon(){
+    public Herencia clon(ArrayList<Entidad> entidadesClon){
         Herencia aux = new Herencia();
         setTipo(tipo);
         for (Entidad entidad : entidades) {
-            aux.entidades.add(entidad.clon());
+            int indexClon = entidades.lastIndexOf(entidad);
+            aux.entidades.add(entidadesClon.get(indexClon));
         }
         aux.setFigura(figura.clon());
         aux.setPadre(padre.clon());

@@ -32,7 +32,7 @@ public class Diagrama {
             aux.addRelacion(relacion.clon(aux.getEntidades()));
         }
         for (Herencia herencia : herencias) {
-            aux.addHerencia(herencia.clon());
+            aux.addHerencia(herencia.clon(aux.getEntidades()));
         }
         return aux;
     }
