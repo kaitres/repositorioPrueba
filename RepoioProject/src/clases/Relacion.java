@@ -31,11 +31,11 @@ public class Relacion {
      * metodo que crea todas las uniones(objeto Union) del objeto Relacion 
      */
     
-    public Relacion clon(ArrayList<Entidad> entidadesClon){
+    public Relacion clon(ArrayList<Entidad> entidadesClon , ArrayList<Entidad> entidadesOriginal){
         Relacion aux = new Relacion(nombre);
         aux.setFigura(figura.clon());
         for (Entidad componente : componentes) {
-            int indexClon = componentes.lastIndexOf(componente);
+            int indexClon = entidadesOriginal.lastIndexOf(componente);
             aux.componentes.add(entidadesClon.get(indexClon));
         }
         for (Union union : uniones) {
