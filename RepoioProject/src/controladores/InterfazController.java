@@ -120,6 +120,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         rBtn.setDisable(true);
         pngBtn.setDisable(true);
         pdfBtn.setDisable(true);
+        hBtn.setDisable(true);
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         
     }
@@ -504,6 +505,8 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             
         }
         for (Relacion relacion : diagrama.getRelaciones()) {
+            relacion.correccion();
+            relacion.metamorfosear();
             relacion.getFigura().dibujar(gc,mostrarPuntos);
             relacion.crearUniones();
             relacion.f(gc);
@@ -740,7 +743,18 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                         (e.getY() < relacion.getFigura().getPuntoCentral().getY()+relacion.getFigura().calEscala())){
                         relacionActual = relacion;
                         AbrirVentana.CargarVista(getClass().getResource("/fxmls/DatosRelacion.fxml"));
+                        if(hayClave(relacionActual.getComponentes()) && 0<hayDebil(relacionActual.getComponentes())){
+                            ArrayList<Integer> debiles =cualesDependeran(relacionActual.getComponentes());
+                            if(!debiles.isEmpty()){
+
+                                relacionActual.setPosicionDebiles(debiles);
+                            }
+                            relacionDebil=false;
+                        }
                         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+                        relacionActual.metamorfosear();
+                        
+                        relacionActual.crearUniones();
                         reDibujarTodo();
                         break;
                 }

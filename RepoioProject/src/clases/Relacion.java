@@ -44,9 +44,24 @@ public class Relacion {
         for (Propiedad propiedad : propiedades) {
             aux.propiedades.add(propiedad.clon());
         }
+        aux.posicionDebiles=(ArrayList<Integer>) posicionDebiles.clone();
         return aux;
     }
-    
+    public void correccion(){
+        int x= 0;
+        while(x<posicionDebiles.size()){
+            if(!componentes.get(posicionDebiles.get(x)).figura.debil){
+                System.out.println("1");
+                posicionDebiles.remove(x);
+            }else{
+                System.out.println("2");
+                x++;
+            }
+            
+        }
+            
+        
+    }
     
     /*public Relacion clon(){
         Relacion aux = new Relacion(nombre);
@@ -97,13 +112,13 @@ public class Relacion {
 
     }
     public void metamorfosear(){
-        for (Entidad componente : componentes) {
-            if(componente.getFigura().debil){
-                this.figura.setDebil(true);
-                return;
-            }
+        
+        if (posicionDebiles.isEmpty()) {
+            this.figura.setDebil(false);
+        }else{
+            this.figura.setDebil(true);
         }
-        this.figura.setDebil(false);
+        
     }
     public Relacion(String nombre) {
         this.nombre = nombre;

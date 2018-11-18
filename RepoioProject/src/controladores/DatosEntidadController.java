@@ -27,6 +27,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
@@ -54,6 +55,8 @@ public class DatosEntidadController implements Initializable {
     
     
     private Button btEliminar;
+    @FXML
+    private CheckBox choiceDebil;
     /**
      * Initializes the controller class.
      */
@@ -62,7 +65,11 @@ public class DatosEntidadController implements Initializable {
         alertEx.setTitle("Error");
         alertEx.setHeaderText(null);
         alertEx.setContentText("Haz excedido el limite de 20 caracteres");
-        
+        if(entidadActual.getFigura().isDebil()){
+            choiceDebil.setSelected(true);
+        }else{
+            choiceDebil.setSelected(false);
+        }
         nombre.setText(entidadActual.getNombre());
         InterfazController.propiedadActual = (ArrayList<Propiedad>) entidadActual.getPropiedades().clone();
         
@@ -82,6 +89,7 @@ public class DatosEntidadController implements Initializable {
                 entidadActual.setNombre(nombre.getText());
                 
                 entidadActual.setPropiedades((ArrayList<Propiedad>) InterfazController.propiedadActual.clone());
+                entidadActual.getFigura().setDebil(choiceDebil.isSelected());
                 Stage stage = (Stage) canBtn.getScene().getWindow();
                 stage.close(); 
             }
