@@ -49,7 +49,7 @@ public  class Figura {
         for (Propiedad propiedad : propiedades) {
             aux.propiedades.add(propiedad.clon());
         }
-        
+        aux.nombre= nombre;
         aux.setPuntoCentral(puntoCentral);
         aux.setDebil(debil);
         aux.setLados(lados);
