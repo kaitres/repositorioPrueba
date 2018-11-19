@@ -362,6 +362,7 @@ public  class Figura {
      * @param circulo booelan con el cual se puede identificar si se esta dibujando un circulo para no recalcular el tamaño de la figura
      */
     public void dibujarPoligono(GraphicsContext gc ,boolean circulo ){
+        gc.setStroke(Color.BLACK);
         if(!circulo){
             this.reCalcular();
         }else{
@@ -437,6 +438,14 @@ public  class Figura {
         if(this.lados ==-2){
             pintarElipse(gc);
         }
+        if(this.lados ==-1){
+            pintarRectangulo(gc);
+        }
+        else{
+            pintarPoligono(gc);
+        }
+        
+       /* 
         for (int i = 1; ciclo; i++) {
             for (int x=0;x<coordenadas.size();x++) {
                 if(x+1<coordenadas.size()){
@@ -458,7 +467,7 @@ public  class Figura {
                 }
             }
             
-        }
+        }*/
         gc.setTextAlign(TextAlignment.CENTER);
         gc.setTextBaseline(VPos.CENTER);
         gc.setFont(Font.font(15));
@@ -649,6 +658,92 @@ public  class Figura {
             poligonoDoble(gc);
             
             
+        }
+        
+    }
+    
+    public void pintarPoligono (GraphicsContext gc){
+        double escala= calEscala()+1;
+        int centroX = (int) this.puntoCentral.getX();
+        int centroY = (int) this.puntoCentral.getY();
+        //gc.setStroke(Color.BLACK);
+        
+        while(escala>=0){
+            double angulo = 0;
+            double anguloAux;
+            int movX;
+            int movY;
+            ArrayList<Point2D>coordenadasPintar = new ArrayList<>();
+
+            for (int i = 0; i < lados; i++ ) {
+                if(angulo==0){
+                    coordenadasPintar.add(new Point2D(centroX , centroY - escala));
+                }
+                else if (angulo > 0 && angulo < 90) {
+                    anguloAux = gradosRadianes(angulo);
+                    movX= (int) (escala * (sin(anguloAux)));
+                    movY= (int) ( (escala*  (cos(anguloAux))));
+                    coordenadasPintar.add(new Point2D(centroX + movX , centroY - movY));
+                }
+
+                else if(angulo==90){
+                    coordenadasPintar.add(new Point2D(centroX + escala , centroY));
+                }
+
+                else if (angulo >90 && angulo < 180) {
+                    anguloAux = gradosRadianes(180-angulo);
+                    movX= ((int) (escala*(sin(anguloAux))));
+                    movY= ((int) (escala*(cos(anguloAux))));
+                    coordenadasPintar.add(new Point2D(centroX + movX , centroY + movY));
+                }
+
+                else if(angulo==180){
+                    coordenadasPintar.add(new Point2D(centroX , centroY + escala));
+                }
+
+                else if (angulo >180 && angulo < 270) {
+                    anguloAux = gradosRadianes(angulo - 180);
+                    movX= ((int) (escala*(sin(anguloAux))));
+                    movY= ((int) (escala*(cos(anguloAux))));
+                    coordenadasPintar.add(new Point2D(centroX - movX , centroY + movY));
+                }
+
+                else if(angulo==270){
+                    coordenadasPintar.add(new Point2D(centroX - escala , centroY));
+                }
+
+                else if(angulo> 270 && angulo <360){
+                    anguloAux = gradosRadianes(360-angulo);
+                    movX= abs((int) (escala*sin((anguloAux))));
+                    movY= ((int) (escala*cos((anguloAux))));
+                    coordenadasPintar.add(new Point2D(centroX - movX , centroY - movY));
+                }
+                angulo+=360/lados;
+            }
+
+            for (int x=0;x<coordenadasPintar.size();x++) {
+                if(x+1<coordenadasPintar.size()){
+                    gc.strokeLine(coordenadasPintar.get(x).getX(), coordenadasPintar.get(x).getY()
+                            ,coordenadasPintar.get(x+1).getX(), coordenadasPintar.get(x+1).getY());
+                }else{
+                    gc.strokeLine(coordenadasPintar.get(x).getX(), coordenadasPintar.get(x).getY()
+                        ,coordenadasPintar.get(0).getX(), coordenadasPintar.get(0).getY());
+                }
+
+            }
+            escala-=0.25;
+        }
+    }
+    
+    public void pintarRectangulo(GraphicsContext gc){
+        //gc.setStroke(Color.BLACK);
+        Point2D p1 = coordenadas.get(0);
+        Point2D p2 = coordenadas.get(1);
+        
+        p1= new Point2D(p1.getX()+1, p1.getY()+1);
+        while(p1.getX() < p2.getX()){
+            gc.strokeLine(p1.getX() , p1.getY() ,p1.getX() , p1.getY()+18 );
+            p1 = new Point2D(p1.getX()+1 ,p1.getY());
         }
         
     }
