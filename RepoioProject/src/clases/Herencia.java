@@ -80,5 +80,13 @@ public class Herencia {
         this.figura.tirarLinea(gc, padre);
         this.figura.tirarLinea(gc,entidades);       
     }
+    public boolean esHijo(Entidad x){
+        if(entidades.indexOf(x)==-1){
+            return false;
+        }else{
+            return true;
+        }
+         
+    }
     
 }
