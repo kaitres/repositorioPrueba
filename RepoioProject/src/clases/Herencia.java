@@ -33,7 +33,7 @@ public class Herencia {
     
     public Herencia clon(ArrayList<Entidad> entidadesClon, ArrayList<Entidad> entidadesOriginal){
         Herencia aux = new Herencia();
-        setTipo(tipo);
+        aux.tipo=this.tipo;
         for (Entidad entidad : entidades) {
             int indexClon = entidadesOriginal.lastIndexOf(entidad);
             aux.entidades.add(entidadesClon.get(indexClon));
@@ -53,6 +53,7 @@ public class Herencia {
     
     public void setTipo(String tipo) {
         this.tipo = tipo;
+        this.figura.nombre = tipo;
     }
 
     public void setEntidades(ArrayList<Entidad> entidades) {

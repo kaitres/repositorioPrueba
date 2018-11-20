@@ -766,18 +766,14 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                         (e.getY() > relacion.getFigura().getPuntoCentral().getY()-relacion.getFigura().calEscala()) &&
                         (e.getY() < relacion.getFigura().getPuntoCentral().getY()+relacion.getFigura().calEscala())){
                         herenciaActual = relacion;
-                        
-                        
+                        AbrirVentana.CargarVista(getClass().getResource("/fxmls/EditarHerencia.fxml"));
+                        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+                        reDibujarTodo();
                         break;
                 }
             }
             propiedadActual= new ArrayList<>();
-            if(herenciaActual!=null){
-                diagrama.getHerencias().remove(herenciaActual);
-                herenciaActual=null;
-                gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-                reDibujarTodo();
-            }
+            
             if (diagrama.getEntidades().isEmpty()) {
                 rBtn.setDisable(true);
                 pngBtn.setDisable(true);
