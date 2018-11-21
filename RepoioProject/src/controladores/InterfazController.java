@@ -793,7 +793,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                 }
             }
             propiedadActual= new ArrayList<>();
-            
+            entidadActual=null;
             if (diagrama.getEntidades().isEmpty()) {
                 rBtn.setDisable(true);
                 pngBtn.setDisable(true);
