@@ -126,6 +126,9 @@ public class EditarHerenciaController implements Initializable {
     private void modificar(ActionEvent event) {
         InterfazController.herenciaActual.setTipo(choiceTipo.getValue());
         InterfazController.herenciaActual.setEntidades(entidadesObj);
+        if(InterfazController.herenciaActual.getEntidades().size()==0){
+           InterfazController.diagrama.herencias.remove(InterfazController.herenciaActual);
+        }
         Stage stage = (Stage) btEliminar.getScene().getWindow();
         stage.close();
     }

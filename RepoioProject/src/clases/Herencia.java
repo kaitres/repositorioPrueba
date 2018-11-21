@@ -39,7 +39,8 @@ public class Herencia {
             aux.entidades.add(entidadesClon.get(indexClon));
         }
         aux.setFigura(figura.clon());
-        aux.setPadre(padre.clon());
+        int indiceAux = entidadesOriginal.indexOf(padre);
+        aux.setPadre(entidadesClon.get(indiceAux));
         return aux;
     }
         
