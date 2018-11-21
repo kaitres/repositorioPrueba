@@ -365,12 +365,14 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             
             if(arrastrando){
                 figuraMov.setPuntoCentral(mouse);
-                gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-                reDibujarTodo();
-                if (getMayores().getX()>770 && getMayores().getY()>520){
+                if (getMayores().getX()>770){ 
                     canvas.setWidth(getMayores().getX());
+                }
+                if (getMayores().getY()>520){
                     canvas.setHeight(getMayores().getY());
                 }
+                gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+                reDibujarTodo();
             }
             else{
                 if(dentroDeAlgunaFigura(mouse)){
