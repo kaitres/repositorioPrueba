@@ -22,7 +22,7 @@ public class JavaFXApplication5 extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/fxmls/Interfaz.fxml"));
         
         Scene scene = new Scene(root);
-        
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.setTitle("Diagramador entidad relacion limdi");
         stage.show();

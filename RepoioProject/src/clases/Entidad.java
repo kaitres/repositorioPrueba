@@ -16,11 +16,11 @@ public class Entidad {
     String nombre;
     Figura figura; //puede ser Rectangulo ya que solo se puede representar de esa manera
     ArrayList<Propiedad> propiedades = new ArrayList<>();
-    ArrayList<Entidad> hijos = new ArrayList<>();
+   
 
     public Entidad(String nombre) {//Lo hizo el Carlos UwU
         this.nombre = nombre;
-        this.hijos= new ArrayList<>();
+        
     }
     
     public Entidad clon(){
@@ -30,9 +30,7 @@ public class Entidad {
             aux.propiedades.add(propiedade.clon());                 
         }
         
-        for (Entidad entidad : hijos) {
-            aux.hijos.add(entidad.clon());
-        }
+        
         return aux;
     }
     
@@ -70,12 +68,6 @@ public class Entidad {
         return nombre;
     }
 
-    public void setHijos(ArrayList<Entidad> hijos) {
-        this.hijos = hijos;
-    }
-
-    public ArrayList<Entidad> getHijos() {
-        return hijos;
-    }
+    
     
 }

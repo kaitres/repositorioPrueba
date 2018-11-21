@@ -108,8 +108,9 @@ public class EditarHerenciaController implements Initializable {
         ObservableList<Entidad> itemEnt = FXCollections.observableArrayList();
         removerEntidades(itemEnt);
         choiceEntidad.setItems(itemEnt);
-        choiceEntidad.setValue(itemEnt.get(0));
-        
+        if(!itemEnt.isEmpty()){
+            choiceEntidad.setValue(itemEnt.get(0));  
+        }
         btEliminar.setDisable(true);
         btAniadir.setDisable(false);
     }
@@ -126,6 +127,9 @@ public class EditarHerenciaController implements Initializable {
     private void modificar(ActionEvent event) {
         InterfazController.herenciaActual.setTipo(choiceTipo.getValue());
         InterfazController.herenciaActual.setEntidades(entidadesObj);
+        if(InterfazController.herenciaActual.getEntidades().size()==0){
+           InterfazController.diagrama.herencias.remove(InterfazController.herenciaActual);
+        }
         Stage stage = (Stage) btEliminar.getScene().getWindow();
         stage.close();
     }

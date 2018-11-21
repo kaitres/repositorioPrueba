@@ -50,7 +50,8 @@ import javax.swing.ImageIcon;
  */
 public class InterfazController implements Initializable {//Lo hizo el Carlos UwU
     public static Diagrama diagrama;
-    
+    public static int id = 0;
+
     public static int indiceD =-1;
     public ArrayList<Diagrama> diagramas = new ArrayList();
     
@@ -114,7 +115,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         hBtn.setDisable(true);
         pngBtn.setDisable(true);
         pdfBtn.setDisable(true);
-        diagrama = new Diagrama();
+        diagrama = new Diagrama(id);
         puntoGuardado();
         gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.BLUE);
@@ -134,29 +135,46 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
 //---------------------------------------------------------------------------------------------
      private void puntoGuardado() {
 
-        
-        if(indiceD != diagramas.size() ){
-            while(indiceD + 1 < diagramas.size()){
-                System.out.println("borre");
+        if(indiceD < diagramas.size() - 1 ){
+            for (int i = indiceD +1 ; i < diagramas.size(); i++) {
                 diagramas.remove(diagramas.size()-1);
-                System.out.println(diagramas.size());
             }
+            
+            //Parche
+            diagramas.remove(diagramas.size()-1);
+            indiceD= diagramas.size()-1;
+            System.out.println("borre");
+            datos();
+                
+          
         }
-        
-
-        
-        
         if(diagramas.size() > 10 ){
             diagramas.remove(0);
         }
         else{ 
             indiceD +=1;      
         }
-        diagramas.add(diagrama.clon());
+        
+        diagramas.add(diagrama.clon(id));
+        id+=1;
+        datos();
+
         
      }
         
-        
+       
+     public void datos(){
+         int h=0;
+         System.out.println("--------------------");
+         for (Diagrama diagrama1 : diagramas) {
+             if(h == indiceD){
+                 System.out.print("**");
+             }
+             System.out.println(diagrama1.getId());
+             h+=1;
+         }
+         System.out.println("--------------------");
+     }
     
     @FXML 
     private void deshacer(){
@@ -164,11 +182,12 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         if(indiceD > 0 ){
             System.out.println("deshacer");
             indiceD-=1;
-            diagrama = diagramas.get(indiceD);
+            diagrama = diagramas.get(indiceD).clon(id);
             gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
             reDibujarTodo();
         }
         System.out.println(indiceD);
+        datos();
         
     }
     
@@ -179,11 +198,12 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         if(indiceD < diagramas.size()-1){
             indiceD += 1;
             System.out.println("rehacer");
-            diagrama = diagramas.get(indiceD);
+            diagrama = diagramas.get(indiceD).clon(id);
             gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
             reDibujarTodo();
         }
         System.out.println(indiceD);
+        datos();
         
     }
     //-----------------------------------------------------------------------------------
@@ -781,7 +801,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                 }
             }
             propiedadActual= new ArrayList<>();
-            
+            entidadActual=null;
             if (diagrama.getEntidades().isEmpty()) {
                 rBtn.setDisable(true);
                 pngBtn.setDisable(true);

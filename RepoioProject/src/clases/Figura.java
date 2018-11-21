@@ -386,7 +386,7 @@ public  class Figura {
         
     }  
     public void tirarLinea(GraphicsContext gc,ArrayList<Entidad> a){
-        //gc.setStroke(Color.BLACK);
+        gc.setStroke(Color.BLACK);
         int x1 = 0;
         int y1 = 0;
         int x2 = 0;

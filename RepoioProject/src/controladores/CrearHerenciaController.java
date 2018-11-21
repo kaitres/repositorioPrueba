@@ -106,7 +106,7 @@ public class CrearHerenciaController implements Initializable {
             for (Entidad object : listEntView.getItems()) {
                 aux.add(object);
             }
-            InterfazController.diagrama.getEntidades().get(index).getHijos().addAll(aux);
+            
             //InterfazController.diagrama.getEntidades().get(index).setHijos(aux);
             
             Figura f = new Figura();
@@ -118,9 +118,7 @@ public class CrearHerenciaController implements Initializable {
         }
     }
     private void removerHijos(ArrayList<Entidad> opciones, Entidad e){
-        for (Entidad obj : e.getHijos()) {
-            opciones.remove(obj);
-        }
+        
         for (Herencia herencia : InterfazController.diagrama.getHerencias()) {
             if(herencia.esHijo(entChoice.getValue()) && opciones.indexOf(herencia.getPadre())>=0){
                 opciones.remove(herencia.getPadre());
