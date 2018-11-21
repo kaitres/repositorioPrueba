@@ -13,8 +13,11 @@ import clases.Relacion;
 import clases.Tipo;
 import static controladores.InterfazController.compRelacion;
 import static controladores.InterfazController.entidadActual;
+import static controladores.InterfazController.hayClave;
+import static controladores.InterfazController.hayDebil;
 import static controladores.InterfazController.posicionDefaultX;
 import static controladores.InterfazController.posicionDefaultY;
+import static controladores.InterfazController.relacionActual;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -118,13 +121,13 @@ public class DatosEntidadController implements Initializable {
         ArrayList <Relacion> eliminar = new ArrayList();
         for (Relacion relacion : InterfazController.diagrama.relaciones) {
             if(relacion.getComponentes().contains(entidadActual)){
-                if (entidadActual.getFigura().isDebil()) {
+                //if (entidadActual.getFigura().isDebil()) {
                     relacion.eliminarDebil(entidadActual);
                     relacion.metamorfosear();
-                }
+                //}
                 
                 relacion.getComponentes().remove(entidadActual);
-                relacion.crearUniones();
+                
                 
                 Figura fig = new Figura();
                 if(relacion.getComponentes().size() == 0){
@@ -137,7 +140,12 @@ public class DatosEntidadController implements Initializable {
                     fig.crearFigura(posicionDefaultX, posicionDefaultY, 20 , relacion.getComponentes().size());
                 }   
                 relacion.setFigura(fig);
-
+                System.out.println(hayClave(relacion.getComponentes()));
+                System.out.println(" hay :"+hayDebil(relacion.getComponentes()));
+                if(!(hayClave(relacion.getComponentes()))){
+                    relacion.getFigura().setDebil(false);
+                }
+                relacion.crearUniones();
             }          
         }
         ArrayList <Herencia> eliminar2 = new ArrayList();

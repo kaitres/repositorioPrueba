@@ -5,6 +5,7 @@
  */
 package clases;
 
+import controladores.InterfazController;
 import java.util.ArrayList;
 import javafx.scene.canvas.GraphicsContext;
 
@@ -51,10 +52,10 @@ public class Relacion {
         int x= 0;
         while(x<posicionDebiles.size()){
             if(!componentes.get(posicionDebiles.get(x)).figura.debil){
-                System.out.println("1");
+                
                 posicionDebiles.remove(x);
             }else{
-                System.out.println("2");
+                
                 x++;
             }
             
@@ -97,8 +98,10 @@ public class Relacion {
         }
     }
     public void eliminarDebil(Entidad c){
+        int w=componentes.indexOf(c);
+        
         for(int x =0; x<posicionDebiles.size();x++){
-            if(componentes.indexOf(c)==posicionDebiles.get(x)){
+            if(w==posicionDebiles.get(x)){
                 uniones.get(posicionDebiles.get(x)).setDebil(true);
                 for(int y=x+1;y<posicionDebiles.size();y++){
                     posicionDebiles.set(y, ((Integer) posicionDebiles.get(y)-1));
@@ -107,17 +110,21 @@ public class Relacion {
                 
                 break;
             }
+            if(w<posicionDebiles.get(x)){
+                posicionDebiles.set(x, posicionDebiles.get(x)-1);
+            }
         }
         
 
     }
     public void metamorfosear(){
-        
-        if (posicionDebiles.isEmpty()) {
-            this.figura.setDebil(false);
-        }else{
+        if(InterfazController.hayClave(componentes) && InterfazController.hayDebil(componentes)<componentes.size() && posicionDebiles.size()>0){
             this.figura.setDebil(true);
+        }else{
+            this.figura.setDebil(false);
+            posicionDebiles = new ArrayList<>();
         }
+        
         
     }
     public Relacion(String nombre) {

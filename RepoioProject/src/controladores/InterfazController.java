@@ -228,7 +228,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             }
                         
             
-            
+            puntoGuardado();
         }
         
         if (!diagrama.getEntidades().isEmpty()){
@@ -249,7 +249,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         }
         entidadActual=null;
         propiedadActual= new ArrayList<>();
-        puntoGuardado();
+        
     }
     
     @FXML
@@ -295,18 +295,19 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                     }
                 }
             }
+            puntoGuardado();
            
         }
         
         relacionActual= null;
         propiedadActual= new ArrayList<>();
         InterfazController.compRelacion.clear();
-        puntoGuardado();
+
         
         
     }
     
-    private int hayDebil(ArrayList<Entidad> componentes ){
+    public static int hayDebil(ArrayList<Entidad> componentes ){
         int i=0;
         for (Entidad componente : componentes) {
             if(componente.getFigura().isDebil()){
@@ -316,7 +317,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         }
         return i;
     }
-    private boolean hayClave(ArrayList<Entidad> componentes){
+    public static boolean hayClave(ArrayList<Entidad> componentes){
         for (Entidad componente : componentes) {
             for (Propiedad propiedad : componente.getPropiedades()) {
                 if(propiedad.getTipo().equals(Tipo.clave)){
@@ -773,8 +774,12 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                             if(!debiles.isEmpty()){
 
                                 relacionActual.setPosicionDebiles(debiles);
+                            }else{
+                                relacionActual.getFigura().setDebil(false);
                             }
                             relacionDebil=false;
+                        }else{
+                            relacionActual.getFigura().setDebil(false);
                         }
                         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                         relacionActual.metamorfosear();
