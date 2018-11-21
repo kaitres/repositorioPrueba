@@ -130,14 +130,15 @@ public class DatosEntidadController implements Initializable {
                 
                 
                 Figura fig = new Figura();
+                
                 if(relacion.getComponentes().size() == 0){
                     eliminar.add(relacion);
                 }
                 
                 else if (relacion.getComponentes().size()==1 || relacion.getComponentes().size()==2 || relacion.getComponentes().size()==4 ){
-                    fig.crearFigura(posicionDefaultX, posicionDefaultY, 20 , 4);
+                    fig.crearFigura((int) relacion.getFigura().getPuntoCentral().getX(), (int) relacion.getFigura().getPuntoCentral().getY(), 20 , 4);
                 } else {
-                    fig.crearFigura(posicionDefaultX, posicionDefaultY, 20 , relacion.getComponentes().size());
+                    fig.crearFigura((int) relacion.getFigura().getPuntoCentral().getX(), (int) relacion.getFigura().getPuntoCentral().getY(), 20 , relacion.getComponentes().size());
                 }   
                 relacion.setFigura(fig);
                 System.out.println(hayClave(relacion.getComponentes()));
@@ -146,6 +147,7 @@ public class DatosEntidadController implements Initializable {
                     relacion.getFigura().setDebil(false);
                 }
                 relacion.crearUniones();
+                
             }          
         }
         ArrayList <Herencia> eliminar2 = new ArrayList();

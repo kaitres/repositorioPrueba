@@ -35,7 +35,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ZoomEvent;
@@ -74,7 +73,6 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     public static boolean nivelPropiedadCompuesta=true;
     
     public static boolean editar = false;
-    boolean state = false;
     public static boolean mostrarPuntos = false;
     
     public static Entidad entidadActual;
@@ -106,8 +104,6 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     private Button zoomOBTN;
     @FXML
     private Button zoomIBTN;
-    @FXML
-    private CheckBox checkBEditar;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -149,7 +145,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                 
           
         }
-        if(diagramas.size() > 10 ){
+        if(diagramas.size() > 20 ){
             diagramas.remove(0);
         }
         else{ 
@@ -747,7 +743,6 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     @FXML
     private void editar(ActionEvent event) {
         this.editar = !editar;
-        this.state = !state;
     }
     
    @FXML
@@ -764,6 +759,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                     AbrirVentana.CargarVista(getClass().getResource("/fxmls/DatosEntidad.fxml"));
                     gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                     reDibujarTodo();
+                    puntoGuardado();
                     break;
                 }
                 
@@ -776,23 +772,30 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                         (e.getY() < relacion.getFigura().getPuntoCentral().getY()+relacion.getFigura().calEscala())){
                         relacionActual = relacion;
                         AbrirVentana.CargarVista(getClass().getResource("/fxmls/DatosRelacion.fxml"));
+                        if(relacionActual == null){
+                            gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+                            reDibujarTodo();
+                            puntoGuardado();
+                            break;
+                        }
                         if(hayClave(relacionActual.getComponentes()) && 0<hayDebil(relacionActual.getComponentes())){
                             ArrayList<Integer> debiles =cualesDependeran(relacionActual.getComponentes());
-                            if(!debiles.isEmpty()){
-
-                                relacionActual.setPosicionDebiles(debiles);
-                            }else{
+                            if(debiles.isEmpty()){
                                 relacionActual.getFigura().setDebil(false);
                             }
+                            relacionActual.setPosicionDebiles(debiles);
+                            
                             relacionDebil=false;
                         }else{
                             relacionActual.getFigura().setDebil(false);
+                            relacionActual.setPosicionDebiles(new ArrayList<Integer>());
                         }
                         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                         relacionActual.metamorfosear();
                         
                         relacionActual.crearUniones();
                         reDibujarTodo();
+                        puntoGuardado();
                         break;
                 }
             }
@@ -806,6 +809,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                         AbrirVentana.CargarVista(getClass().getResource("/fxmls/EditarHerencia.fxml"));
                         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                         reDibujarTodo();
+                        puntoGuardado();
                         break;
                 }
             }
@@ -839,19 +843,9 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         zoomTime -= 1;
         if (zoomTime <= -1){
             zoomOBTN.setDisable(true);
-            checkBEditar.setDisable(true);
-            if (!state){
-                editar = true;
-            }
         } else{
             zoomOBTN.setDisable(false);   
             zoomIBTN.setDisable(false);
-            checkBEditar.setDisable(false);
-            if (state){
-                editar = true;
-            } else {
-                editar = false;
-            }
         }
         System.out.println(canvas.getWidth() + " " + canvas.getHeight());
     }
@@ -869,19 +863,9 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         zoomTime += 1;
         if (zoomTime >= 1){
             zoomIBTN.setDisable(true);
-            checkBEditar.setDisable(true);
-            if (!state){
-                editar = true;
-            }
         } else{
             zoomIBTN.setDisable(false);   
             zoomOBTN.setDisable(false);
-            checkBEditar.setDisable(false);
-            if (state){
-                editar = true;
-            } else {
-                editar = false;
-            }
         }
         System.out.println(canvas.getWidth() + " " + canvas.getHeight());
     }

@@ -9,6 +9,7 @@ package controladores;
 import clases.Entidad;
 import clases.Figura;
 import clases.Propiedad;
+import clases.Relacion;
 import static controladores.InterfazController.compRelacion;
 import static controladores.InterfazController.posicionDefaultX;
 import static controladores.InterfazController.posicionDefaultY;
@@ -202,7 +203,7 @@ public class DatosRelacionController implements Initializable {
     @FXML
     private void eliminarRelacion(){
         InterfazController.diagrama.getRelaciones().remove(relacionActual);
-        
+        relacionActual=null;
         
         Stage stage = (Stage) canBtn.getScene().getWindow();
         stage.close();

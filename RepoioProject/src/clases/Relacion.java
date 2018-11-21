@@ -20,6 +20,9 @@ public class Relacion {
     ArrayList<Union> uniones = new ArrayList();
     ArrayList<Propiedad> propiedades = new ArrayList<>();
     ArrayList<Integer> posicionDebiles = new ArrayList<>();
+
+    public Relacion() {
+    }
     public ArrayList<Union> getUniones() {
         return uniones;
     }
