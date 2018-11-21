@@ -37,6 +37,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ZoomEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -82,6 +83,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
  
     public ArrayList<Point2D> puntosDeCorte;
     
+    int zoomTime;
     
     Figura figuraMov;
 
@@ -97,9 +99,14 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     private Button pdfBtn;
     @FXML
     private Button hBtn;
+    @FXML
+    private Button zoomOBTN;
+    @FXML
+    private Button zoomIBTN;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        zoomTime = 0;
         puntosDeCorte = new ArrayList<>();
         propiedadActual = new ArrayList<>();
         compRelacion = new ArrayList<>();
@@ -720,6 +727,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     
    @FXML
     public void modificar(MouseEvent event) throws IOException{
+        
         if(editar){
             Point2D e=new Point2D(event.getX(), event.getY());
             for(Entidad entidad : diagrama.getEntidades() ){
@@ -790,14 +798,43 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
 
     @FXML
     private void zoomOut(ActionEvent event) {
+        
+        canvas.setTranslateX(0);
+        canvas.setTranslateY(0);
+        if (zoomTime!=0){
+            canvas.setWidth(canvas.getWidth()/2);
+            canvas.setHeight(canvas.getHeight()/2);
+        }
         canvas.setScaleX(canvas.getScaleX()/2);
         canvas.setScaleY(canvas.getScaleY()/2);
+        zoomTime -= 1;
+        if (zoomTime <= -1){
+            zoomOBTN.setDisable(true);
+        } else{
+            zoomOBTN.setDisable(false);   
+            zoomIBTN.setDisable(false);
+        }
+        System.out.println(canvas.getWidth() + " " + canvas.getHeight());
     }
 
     @FXML
     private void zoomIn(ActionEvent event) {
+        canvas.setTranslateX(canvas.getWidth()*(zoomTime+1));
+        canvas.setTranslateY(canvas.getHeight()*(zoomTime+1));
+        if (zoomTime==0){
+            canvas.setWidth(canvas.getWidth()*2);
+            canvas.setHeight(canvas.getHeight()*2);
+        }
         canvas.setScaleX(canvas.getScaleX()*2);
         canvas.setScaleY(canvas.getScaleY()*2);
+        zoomTime += 1;
+        if (zoomTime >= 1){
+            zoomIBTN.setDisable(true);
+        } else{
+            zoomIBTN.setDisable(false);   
+            zoomOBTN.setDisable(false);
+        }
+        System.out.println(canvas.getWidth() + " " + canvas.getHeight());
     }
 
     @FXML
