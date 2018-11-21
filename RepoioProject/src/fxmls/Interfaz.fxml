@@ -40,7 +40,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <CheckBox layoutX="9.0" layoutY="248.0" mnemonicParsing="false" onAction="#editar" text="Editar" />
+            <CheckBox fx:id="checkBEditar" layoutX="9.0" layoutY="248.0" mnemonicParsing="false" onAction="#editar" text="Editar" />
             <Button fx:id="zoomOBTN" layoutX="24.0" layoutY="426.0" mnemonicParsing="false" onAction="#zoomOut" prefHeight="35.0" prefWidth="37.0">
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
