@@ -717,8 +717,8 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         }
         recortar(file2);
         try{
-            float ancho = (float) (puntosDeCorte.get(1).getX() - puntosDeCorte.get(0).getX());
-            float alto =(float) (puntosDeCorte.get(1).getY() - puntosDeCorte.get(0).getY());
+            float ancho = (float) (puntosDeCorte.get(1).getX() - puntosDeCorte.get(0).getX()) +50;
+            float alto =(float) (puntosDeCorte.get(1).getY() - puntosDeCorte.get(0).getY()) +50;
             Rectangle rectangle = new Rectangle( ancho + 5 , alto +5);
             Document doc = new Document(rectangle);
             PdfWriter.getInstance(doc, archivo);
