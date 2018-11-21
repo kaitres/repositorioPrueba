@@ -108,8 +108,9 @@ public class EditarHerenciaController implements Initializable {
         ObservableList<Entidad> itemEnt = FXCollections.observableArrayList();
         removerEntidades(itemEnt);
         choiceEntidad.setItems(itemEnt);
-        choiceEntidad.setValue(itemEnt.get(0));
-        
+        if(!itemEnt.isEmpty()){
+            choiceEntidad.setValue(itemEnt.get(0));  
+        }
         btEliminar.setDisable(true);
         btAniadir.setDisable(false);
     }
