@@ -13,18 +13,24 @@ import java.util.ArrayList;
  * @author IP-ROUTE
  */
 public class Diagrama {
+    int id;
     public  ArrayList<Entidad> entidades = new ArrayList<>();
     public  ArrayList<Relacion> relaciones = new ArrayList<>();
     public  ArrayList<Herencia> herencias = new ArrayList<>();
     
-    public Diagrama() {
+    public Diagrama(int id) {
+        this.id=id;
         this.entidades = new ArrayList<>();
         this.relaciones = new ArrayList<>();
         this.herencias = new ArrayList<>();
     }
 
-     public Diagrama clon(){
-        Diagrama aux= new Diagrama();
+    public int getId() {
+        return id;
+    }
+
+     public Diagrama clon(int id){
+        Diagrama aux= new Diagrama(id);
         for (Entidad entidad : entidades) {
             aux.addEntidad(entidad.clon());
         }
@@ -36,6 +42,7 @@ public class Diagrama {
         }
         return aux;
     }
+
      
     
     public ArrayList<Herencia> getHerencias() {
