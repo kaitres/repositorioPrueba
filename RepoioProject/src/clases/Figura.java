@@ -366,7 +366,8 @@ public  class Figura {
     }
     
     public void tirarLinea(GraphicsContext gc, Entidad e){
-         gc.strokeLine(this.puntoCentral.getX(), this.puntoCentral.getY(),
+        gc.setStroke(Color.BLACK);
+        gc.strokeLine(this.puntoCentral.getX(), this.puntoCentral.getY(),
                     e.getFigura().getPuntoCentral().getX(), e.getFigura().getPuntoCentral().getY());
     }
     public void tirarLinea(ArrayList<Propiedad> e, GraphicsContext gc){
@@ -536,7 +537,7 @@ public  class Figura {
 
 
         }
-        else{//figura
+        else{
             
             poligonoDoble(gc);
             

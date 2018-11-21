@@ -60,7 +60,7 @@ public class Diagrama {
     public void setEntidades(ArrayList<Entidad> entidades) {
         this.entidades = entidades;
     }
-
+        
     public ArrayList<Relacion> getRelaciones() {
         return relaciones;
     }

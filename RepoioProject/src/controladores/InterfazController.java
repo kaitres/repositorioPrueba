@@ -136,15 +136,12 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
      private void puntoGuardado() {
 
         if(indiceD < diagramas.size() - 1 ){
-            for (int i = indiceD +1 ; i < diagramas.size(); i++) {
+            while(indiceD != diagramas.size()-1 ){
                 diagramas.remove(diagramas.size()-1);
             }
-            
-            //Parche
-            diagramas.remove(diagramas.size()-1);
-            indiceD= diagramas.size()-1;
-            System.out.println("borre");
+            System.out.println("parche");
             datos();
+
                 
           
         }
