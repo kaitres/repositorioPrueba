@@ -134,7 +134,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                 diagramas.remove(diagramas.size()-1);
                 System.out.println(diagramas.size());
             }
-        }
+        } 
         
 
         
