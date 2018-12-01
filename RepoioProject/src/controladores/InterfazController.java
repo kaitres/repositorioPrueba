@@ -137,7 +137,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         
     }
 //---------------------------------------------------------------------------------------------
-     private void puntoGuardado() {
+    private void puntoGuardado() {
 
         if(indiceD < diagramas.size() - 1 ){
             while(indiceD != diagramas.size()-1 ){
@@ -164,7 +164,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
      }
         
        
-     public void datos(){
+    public void datos(){
          int h=0;
          System.out.println("--------------------");
          for (Diagrama diagrama1 : diagramas) {
@@ -282,12 +282,19 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                 }
                 relacionDebil=false;
             }
-            diagrama.addRelacion(rec);
-            fig.dibujar(gc,mostrarPuntos);
-            
             rec.setComponentes(compRelacion);
             rec.metamorfosear();
             rec.crearUniones();
+            if (rec.getComponentes().size()<3) {
+                relacionActual=rec;
+                AbrirVentana.CargarVista(getClass().getResource("/fxmls/CrearCardinalidad.fxml"));
+                
+                relacionActual = null;
+            }
+            diagrama.addRelacion(rec);
+            fig.dibujar(gc,mostrarPuntos);
+            
+            
             rec.f(gc);
             fig.pintar(gc);
             for (Propiedad prop : rec.getPropiedades()){
@@ -321,6 +328,8 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         }
         return i;
     }
+    
+    
     public static boolean hayClave(ArrayList<Entidad> componentes){
         for (Entidad componente : componentes) {
             for (Propiedad propiedad : componente.getPropiedades()) {
@@ -331,6 +340,8 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         }
         return false;     
     }
+    
+    
     private ArrayList<Integer> cualesDependeran(ArrayList<Entidad> componentes) throws IOException{
         ArrayList<Integer> debiles = new ArrayList<>();
         for (Entidad componente : componentes) {

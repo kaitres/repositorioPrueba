@@ -20,9 +20,28 @@ public class Relacion {
     ArrayList<Union> uniones = new ArrayList();
     ArrayList<Propiedad> propiedades = new ArrayList<>();
     ArrayList<Integer> posicionDebiles = new ArrayList<>();
+    String entidad1Cardinal="";
+    String entidad2Cardinal="";
 
+    public void setEntidad1Cardinal(String entidad1Cardinal) {
+        this.entidad1Cardinal = entidad1Cardinal;
+    }
+
+    public void setEntidad2Cardinal(String entidad2Cardinal) {
+        this.entidad2Cardinal = entidad2Cardinal;
+    }
+
+    public String getEntidad1Cardinal() {
+        return entidad1Cardinal;
+    }
+
+    public String getEntidad2Cardinal() {
+        return entidad2Cardinal;
+    }
+    
     public Relacion() {
     }
+    
     public ArrayList<Union> getUniones() {
         return uniones;
     }
@@ -49,6 +68,8 @@ public class Relacion {
             aux.propiedades.add(propiedad.clon());
         }
         aux.posicionDebiles=(ArrayList<Integer>) posicionDebiles.clone();
+        aux.entidad1Cardinal=entidad1Cardinal;
+        aux.entidad2Cardinal=entidad2Cardinal;
         return aux;
     }
     public void correccion(){
@@ -66,22 +87,7 @@ public class Relacion {
             
         
     }
-    
-    /*public Relacion clon(){
-        Relacion aux = new Relacion(nombre);
-        aux.setFigura(figura.clon());
-        for (Entidad componente : componentes) {
-            aux.componentes.add(componente.clon());
-        }
-        for (Union union : uniones) {
-            aux.uniones.add(union.clon());
-        }
-        for (Propiedad propiedad : propiedades) {
-            aux.propiedades.add(propiedad.clon());
-        }
-        return aux;
-    }
-*/
+
     
     
     public void crearUniones(){
@@ -187,13 +193,22 @@ public class Relacion {
     }
     public void f(GraphicsContext gc){
         this.figura.tirarLinea(propiedades, gc);
-        for (Union u: uniones){
-            if(u.debil){
-                this.figura.tirarDobleLinea(gc, u);
+        for (int i = 0; i < uniones.size(); i++) {
+            
+            if(uniones.get(i).debil){
+                this.figura.tirarDobleLinea(gc, uniones.get(i));
             }else{
-                this.figura.tirarLinea(gc, u);
+                this.figura.tirarLinea(gc, uniones.get(i));
             }
+            if(i==0){
+                uniones.get(0).cardinalidad(entidad1Cardinal,gc);
+            }
+            if(i==1){
+                uniones.get(1).cardinalidad(entidad2Cardinal,gc);
+            }
+            
         }
+        
     }
     
 }

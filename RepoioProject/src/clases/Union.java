@@ -8,8 +8,11 @@ package clases;
 import static java.lang.Math.abs;
 import java.util.ArrayList;
 import javafx.geometry.Point2D;
+import javafx.geometry.VPos;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.shape.ArcType;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 
 /**
  *
@@ -47,7 +50,18 @@ public class Union {
     public Point2D getUnionFig1() {
         return unionFig1;
     }
-
+    
+    public void cardinalidad(String cardinalidad, GraphicsContext gc){
+        gc.setTextAlign(TextAlignment.CENTER);
+        gc.setTextBaseline(VPos.CENTER);
+        gc.setFont(Font.font(15));
+        double puntoMedioX=this.unionFig1.midpoint(unionFig2).getX();
+        double puntoMedioY=this.unionFig1.midpoint(unionFig2).getY();
+        gc.fillText(cardinalidad, this.unionFig1.midpoint(unionFig2).getX(), this.unionFig1.midpoint(unionFig2).getY());
+        
+ 
+         
+    }
     
     public Union(Figura fig1,Figura fig2 ){
         this.fig2 = fig2;
