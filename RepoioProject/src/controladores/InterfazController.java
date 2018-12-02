@@ -806,10 +806,17 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                             relacionActual.getFigura().setDebil(false);
                             relacionActual.setPosicionDebiles(new ArrayList<Integer>());
                         }
-                        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                         relacionActual.metamorfosear();
-                        
                         relacionActual.crearUniones();
+                        
+                        
+                        if (relacion.getComponentes().size()<3) {
+                            
+                            AbrirVentana.CargarVista(getClass().getResource("/fxmls/CrearCardinalidad.fxml"));
+                
+                            relacionActual = null;
+                        }
+                        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                         reDibujarTodo();
                         puntoGuardado();
                         break;

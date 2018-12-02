@@ -126,14 +126,24 @@ public class DatosEntidadController implements Initializable {
                     relacion.metamorfosear();
                 //}
                 
+                if(relacion.getComponentes().size()<3){
+                    if(relacion.getComponentes().indexOf(entidadActual)==0){
+                        relacion.setEntidad1Cardinal(relacion.getEntidad2Cardinal());
+                        relacion.setEntidad2Cardinal("");
+                    }
+                    if(relacion.getComponentes().indexOf(entidadActual)==1){
+                        relacion.setEntidad2Cardinal("");
+                    }
+                }
                 relacion.getComponentes().remove(entidadActual);
                 
                 
                 Figura fig = new Figura();
                 
-                if(relacion.getComponentes().size() == 0){
+                if( relacion.getComponentes().isEmpty()){
                     eliminar.add(relacion);
                 }
+                
                 
                 else if (relacion.getComponentes().size()==1 || relacion.getComponentes().size()==2 || relacion.getComponentes().size()==4 ){
                     fig.crearFigura((int) relacion.getFigura().getPuntoCentral().getX(), (int) relacion.getFigura().getPuntoCentral().getY(), 20 , 4);
@@ -141,8 +151,7 @@ public class DatosEntidadController implements Initializable {
                     fig.crearFigura((int) relacion.getFigura().getPuntoCentral().getX(), (int) relacion.getFigura().getPuntoCentral().getY(), 20 , relacion.getComponentes().size());
                 }   
                 relacion.setFigura(fig);
-                System.out.println(hayClave(relacion.getComponentes()));
-                System.out.println(" hay :"+hayDebil(relacion.getComponentes()));
+                
                 if(!(hayClave(relacion.getComponentes()))){
                     relacion.getFigura().setDebil(false);
                 }
