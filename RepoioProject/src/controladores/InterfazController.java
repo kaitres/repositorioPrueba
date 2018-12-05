@@ -82,7 +82,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     public static Herencia herenciaActual;
 
     public static ArrayList<Propiedad> propiedadActual; 
-    
+    public static int cantProps;
  
     public ArrayList<Point2D> puntosDeCorte;
     
@@ -123,6 +123,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         puntoGuardado();
         gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.BLUE);
+        cantProps = 0;
         
     }    
 
@@ -134,6 +135,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         pdfBtn.setDisable(true);
         hBtn.setDisable(true);
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        cantProps = 0;
         
     }
 //---------------------------------------------------------------------------------------------
@@ -854,17 +856,37 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
 
     @FXML
     private void zoomOut(ActionEvent event) {
-        
-        canvas.setTranslateX(0);
-        canvas.setTranslateY(0);
-        if (zoomTime!=0){
-            canvas.setWidth(canvas.getWidth()/2);
-            canvas.setHeight(canvas.getHeight()/2);
+        if (zoomTime == 2){
+            canvas.setWidth(canvas.getWidth()/1.5);
+            canvas.setHeight(canvas.getHeight()/1.5);
+            canvas.setTranslateX(canvas.getWidth()/9);
+            canvas.setTranslateY(canvas.getHeight()/9);
+            canvas.setScaleX(canvas.getScaleX()/1.5);
+            canvas.setScaleY(canvas.getScaleY()/1.5);
         }
-        canvas.setScaleX(canvas.getScaleX()/2);
-        canvas.setScaleY(canvas.getScaleY()/2);
+        if (zoomTime == 1){
+            canvas.setWidth(canvas.getWidth()/1.2);
+            canvas.setHeight(canvas.getHeight()/1.2);
+            canvas.setTranslateX(0);
+            canvas.setTranslateY(0);
+            canvas.setScaleX(canvas.getScaleX()/1.2);
+            canvas.setScaleY(canvas.getScaleY()/1.2);
+        }
+        if (zoomTime == 0){
+            canvas.setTranslateX(0);
+            canvas.setTranslateY(0);
+            canvas.setScaleX(canvas.getScaleX()/1.2);
+            canvas.setScaleY(canvas.getScaleY()/1.2);
+        }
+        if (zoomTime==-1){
+            canvas.setTranslateX(0);
+            canvas.setTranslateY(0);
+            canvas.setScaleX(canvas.getScaleX()/1.5);
+            canvas.setScaleY(canvas.getScaleY()/1.5);
+        }
+        
         zoomTime -= 1;
-        if (zoomTime <= -1){
+        if (zoomTime <= -2){
             zoomOBTN.setDisable(true);
             checkBEditar.setDisable(true);
             if (!state){
@@ -881,16 +903,36 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
 
     @FXML
     private void zoomIn(ActionEvent event) {
-        canvas.setTranslateX(canvas.getWidth()*(zoomTime+1));
-        canvas.setTranslateY(canvas.getHeight()*(zoomTime+1));
-        if (zoomTime==0){
-            canvas.setWidth(canvas.getWidth()*2);
-            canvas.setHeight(canvas.getHeight()*2);
+        if (zoomTime == 1){
+            canvas.setWidth(canvas.getWidth()*1.5);
+            canvas.setHeight(canvas.getHeight()*1.5);
+            canvas.setScaleX(canvas.getScaleX()*1.5);
+            canvas.setScaleY(canvas.getScaleY()*1.5);
+            canvas.setTranslateX(canvas.getWidth()*0.4);
+            canvas.setTranslateY(canvas.getHeight()*0.4);
         }
-        canvas.setScaleX(canvas.getScaleX()*2);
-        canvas.setScaleY(canvas.getScaleY()*2);
+        if (zoomTime == 0){
+            canvas.setWidth(canvas.getWidth()*1.2);
+            canvas.setHeight(canvas.getHeight()*1.2);
+            canvas.setScaleX(canvas.getScaleX()*1.2);
+            canvas.setScaleY(canvas.getScaleY()*1.2);
+            canvas.setTranslateX(canvas.getWidth()*0.1);
+            canvas.setTranslateY(canvas.getHeight()*0.1);
+        }
+        if (zoomTime==-1){
+            canvas.setTranslateX(0);
+            canvas.setTranslateY(0);
+            canvas.setScaleX(canvas.getScaleX()*1.2);
+            canvas.setScaleY(canvas.getScaleY()*1.2);
+        }
+        if (zoomTime==-2){
+            canvas.setTranslateX(0);
+            canvas.setTranslateY(0);
+            canvas.setScaleX(canvas.getScaleX()*1.5);
+            canvas.setScaleY(canvas.getScaleY()*1.5);
+        }
         zoomTime += 1;
-        if (zoomTime >= 1){
+        if (zoomTime >= 2){
             zoomIBTN.setDisable(true);
             checkBEditar.setDisable(true);
             if (!state){

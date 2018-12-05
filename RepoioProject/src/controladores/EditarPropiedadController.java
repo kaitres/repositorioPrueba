@@ -121,7 +121,7 @@ public class EditarPropiedadController implements Initializable {
                 ArrayList<Propiedad> auxiliar=InterfazController.propiedadActual;
                 propiedadesObj.add(new Propiedad("p"+(propiedadesObj.size()+1), comboBox.getValue(), (ArrayList<Propiedad>) auxiliar.clone()));
             }else{
-                propiedadesObj.add(new Propiedad("p"+(propiedadesObj.size()+1), comboBox.getValue()));
+                propiedadesObj.add(new Propiedad("p"+(InterfazController.cantProps+1), comboBox.getValue()));
             }
             ObservableList<Propiedad> item = FXCollections.observableArrayList();
             item.addAll(propiedadesObj);
@@ -130,6 +130,7 @@ public class EditarPropiedadController implements Initializable {
             
             comboBox.setValue(Tipo.generico);
         }
+        InterfazController.cantProps += 1;
     }
 
     @FXML
@@ -150,6 +151,7 @@ public class EditarPropiedadController implements Initializable {
         btEditar.setDisable(true);
         propiedadField.setText("");
         comboBox.setValue(Tipo.generico);
+        InterfazController.cantProps -= 1;
     }
 
     @FXML
