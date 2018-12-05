@@ -898,7 +898,6 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             checkBEditar.setDisable(false);
             editar = state;
         }
-        System.out.println(canvas.getWidth() + " " + canvas.getHeight());
     }
 
     @FXML
@@ -944,7 +943,6 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             checkBEditar.setDisable(false);
             editar = state;
         }
-        System.out.println(canvas.getWidth() + " " + canvas.getHeight());
     }
 
     @FXML

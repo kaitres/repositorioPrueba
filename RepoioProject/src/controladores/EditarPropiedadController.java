@@ -5,6 +5,7 @@
  */
 package controladores;
 
+import clases.Entidad;
 import clases.Propiedad;
 import clases.Tipo;
 import java.io.IOException;
@@ -16,6 +17,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
@@ -81,7 +83,7 @@ public class EditarPropiedadController implements Initializable {
             items.addAll(Tipo.generico);
         }
         
-
+        
         comboBox.setItems(items);
         comboBox.setValue(Tipo.generico);
     }    
@@ -89,8 +91,6 @@ public class EditarPropiedadController implements Initializable {
     @FXML
     private void aniadir(ActionEvent event) throws IOException {
         if(!"".equals(propiedadField.getText())){
-            
-            
             if(comboBox.getValue()==Tipo.compuesto ){
                 InterfazController.nivelPropiedadCompuesta=false;
                 InterfazController.propiedadActual.clear();
@@ -100,16 +100,17 @@ public class EditarPropiedadController implements Initializable {
                 ArrayList<Propiedad> auxiliar=InterfazController.propiedadActual;
                 propiedadesObj.add(new Propiedad(propiedadField.getText(), comboBox.getValue(), (ArrayList<Propiedad>) auxiliar.clone()));
             }else{
-                
+
                     propiedadesObj.add(new Propiedad(propiedadField.getText(), comboBox.getValue()));
-                
+
             }
             ObservableList<Propiedad> item = FXCollections.observableArrayList();
             item.addAll(propiedadesObj);
             listaPropiedadesView.setItems(item);
             propiedadField.setText("");
+
+            comboBox.setValue(Tipo.generico); 
             
-            comboBox.setValue(Tipo.generico);
         }
         else {
             if(comboBox.getValue()==Tipo.compuesto ){

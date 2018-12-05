@@ -45,7 +45,7 @@ public class CrearEntidadController implements Initializable {
     Alert alertEx = new Alert(Alert.AlertType.INFORMATION);
     
     private boolean debil = false;
-    
+    private boolean hayParcial = false;
     
     /**
      * Initializes the controller class.
@@ -55,7 +55,7 @@ public class CrearEntidadController implements Initializable {
         InterfazController.propiedadActual.clear();
         alert.setTitle("Error");
         alert.setHeaderText(null);
-        alert.setContentText("Debes ponerle un nombre");
+        alert.setContentText("La entidad debil debe tener una propiedad parcial");
         
         alertEx.setTitle("Error");
         alertEx.setHeaderText(null);
@@ -85,7 +85,36 @@ public class CrearEntidadController implements Initializable {
             if(nombre.getText().length()>20){
                 alertEx.showAndWait();
             } else{
-                nombreE=nombre.getText();
+                for (Propiedad p : InterfazController.propiedadActual){
+                    if (p.getTipo() == Tipo.parcial){
+                        hayParcial = true;
+                    }
+                }
+                if (debil && !hayParcial){
+                    alert.showAndWait();
+                } else{
+                    nombreE=nombre.getText();
+                    InterfazController.entidadActual = new Entidad(nombreE);
+                    Figura f = new Figura();
+                    f.setDebil(debil);
+                    f.rectangulo(InterfazController.posicionDefaultX, InterfazController.posicionDefaultY, 25);
+                    InterfazController.entidadActual.setFigura(f);
+                    InterfazController.entidadActual.setPropiedades((ArrayList<Propiedad>) InterfazController.propiedadActual.clone());
+                    Stage stage = (Stage) aceBtn.getScene().getWindow();
+                    stage.close();  
+                }
+                
+            }  
+        }else{
+            for (Propiedad p : InterfazController.propiedadActual){
+                if (p.getTipo() == Tipo.parcial){
+                    hayParcial = true;
+                }
+            }
+            if (debil && !hayParcial){
+                alert.showAndWait();
+            } else{
+                nombreE="e"+(InterfazController.diagrama.getEntidades().size()+1);
                 InterfazController.entidadActual = new Entidad(nombreE);
                 Figura f = new Figura();
                 f.setDebil(debil);
@@ -93,18 +122,8 @@ public class CrearEntidadController implements Initializable {
                 InterfazController.entidadActual.setFigura(f);
                 InterfazController.entidadActual.setPropiedades((ArrayList<Propiedad>) InterfazController.propiedadActual.clone());
                 Stage stage = (Stage) aceBtn.getScene().getWindow();
-                stage.close();  
-            }  
-        }else{
-            nombreE="e"+(InterfazController.diagrama.getEntidades().size()+1);
-            InterfazController.entidadActual = new Entidad(nombreE);
-            Figura f = new Figura();
-            f.setDebil(debil);
-            f.rectangulo(InterfazController.posicionDefaultX, InterfazController.posicionDefaultY, 25);
-            InterfazController.entidadActual.setFigura(f);
-            InterfazController.entidadActual.setPropiedades((ArrayList<Propiedad>) InterfazController.propiedadActual.clone());
-            Stage stage = (Stage) aceBtn.getScene().getWindow();
-            stage.close();
+                stage.close();
+            }
         }
         
     }
@@ -115,24 +134,43 @@ public class CrearEntidadController implements Initializable {
             if(nombre.getText().length()>20){
                 alertEx.showAndWait();
             } else{
-                nombreE=nombre.getText();
+                for (Propiedad p : InterfazController.propiedadActual){
+                    if (p.getTipo() == Tipo.parcial){
+                        hayParcial = true;
+                    }
+                }
+                if (debil && !hayParcial){
+                    alert.showAndWait();
+                } else{
+                    nombreE=nombre.getText();
+                    InterfazController.entidadActual = new Entidad(nombreE);
+                    Figura f = new Figura();
+                    f.setDebil(debil);
+                    f.rectangulo(InterfazController.posicionDefaultX, InterfazController.posicionDefaultY, 25);
+                    InterfazController.entidadActual.setFigura(f);
+                    InterfazController.entidadActual.setPropiedades((ArrayList<Propiedad>) InterfazController.propiedadActual.clone());
+                    Stage stage = (Stage) aceBtn.getScene().getWindow();
+                    stage.close();  
+                }
+            } 
+        } else{
+            for (Propiedad p : InterfazController.propiedadActual){
+                if (p.getTipo() == Tipo.parcial){
+                    hayParcial = true;
+                }
+            }
+            if (debil && !hayParcial){
+                alert.showAndWait();
+            } else{
+                nombreE="e"+(InterfazController.diagrama.getEntidades().size()+1);
                 InterfazController.entidadActual = new Entidad(nombreE);
                 Figura f = new Figura();
                 f.rectangulo(InterfazController.posicionDefaultX, InterfazController.posicionDefaultY, 25);
                 InterfazController.entidadActual.setFigura(f);
                 InterfazController.entidadActual.setPropiedades((ArrayList<Propiedad>) InterfazController.propiedadActual.clone());
                 Stage stage = (Stage) aceBtn.getScene().getWindow();
-                stage.close();  
-            } 
-        } else{
-            nombreE="e"+(InterfazController.diagrama.getEntidades().size()+1);
-            InterfazController.entidadActual = new Entidad(nombreE);
-            Figura f = new Figura();
-            f.rectangulo(InterfazController.posicionDefaultX, InterfazController.posicionDefaultY, 25);
-            InterfazController.entidadActual.setFigura(f);
-            InterfazController.entidadActual.setPropiedades((ArrayList<Propiedad>) InterfazController.propiedadActual.clone());
-            Stage stage = (Stage) aceBtn.getScene().getWindow();
-            stage.close();
+                stage.close();
+            }
         }
     }
 
