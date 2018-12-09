@@ -128,7 +128,7 @@ public class Relacion {
         }
         
         
-        if(uniones.size()<3 && uniones.size()>0){
+        if(uniones.size()<3 && uniones.size()>0 && this.figura.debil==false){
             if("Doble".equals(entidad1Linea)){
                 uniones.get(0).setDebil(true);
             }else{
