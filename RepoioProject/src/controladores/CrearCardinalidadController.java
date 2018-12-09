@@ -57,6 +57,11 @@ public class CrearCardinalidadController implements Initializable {
         choiceEntidad1.setValue(InterfazController.relacionActual.getEntidad1Cardinal());
         choiceEntidad2.setValue(InterfazController.relacionActual.getEntidad2Cardinal());
         
+        if(InterfazController.relacionActual.getFigura().isDebil()){
+            choiceEntidad1Linea.setDisable(true);
+            choiceEntidad2Linea.setDisable(true);
+        }
+        
         ObservableList<String> itemLinea = FXCollections.observableArrayList();
         itemLinea.addAll("Doble","Simple");
         
@@ -80,9 +85,11 @@ public class CrearCardinalidadController implements Initializable {
     private void aceptar(ActionEvent event) {
         InterfazController.relacionActual.setEntidad1Cardinal(choiceEntidad1.getValue());
         InterfazController.relacionActual.setEntidad2Cardinal(choiceEntidad2.getValue());
+        if(!InterfazController.relacionActual.getFigura().isDebil()){
+            InterfazController.relacionActual.setEntidad1Linea(choiceEntidad1Linea.getValue());
+            InterfazController.relacionActual.setEntidad2Linea(choiceEntidad2Linea.getValue());
         
-        InterfazController.relacionActual.setEntidad1Linea(choiceEntidad1Linea.getValue());
-        InterfazController.relacionActual.setEntidad2Linea(choiceEntidad2Linea.getValue());
+        }
         
         
         Stage stage = (Stage) butonAce.getScene().getWindow();

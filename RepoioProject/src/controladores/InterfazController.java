@@ -796,7 +796,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                             puntoGuardado();
                             break;
                         }
-                        if(hayClave(relacionActual.getComponentes()) && 1==hayDebil(relacionActual.getComponentes())){
+                        if(hayClave(relacionActual.getComponentes()) && 1==hayDebil(relacionActual.getComponentes()) && relacionActual.getComponentes().size()==2){
                             ArrayList<Integer> debiles =cualesDependeran(relacionActual.getComponentes());
                             if(debiles.isEmpty()){
                                 relacionActual.getFigura().setDebil(false);
@@ -817,6 +817,11 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                             AbrirVentana.CargarVista(getClass().getResource("/fxmls/CrearCardinalidad.fxml"));
                 
                             relacionActual = null;
+                        }else{
+                            relacionActual.setEntidad1Cardinal("");
+                            relacionActual.setEntidad2Cardinal("");
+                            relacionActual.setEntidad1Linea("Simple");
+                            relacionActual.setEntidad2Linea("Simple");
                         }
                         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                         reDibujarTodo();
