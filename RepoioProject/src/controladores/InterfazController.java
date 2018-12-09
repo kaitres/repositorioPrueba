@@ -276,7 +276,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             rec.setFigura(fig);
             rec.setPropiedades(propiedadActual);
 
-            if(hayClave(compRelacion) && 0<hayDebil(compRelacion)){
+            if(hayClave(compRelacion) && 1==hayDebil(compRelacion)){
                 ArrayList<Integer> debiles =cualesDependeran(compRelacion);
                 if(!debiles.isEmpty()){
                     
@@ -796,7 +796,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                             puntoGuardado();
                             break;
                         }
-                        if(hayClave(relacionActual.getComponentes()) && 0<hayDebil(relacionActual.getComponentes())){
+                        if(hayClave(relacionActual.getComponentes()) && 1==hayDebil(relacionActual.getComponentes())){
                             ArrayList<Integer> debiles =cualesDependeran(relacionActual.getComponentes());
                             if(debiles.isEmpty()){
                                 relacionActual.getFigura().setDebil(false);

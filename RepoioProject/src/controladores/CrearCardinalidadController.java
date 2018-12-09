@@ -36,6 +36,10 @@ public class CrearCardinalidadController implements Initializable {
     private Button butonAce;
     @FXML
     private Button butonCan;
+    @FXML
+    private ChoiceBox<String> choiceEntidad1Linea;
+    @FXML
+    private ChoiceBox<String> choiceEntidad2Linea;
 
     /**
      * Initializes the controller class.
@@ -45,10 +49,23 @@ public class CrearCardinalidadController implements Initializable {
         // TODO
         ObservableList<String> itemTip = FXCollections.observableArrayList();
         itemTip.addAll("N","1");
+        
         choiceEntidad1.setItems(itemTip);
         choiceEntidad2.setItems(itemTip);
-        choiceEntidad1.setValue("1");
-        choiceEntidad2.setValue("1");
+        
+        
+        choiceEntidad1.setValue(InterfazController.relacionActual.getEntidad1Cardinal());
+        choiceEntidad2.setValue(InterfazController.relacionActual.getEntidad2Cardinal());
+        
+        ObservableList<String> itemLinea = FXCollections.observableArrayList();
+        itemLinea.addAll("Doble","Simple");
+        
+        choiceEntidad1Linea.setItems(itemLinea);
+        choiceEntidad2Linea.setItems(itemLinea);
+        
+        choiceEntidad1Linea.setValue(InterfazController.relacionActual.getEntidad1Linea());
+        choiceEntidad2Linea.setValue(InterfazController.relacionActual.getEntidad2Linea());
+        
         labelEntidad1.setText(InterfazController.relacionActual.getComponente(0).getNombre());
         if(InterfazController.relacionActual.getComponentes().size()==1){
             labelEntidad2.setText(InterfazController.relacionActual.getComponente(0).getNombre());
@@ -63,6 +80,11 @@ public class CrearCardinalidadController implements Initializable {
     private void aceptar(ActionEvent event) {
         InterfazController.relacionActual.setEntidad1Cardinal(choiceEntidad1.getValue());
         InterfazController.relacionActual.setEntidad2Cardinal(choiceEntidad2.getValue());
+        
+        InterfazController.relacionActual.setEntidad1Linea(choiceEntidad1Linea.getValue());
+        InterfazController.relacionActual.setEntidad2Linea(choiceEntidad2Linea.getValue());
+        
+        
         Stage stage = (Stage) butonAce.getScene().getWindow();
             stage.close();
     }

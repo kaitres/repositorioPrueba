@@ -22,7 +22,26 @@ public class Relacion {
     ArrayList<Integer> posicionDebiles = new ArrayList<>();
     String entidad1Cardinal="";
     String entidad2Cardinal="";
+    String entidad1Linea="Simple";
+    String entidad2Linea="Simple";
 
+    public String getEntidad1Linea() {
+        return entidad1Linea;
+    }
+
+    public String getEntidad2Linea() {
+        return entidad2Linea;
+    }
+
+    public void setEntidad1Linea(String entidad1Linea) {
+        this.entidad1Linea = entidad1Linea;
+    }
+
+    public void setEntidad2Linea(String entidad2Linea) {
+        this.entidad2Linea = entidad2Linea;
+    }
+    
+    
     public void setEntidad1Cardinal(String entidad1Cardinal) {
         this.entidad1Cardinal = entidad1Cardinal;
     }
@@ -70,6 +89,8 @@ public class Relacion {
         aux.posicionDebiles=(ArrayList<Integer>) posicionDebiles.clone();
         aux.entidad1Cardinal=entidad1Cardinal;
         aux.entidad2Cardinal=entidad2Cardinal;
+        aux.entidad1Linea = entidad1Linea;
+        aux.entidad2Linea = entidad2Linea;
         return aux;
     }
     public void correccion(){
@@ -104,6 +125,20 @@ public class Relacion {
         }
         for(int x =0; x<posicionDebiles.size();x++){
             uniones.get(posicionDebiles.get(x)).setDebil(true);
+        }
+        
+        
+        if(uniones.size()<3 && uniones.size()>0){
+            if("Doble".equals(entidad1Linea)){
+                uniones.get(0).setDebil(true);
+            }else{
+                uniones.get(0).setDebil(false);
+            }
+            if("Doble".equals(entidad2Linea)){
+                uniones.get(1).setDebil(true);
+            }else{
+                uniones.get(1).setDebil(false);
+            }
         }
     }
     public void eliminarDebil(Entidad c){
@@ -198,6 +233,7 @@ public class Relacion {
             if(uniones.get(i).debil){
                 this.figura.tirarDobleLinea(gc, uniones.get(i));
             }else{
+                
                 this.figura.tirarLinea(gc, uniones.get(i));
             }
             if(i==0){

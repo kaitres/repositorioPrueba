@@ -23,8 +23,8 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <ChoiceBox fx:id="choiceEntidad1" layoutX="177.0" layoutY="67.0" prefHeight="25.0" prefWidth="55.0" />
-      <ChoiceBox fx:id="choiceEntidad2" layoutX="177.0" layoutY="101.0" prefHeight="25.0" prefWidth="55.0" />
+      <ChoiceBox fx:id="choiceEntidad1" layoutX="96.0" layoutY="74.0" prefHeight="25.0" prefWidth="55.0" />
+      <ChoiceBox fx:id="choiceEntidad2" layoutX="96.0" layoutY="108.0" prefHeight="25.0" prefWidth="55.0" />
       <Button fx:id="butonAce" layoutX="176.0" layoutY="145.0" mnemonicParsing="false" onAction="#aceptar" styleClass="boton" stylesheets="@Estilo.css" text="Aceptar" />
       <Button fx:id="butonCan" layoutX="11.0" layoutY="145.0" mnemonicParsing="false" onAction="#cancelar" styleClass="boton" stylesheets="@Estilo.css" text="Cancelar" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ececec" height="60.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="247.0" />
@@ -33,5 +33,7 @@
             <Font size="20.0" />
          </font>
       </Label>
+      <ChoiceBox fx:id="choiceEntidad1Linea" layoutX="176.0" layoutY="74.0" prefHeight="25.0" prefWidth="55.0" />
+      <ChoiceBox fx:id="choiceEntidad2Linea" layoutX="176.0" layoutY="108.0" prefHeight="25.0" prefWidth="55.0" />
    </children>
 </AnchorPane>
