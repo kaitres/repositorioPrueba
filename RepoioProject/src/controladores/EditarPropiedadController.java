@@ -120,9 +120,9 @@ public class EditarPropiedadController implements Initializable {
                 AbrirVentana.CargarVista(getClass().getResource("/fxmls/EditarPropiedad.fxml"));
                 InterfazController.nivelPropiedadCompuesta=true;
                 ArrayList<Propiedad> auxiliar=InterfazController.propiedadActual;
-                propiedadesObj.add(new Propiedad("p"+(propiedadesObj.size()+1), comboBox.getValue(), (ArrayList<Propiedad>) auxiliar.clone()));
+                propiedadesObj.add(new Propiedad("p"+(propiedadesObj.size()+1)+InterfazController.nombreActual, comboBox.getValue(), (ArrayList<Propiedad>) auxiliar.clone()));
             }else{
-                propiedadesObj.add(new Propiedad("p"+(InterfazController.cantProps+1), comboBox.getValue()));
+                propiedadesObj.add(new Propiedad("p"+(propiedadesObj.size()+1)+InterfazController.nombreActual, comboBox.getValue()));
             }
             ObservableList<Propiedad> item = FXCollections.observableArrayList();
             item.addAll(propiedadesObj);

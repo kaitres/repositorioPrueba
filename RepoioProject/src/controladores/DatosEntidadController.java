@@ -45,15 +45,17 @@ import javafx.stage.Stage;
 public class DatosEntidadController implements Initializable {
     
     int propiedadEditada;
-    
-    
+
+    private boolean hayParcial = false;
+    private boolean hayClave = false;
        
     @FXML
     public TextField nombre;
     @FXML 
     private Button canBtn;
     
-    
+    Alert alertDebil = new Alert(Alert.AlertType.INFORMATION);
+    Alert alertFuerte = new Alert(Alert.AlertType.INFORMATION);
     Alert alertEx = new Alert(Alert.AlertType.INFORMATION);
     
     
@@ -65,6 +67,16 @@ public class DatosEntidadController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        InterfazController.propiedadActual.clear();
+        alertDebil.setTitle("Error");
+        alertDebil.setHeaderText(null);
+        alertDebil.setContentText("La entidad debil debe tener una propiedad parcial");
+        
+        alertFuerte.setTitle("Error");
+        alertFuerte.setHeaderText(null);
+        alertFuerte.setContentText("La entidad fuerte debe tener una propiedad clave");
+        
         alertEx.setTitle("Error");
         alertEx.setHeaderText(null);
         alertEx.setContentText("Haz excedido el limite de 20 caracteres");
@@ -88,13 +100,26 @@ public class DatosEntidadController implements Initializable {
             if (nombre.getText().length()>20){
                 alertEx.showAndWait();
             }else{
+                for (Propiedad p : InterfazController.propiedadActual){
+                    if (p.getTipo() == Tipo.parcial){
+                        hayParcial = true;
+                    }
+                    if (p.getTipo() == Tipo.clave){
+                        hayClave = true;
+                    }
+                }
+                if (choiceDebil.isSelected() && !hayParcial){
+                    alertDebil.showAndWait();
+                } else if (!choiceDebil.isSelected() && !hayClave){
+                    alertFuerte.showAndWait();
+                } else {
+                    entidadActual.setNombre(nombre.getText());
+                    entidadActual.setPropiedades((ArrayList<Propiedad>) InterfazController.propiedadActual.clone());
+                    entidadActual.getFigura().setDebil(choiceDebil.isSelected());
+                    Stage stage = (Stage) canBtn.getScene().getWindow();
+                    stage.close(); 
+                }
                 
-                entidadActual.setNombre(nombre.getText());
-                
-                entidadActual.setPropiedades((ArrayList<Propiedad>) InterfazController.propiedadActual.clone());
-                entidadActual.getFigura().setDebil(choiceDebil.isSelected());
-                Stage stage = (Stage) canBtn.getScene().getWindow();
-                stage.close(); 
             }
         }
         else{
@@ -183,7 +208,13 @@ public class DatosEntidadController implements Initializable {
 
     @FXML
     private void haciaPropiedad(ActionEvent event) throws IOException {
-        
+        if (nombre.getText().length()!=0){
+            if(nombre.getText().length()>20){
+                alertEx.showAndWait();
+            }
+        } else{
+            InterfazController.nombreActual="e"+(InterfazController.diagrama.getEntidades().size()+1);
+        }
         AbrirVentana.CargarVista(getClass().getResource("/fxmls/EditarPropiedad.fxml"));
     }
     

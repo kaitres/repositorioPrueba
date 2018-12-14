@@ -41,11 +41,13 @@ public class CrearEntidadController implements Initializable {
     @FXML
     private Button aceBtn;
     
-    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    Alert alertDebil = new Alert(Alert.AlertType.INFORMATION);
+    Alert alertFuerte = new Alert(Alert.AlertType.INFORMATION);
     Alert alertEx = new Alert(Alert.AlertType.INFORMATION);
     
     private boolean debil = false;
     private boolean hayParcial = false;
+    private boolean hayClave = false;
     
     /**
      * Initializes the controller class.
@@ -53,9 +55,13 @@ public class CrearEntidadController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         InterfazController.propiedadActual.clear();
-        alert.setTitle("Error");
-        alert.setHeaderText(null);
-        alert.setContentText("La entidad debil debe tener una propiedad parcial");
+        alertDebil.setTitle("Error");
+        alertDebil.setHeaderText(null);
+        alertDebil.setContentText("La entidad debil debe tener una propiedad parcial");
+        
+        alertFuerte.setTitle("Error");
+        alertFuerte.setHeaderText(null);
+        alertFuerte.setContentText("La entidad fuerte debe tener una propiedad clave");
         
         alertEx.setTitle("Error");
         alertEx.setHeaderText(null);
@@ -89,10 +95,15 @@ public class CrearEntidadController implements Initializable {
                     if (p.getTipo() == Tipo.parcial){
                         hayParcial = true;
                     }
+                    if (p.getTipo() == Tipo.clave){
+                        hayClave = true;
+                    }
                 }
                 if (debil && !hayParcial){
-                    alert.showAndWait();
-                } else{
+                    alertDebil.showAndWait();
+                }else if (!debil && !hayClave){
+                    alertFuerte.showAndWait();
+                }else{
                     nombreE=nombre.getText();
                     InterfazController.entidadActual = new Entidad(nombreE);
                     Figura f = new Figura();
@@ -106,14 +117,19 @@ public class CrearEntidadController implements Initializable {
                 
             }  
         }else{
-            for (Propiedad p : InterfazController.propiedadActual){
+           for (Propiedad p : InterfazController.propiedadActual){
                 if (p.getTipo() == Tipo.parcial){
                     hayParcial = true;
                 }
+                if (p.getTipo() == Tipo.clave){
+                    hayClave = true;
+                }
             }
             if (debil && !hayParcial){
-                alert.showAndWait();
-            } else{
+                alertDebil.showAndWait();
+            }else if (!debil && !hayClave){
+                alertFuerte.showAndWait();
+            }else{
                 nombreE="e"+(InterfazController.diagrama.getEntidades().size()+1);
                 InterfazController.entidadActual = new Entidad(nombreE);
                 Figura f = new Figura();
@@ -138,10 +154,15 @@ public class CrearEntidadController implements Initializable {
                     if (p.getTipo() == Tipo.parcial){
                         hayParcial = true;
                     }
+                    if (p.getTipo() == Tipo.clave){
+                        hayClave = true;
+                    }
                 }
                 if (debil && !hayParcial){
-                    alert.showAndWait();
-                } else{
+                    alertDebil.showAndWait();
+                }else if (!debil && !hayClave){
+                    alertFuerte.showAndWait();
+                }else{
                     nombreE=nombre.getText();
                     InterfazController.entidadActual = new Entidad(nombreE);
                     Figura f = new Figura();
@@ -158,10 +179,15 @@ public class CrearEntidadController implements Initializable {
                 if (p.getTipo() == Tipo.parcial){
                     hayParcial = true;
                 }
+                if (p.getTipo() == Tipo.clave){
+                    hayClave = true;
+                }
             }
             if (debil && !hayParcial){
-                alert.showAndWait();
-            } else{
+                alertDebil.showAndWait();
+            }else if (!debil && !hayClave){
+                alertFuerte.showAndWait();
+            }else{
                 nombreE="e"+(InterfazController.diagrama.getEntidades().size()+1);
                 InterfazController.entidadActual = new Entidad(nombreE);
                 Figura f = new Figura();
@@ -180,6 +206,13 @@ public class CrearEntidadController implements Initializable {
 
     @FXML
     private void haciaPropiedad(ActionEvent event) throws IOException {
+        if (nombre.getText().length()!=0){
+            if(nombre.getText().length()>20){
+                alertEx.showAndWait();
+            }
+        } else{
+            InterfazController.nombreActual="e"+(InterfazController.diagrama.getEntidades().size()+1);
+        }
         AbrirVentana.CargarVista(getClass().getResource("/fxmls/EditarPropiedad.fxml"));
     }
     

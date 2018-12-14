@@ -136,6 +136,13 @@ public class DatosRelacionController implements Initializable {
 
     @FXML
     private void haciaPropiedad(ActionEvent event) throws IOException {
+        if (nombre.getText().length()!=0){
+            if(nombre.getText().length()>20){
+                alertEx.showAndWait();
+            }
+        } else{
+            InterfazController.nombreActual="e"+(InterfazController.diagrama.getEntidades().size()+1);
+        }
         AbrirVentana.CargarVista(getClass().getResource("/fxmls/EditarPropiedad.fxml"));
     }
 

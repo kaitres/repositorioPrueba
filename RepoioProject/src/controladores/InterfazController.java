@@ -1,4 +1,4 @@
-
+    
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -80,6 +80,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     public static Entidad entidadActual;
     public static Relacion relacionActual;
     public static Herencia herenciaActual;
+    public static String nombreActual;
 
     public static ArrayList<Propiedad> propiedadActual; 
     public static int cantProps;
@@ -145,8 +146,6 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             while(indiceD != diagramas.size()-1 ){
                 diagramas.remove(diagramas.size()-1);
             }
-            System.out.println("parche");
-            datos();
 
                 
           
@@ -160,37 +159,19 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         
         diagramas.add(diagrama.clon(id));
         id+=1;
-        datos();
 
         
-     }
-        
-       
-    public void datos(){
-         int h=0;
-         System.out.println("--------------------");
-         for (Diagrama diagrama1 : diagramas) {
-             if(h == indiceD){
-                 System.out.print("**");
-             }
-             System.out.println(diagrama1.getId());
-             h+=1;
-         }
-         System.out.println("--------------------");
      }
     
     @FXML 
     private void deshacer(){
        
         if(indiceD > 0 ){
-            System.out.println("deshacer");
             indiceD-=1;
             diagrama = diagramas.get(indiceD).clon(id);
             gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
             reDibujarTodo();
         }
-        System.out.println(indiceD);
-        datos();
         
     }
     
@@ -200,13 +181,10 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         
         if(indiceD < diagramas.size()-1){
             indiceD += 1;
-            System.out.println("rehacer");
             diagrama = diagramas.get(indiceD).clon(id);
             gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
             reDibujarTodo();
         }
-        System.out.println(indiceD);
-        datos();
         
     }
     //-----------------------------------------------------------------------------------
@@ -971,5 +949,9 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             puntoGuardado();
             
         }
+    }
+
+    @FXML
+    private void validSemantica(ActionEvent event) {
     }
 }
