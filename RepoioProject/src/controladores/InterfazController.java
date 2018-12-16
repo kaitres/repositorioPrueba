@@ -155,12 +155,9 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         }
         else{ 
             indiceD +=1;      
-        }
-        
+        }       
         diagramas.add(diagrama.clon(id));
-        id+=1;
-
-        
+        id+=1; 
      }
     
     @FXML 
@@ -949,6 +946,24 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             puntoGuardado();
             
         }
+    }
+    public static boolean elemMismoNombre (){
+        for (Entidad e : diagrama.getEntidades()){
+            if (e.getNombre().equals(nombreActual)){
+                return true;
+            }
+            for (Propiedad p : e.getPropiedades()){
+                if (p.getNombre().equals(nombreActual)){
+                    return true;
+                }
+            }
+        }
+        for (Relacion r : diagrama.getRelaciones()){
+            if (r.getNombre().equals(nombreActual)){
+                return true;
+            }
+        }
+        return false;
     }
 
     @FXML

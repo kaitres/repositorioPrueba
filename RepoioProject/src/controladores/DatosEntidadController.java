@@ -54,6 +54,7 @@ public class DatosEntidadController implements Initializable {
     @FXML 
     private Button canBtn;
     
+    Alert alertNombre = new Alert(Alert.AlertType.INFORMATION);
     Alert alertDebil = new Alert(Alert.AlertType.INFORMATION);
     Alert alertFuerte = new Alert(Alert.AlertType.INFORMATION);
     Alert alertEx = new Alert(Alert.AlertType.INFORMATION);
@@ -76,6 +77,10 @@ public class DatosEntidadController implements Initializable {
         alertFuerte.setTitle("Error");
         alertFuerte.setHeaderText(null);
         alertFuerte.setContentText("La entidad fuerte debe tener una propiedad clave");
+        
+        alertNombre.setTitle("Error");
+        alertNombre.setHeaderText(null);
+        alertNombre.setContentText("La entidad tiene el mismo nombre que otro elemento en el diagrama");
         
         alertEx.setTitle("Error");
         alertEx.setHeaderText(null);
@@ -113,11 +118,17 @@ public class DatosEntidadController implements Initializable {
                 } else if (!choiceDebil.isSelected() && !hayClave){
                     alertFuerte.showAndWait();
                 } else {
-                    entidadActual.setNombre(nombre.getText());
-                    entidadActual.setPropiedades((ArrayList<Propiedad>) InterfazController.propiedadActual.clone());
-                    entidadActual.getFigura().setDebil(choiceDebil.isSelected());
-                    Stage stage = (Stage) canBtn.getScene().getWindow();
-                    stage.close(); 
+                    InterfazController.nombreActual = nombre.getText();
+                    if (!InterfazController.elemMismoNombre()){
+                        entidadActual.setNombre(nombre.getText());
+                        entidadActual.setPropiedades((ArrayList<Propiedad>) InterfazController.propiedadActual.clone());
+                        entidadActual.getFigura().setDebil(choiceDebil.isSelected());
+                        Stage stage = (Stage) canBtn.getScene().getWindow();
+                        stage.close(); 
+                    } else{
+                        alertNombre.showAndWait();
+                    }
+                    
                 }
                 
             }

@@ -55,6 +55,7 @@ public class DatosRelacionController implements Initializable {
     public ListView lista;
     ObservableList<EntidadCheck> entidadCheck = FXCollections.observableArrayList();
     
+    Alert alertNombre = new Alert(Alert.AlertType.INFORMATION); 
     Alert alertEx = new Alert(Alert.AlertType.INFORMATION);
     
     @FXML private Button canBtn;
@@ -87,6 +88,9 @@ public class DatosRelacionController implements Initializable {
         comboBox.setItems(itemCB);
         delBtn.setDisable(true);
         
+        alertNombre.setTitle("Error");
+        alertNombre.setHeaderText(null);
+        alertNombre.setContentText("La relacion tiene el mismo nombre que otro elemento en el diagrama");
         alertEx.setTitle("Error");
         alertEx.setHeaderText(null);
         alertEx.setContentText("Haz excedido el limite de 20 caracteres");
@@ -100,22 +104,28 @@ public class DatosRelacionController implements Initializable {
             if (nombre.getText().length()>20){
                 alertEx.showAndWait();
             }else{
-                Figura fig = new Figura();
-                if (ents.size()==1 ||
-                    ents.size()==2 ||
-                    ents.size()==4 ){
-                    fig.crearFigura((int)relacionActual.getFigura().getPuntoCentral().getX(), 
-                            (int)relacionActual.getFigura().getPuntoCentral().getY(), 20 , 4);
+                InterfazController.nombreActual = nombre.getText();
+                if (!InterfazController.elemMismoNombre()){
+                    Figura fig = new Figura();
+                    if (ents.size()==1 ||
+                        ents.size()==2 ||
+                        ents.size()==4 ){
+                        fig.crearFigura((int)relacionActual.getFigura().getPuntoCentral().getX(), 
+                                (int)relacionActual.getFigura().getPuntoCentral().getY(), 20 , 4);
+                    } else {
+                        fig.crearFigura((int)relacionActual.getFigura().getPuntoCentral().getX(), 
+                                (int)relacionActual.getFigura().getPuntoCentral().getY(), 20 , ents.size());
+                    }   
+                    relacionActual.setFigura(fig);
+                    relacionActual.setComponentes(ents);
+                    relacionActual.setNombre(nombre.getText());
+                    relacionActual.setPropiedades((ArrayList<Propiedad>) InterfazController.propiedadActual.clone());
+                    Stage stage = (Stage) canBtn.getScene().getWindow();
+                    stage.close();
                 } else {
-                    fig.crearFigura((int)relacionActual.getFigura().getPuntoCentral().getX(), 
-                            (int)relacionActual.getFigura().getPuntoCentral().getY(), 20 , ents.size());
-                }   
-                relacionActual.setFigura(fig);
-                relacionActual.setComponentes(ents);
-                relacionActual.setNombre(nombre.getText());
-                relacionActual.setPropiedades((ArrayList<Propiedad>) InterfazController.propiedadActual.clone());
-                Stage stage = (Stage) canBtn.getScene().getWindow();
-                stage.close();
+                    alertNombre.showAndWait();
+                }
+                
             } 
         }
         else{

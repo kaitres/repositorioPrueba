@@ -36,6 +36,7 @@ public class CrearRelacionController implements Initializable {
     private TextField nombre;
 
     Alert alertName = new Alert(Alert.AlertType.INFORMATION);
+    Alert alertNombre = new Alert(Alert.AlertType.INFORMATION);
     Alert alertEmpty = new Alert(Alert.AlertType.INFORMATION);
     Alert alertEx = new Alert(Alert.AlertType.INFORMATION);
     
@@ -62,6 +63,9 @@ public class CrearRelacionController implements Initializable {
             });
         }
         
+        alertNombre.setTitle("Error");
+        alertNombre.setHeaderText(null);
+        alertNombre.setContentText("La relacion tiene el mismo nombre que otro elemento en el diagrama");
         alertName.setTitle("Error");
         alertName.setHeaderText(null);
         alertName.setContentText("Debes ponerle un nombre");
@@ -96,10 +100,16 @@ public class CrearRelacionController implements Initializable {
             if(nombre.getText().length()>20){
                 alertEx.showAndWait();
             } else{
-                InterfazController.newRelacionNombre = nombre.getText();
-                InterfazController.relacionValidacion = true;
-                Stage stage = (Stage) nombre.getScene().getWindow();
-                stage.close();
+                InterfazController.nombreActual = nombre.getText();
+                if (!InterfazController.elemMismoNombre()){
+                    InterfazController.newRelacionNombre = nombre.getText();
+                    InterfazController.relacionValidacion = true;
+                    Stage stage = (Stage) nombre.getScene().getWindow();
+                    stage.close();
+                } else {
+                    alertNombre.showAndWait();
+                }
+                
             }   
         }
     }
@@ -121,10 +131,15 @@ public class CrearRelacionController implements Initializable {
             if(nombre.getText().length()>20){
                 alertEx.showAndWait();
             } else{
-                InterfazController.newRelacionNombre = nombre.getText();
-                InterfazController.relacionValidacion = true;
-                Stage stage = (Stage) nombre.getScene().getWindow();
-                stage.close();
+                InterfazController.nombreActual = nombre.getText();
+                if (!InterfazController.elemMismoNombre()){
+                    InterfazController.newRelacionNombre = nombre.getText();
+                    InterfazController.relacionValidacion = true;
+                    Stage stage = (Stage) nombre.getScene().getWindow();
+                    stage.close();
+                } else {
+                    alertNombre.showAndWait();
+                }
             }
         }
     }

@@ -57,6 +57,9 @@ public class EditarPropiedadController implements Initializable {
     private Button canBtn;
     @FXML
     private ComboBox<Tipo> comboBox;
+    
+    Alert alertNombre = new Alert(Alert.AlertType.INFORMATION); 
+
 
     /**
      * Initializes the controller class.
@@ -64,6 +67,11 @@ public class EditarPropiedadController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        
+        alertNombre.setTitle("Error");
+        alertNombre.setHeaderText(null);
+        alertNombre.setContentText("La propiedad tiene el mismo nombre que otro elemento en el diagrama");
+        
         if(InterfazController.propiedadActual==null){
             propiedadesObj= new ArrayList<>();
         }else{
@@ -91,25 +99,31 @@ public class EditarPropiedadController implements Initializable {
     @FXML
     private void aniadir(ActionEvent event) throws IOException {
         if(!"".equals(propiedadField.getText())){
-            if(comboBox.getValue()==Tipo.compuesto ){
-                InterfazController.nivelPropiedadCompuesta=false;
-                InterfazController.propiedadActual.clear();
-                InterfazController.propiedadActual=null;
-                AbrirVentana.CargarVista(getClass().getResource("/fxmls/EditarPropiedad.fxml"));
-                InterfazController.nivelPropiedadCompuesta=true;
-                ArrayList<Propiedad> auxiliar=InterfazController.propiedadActual;
-                propiedadesObj.add(new Propiedad(propiedadField.getText(), comboBox.getValue(), (ArrayList<Propiedad>) auxiliar.clone()));
-            }else{
+            InterfazController.nombreActual = propiedadField.getText();
+            if (!InterfazController.elemMismoNombre()){
+                if(comboBox.getValue()==Tipo.compuesto ){
+                    InterfazController.nivelPropiedadCompuesta=false;
+                    InterfazController.propiedadActual.clear();
+                    InterfazController.propiedadActual=null;
+                    AbrirVentana.CargarVista(getClass().getResource("/fxmls/EditarPropiedad.fxml"));
+                    InterfazController.nivelPropiedadCompuesta=true;
+                    ArrayList<Propiedad> auxiliar=InterfazController.propiedadActual;
+                    propiedadesObj.add(new Propiedad(propiedadField.getText(), comboBox.getValue(), (ArrayList<Propiedad>) auxiliar.clone()));
+                }else{
 
-                    propiedadesObj.add(new Propiedad(propiedadField.getText(), comboBox.getValue()));
+                        propiedadesObj.add(new Propiedad(propiedadField.getText(), comboBox.getValue()));
 
+                }
+                ObservableList<Propiedad> item = FXCollections.observableArrayList();
+                item.addAll(propiedadesObj);
+                listaPropiedadesView.setItems(item);
+                propiedadField.setText("");
+
+                comboBox.setValue(Tipo.generico); 
+            } else {
+                alertNombre.showAndWait();
             }
-            ObservableList<Propiedad> item = FXCollections.observableArrayList();
-            item.addAll(propiedadesObj);
-            listaPropiedadesView.setItems(item);
-            propiedadField.setText("");
-
-            comboBox.setValue(Tipo.generico); 
+            
             
         }
         else {

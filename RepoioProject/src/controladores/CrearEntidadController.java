@@ -41,6 +41,7 @@ public class CrearEntidadController implements Initializable {
     @FXML
     private Button aceBtn;
     
+    Alert alertNombre = new Alert(Alert.AlertType.INFORMATION); 
     Alert alertDebil = new Alert(Alert.AlertType.INFORMATION);
     Alert alertFuerte = new Alert(Alert.AlertType.INFORMATION);
     Alert alertEx = new Alert(Alert.AlertType.INFORMATION);
@@ -62,6 +63,10 @@ public class CrearEntidadController implements Initializable {
         alertFuerte.setTitle("Error");
         alertFuerte.setHeaderText(null);
         alertFuerte.setContentText("La entidad fuerte debe tener una propiedad clave");
+        
+        alertNombre.setTitle("Error");
+        alertNombre.setHeaderText(null);
+        alertNombre.setContentText("La entidad tiene el mismo nombre que otro elemento en el diagrama");
         
         alertEx.setTitle("Error");
         alertEx.setHeaderText(null);
@@ -104,15 +109,21 @@ public class CrearEntidadController implements Initializable {
                 }else if (!debil && !hayClave){
                     alertFuerte.showAndWait();
                 }else{
-                    nombreE=nombre.getText();
-                    InterfazController.entidadActual = new Entidad(nombreE);
-                    Figura f = new Figura();
-                    f.setDebil(debil);
-                    f.rectangulo(InterfazController.posicionDefaultX, InterfazController.posicionDefaultY, 25);
-                    InterfazController.entidadActual.setFigura(f);
-                    InterfazController.entidadActual.setPropiedades((ArrayList<Propiedad>) InterfazController.propiedadActual.clone());
-                    Stage stage = (Stage) aceBtn.getScene().getWindow();
-                    stage.close();  
+                    InterfazController.nombreActual = nombre.getText();
+                    if (!InterfazController.elemMismoNombre()){
+                        nombreE=nombre.getText();
+                        InterfazController.entidadActual = new Entidad(nombreE);
+                        Figura f = new Figura();
+                        f.setDebil(debil);
+                        f.rectangulo(InterfazController.posicionDefaultX, InterfazController.posicionDefaultY, 25);
+                        InterfazController.entidadActual.setFigura(f);
+                        InterfazController.entidadActual.setPropiedades((ArrayList<Propiedad>) InterfazController.propiedadActual.clone());
+                        Stage stage = (Stage) aceBtn.getScene().getWindow();
+                        stage.close(); 
+                    } else {
+                        alertNombre.showAndWait();
+                    }
+                     
                 }
                 
             }  
@@ -163,15 +174,20 @@ public class CrearEntidadController implements Initializable {
                 }else if (!debil && !hayClave){
                     alertFuerte.showAndWait();
                 }else{
-                    nombreE=nombre.getText();
-                    InterfazController.entidadActual = new Entidad(nombreE);
-                    Figura f = new Figura();
-                    f.setDebil(debil);
-                    f.rectangulo(InterfazController.posicionDefaultX, InterfazController.posicionDefaultY, 25);
-                    InterfazController.entidadActual.setFigura(f);
-                    InterfazController.entidadActual.setPropiedades((ArrayList<Propiedad>) InterfazController.propiedadActual.clone());
-                    Stage stage = (Stage) aceBtn.getScene().getWindow();
-                    stage.close();  
+                    InterfazController.nombreActual = nombre.getText();
+                    if (!InterfazController.elemMismoNombre()){
+                        nombreE=nombre.getText();
+                        InterfazController.entidadActual = new Entidad(nombreE);
+                        Figura f = new Figura();
+                        f.setDebil(debil);
+                        f.rectangulo(InterfazController.posicionDefaultX, InterfazController.posicionDefaultY, 25);
+                        InterfazController.entidadActual.setFigura(f);
+                        InterfazController.entidadActual.setPropiedades((ArrayList<Propiedad>) InterfazController.propiedadActual.clone());
+                        Stage stage = (Stage) aceBtn.getScene().getWindow();
+                        stage.close(); 
+                    } else {
+                        alertNombre.showAndWait();
+                    }
                 }
             } 
         } else{
