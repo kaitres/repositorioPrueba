@@ -87,6 +87,9 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
  
     public ArrayList<Point2D> puntosDeCorte;
     
+    public boolean agruMov = false;
+    public Agrupacion agrupacionMovimiento;
+    
     int zoomTime;
     
     Figura figuraMov;
@@ -139,9 +142,20 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         cantProps = 0;
         
     }
+     @FXML
+    private void agrupacion(){
+        
+        Agrupacion agrupacion = new Agrupacion("perro", diagrama.getRelaciones().get(diagrama.getRelaciones().size()-1));
+        diagrama.entidades.add(agrupacion);
+        
+        agrupacion.getFigura().dibujar(gc,agrupacion.getRelacion());
+        agrupacion.getFigura().setNombre("perro");
+
+    }
+
 //---------------------------------------------------------------------------------------------
     private void puntoGuardado() {
-
+/*
         if(indiceD < diagramas.size() - 1 ){
             while(indiceD != diagramas.size()-1 ){
                 diagramas.remove(diagramas.size()-1);
@@ -158,6 +172,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         }       
         diagramas.add(diagrama.clon(id));
         id+=1; 
+*/
      }
     
     @FXML 
@@ -341,6 +356,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         if(arrastrando){
             puntoGuardado();
         }
+         this.agruMov=false;
         this.arrastrando=false;       
     }
     
@@ -352,55 +368,115 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             Point2D mouse=new Point2D(event.getX(), event.getY());
             
             if(arrastrando){
-                figuraMov.setPuntoCentral(mouse);
+                
+                if(agruMov){
+                    
+                    agrupacionMovimiento.movimiento(mouse, gc);
+                }
+                else{
+                    figuraMov.setPuntoCentral(mouse);
+                }
+                /*
                 if (getMayores().getX()>770){ 
                     canvas.setWidth(getMayores().getX());
                 }
                 if (getMayores().getY()>520){
                     canvas.setHeight(getMayores().getY());
                 }
+*/
                 gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                 reDibujarTodo();
+
             }
             else{
+                if(dentroAgrupacion(mouse)){
+                    arrastrando=true;
+                    agruMov=true;
+                    agrupacionMovimiento=agrupacionEnMovimiento(mouse);
+                    agrupacionMovimiento.movimiento(mouse, gc);
+                    gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+                    reDibujarTodo();
+                }
                 if(dentroDeAlgunaFigura(mouse)){
                     arrastrando=true;
                     figuraMov =figuraEnMovimiento(mouse);
                     figuraMov.setPuntoCentral(mouse);
                     gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                     reDibujarTodo();
-                    
                 }
+                
             }
         }
     }
     
+    public Agrupacion agrupacionEnMovimiento(Point2D e){
+        for(int i=0 ; i<diagrama.getEntidades().size() ; i++){
+               if(diagrama.getEntidades().get(i) instanceof Agrupacion){
+                   Agrupacion entidade = (Agrupacion) diagrama.getEntidades().get(i);
+                   if ((e.getX() > ((Agrupacion) entidade).getFigura().getCordCuadradoMov().get(0).getX()) &&
+                       (e.getX() < ((Agrupacion) entidade).getFigura().getCordCuadradoMov().get(1).getX()) &&
+                       (e.getY() > ((Agrupacion) entidade).getFigura().getCordCuadradoMov().get(0).getY()) &&
+                       (e.getY() < ((Agrupacion) entidade).getFigura().getCordCuadradoMov().get(2).getY())){
+                       return (Agrupacion) entidade;
+               }
+           }
+        }
+        return new Agrupacion(null , null);   
+    }
+    public boolean dentroAgrupacion(Point2D e){
+        for(int i=0 ; i<diagrama.getEntidades().size() ; i++){
+           if(diagrama.getEntidades().get(i) instanceof Agrupacion){
+                Agrupacion entidade = (Agrupacion) diagrama.getEntidades().get(i);
+                if ((e.getX() > ((Agrupacion) entidade).getFigura().getCordCuadradoMov().get(0).getX()) &&
+                    (e.getX() < ((Agrupacion) entidade).getFigura().getCordCuadradoMov().get(1).getX()) &&
+                    (e.getY() > ((Agrupacion) entidade).getFigura().getCordCuadradoMov().get(0).getY()) &&
+                    (e.getY() < ((Agrupacion) entidade).getFigura().getCordCuadradoMov().get(2).getY())){
+                        return true;
+                }
+           }    
+        }
+        return false;
+        }
+    public Agrupacion agrupacionMovimiento(Agrupacion agrupacion , Point2D e){
+        if ((e.getX() > ((Agrupacion) agrupacion).getFigura().getCordCuadradoMov().get(0).getX()) &&
+                    (e.getX() < ((Agrupacion) agrupacion).getFigura().getCordCuadradoMov().get(1).getX()) &&
+                    (e.getY() > ((Agrupacion) agrupacion).getFigura().getCordCuadradoMov().get(0).getY()) &&
+                    (e.getY() < ((Agrupacion) agrupacion).getFigura().getCordCuadradoMov().get(2).getY())){
+                    return agrupacion;
+        }
+        return null;
+    }
+    
     public boolean dentroDeAlgunaFigura(Point2D e){     
-        for (Entidad entidade : diagrama.getEntidades()) {
-            if ((e.getX() > entidade.getFigura().getCoordenadas().get(0).getX()) &&
-                    (e.getX() < entidade.getFigura().getCoordenadas().get(1).getX()) &&
-                    (e.getY() > entidade.getFigura().getCoordenadas().get(0).getY()) &&
-                    (e.getY() < entidade.getFigura().getCoordenadas().get(2).getY())){
-                return true;
-            }
-            for (Propiedad prop: entidade.getPropiedades()){
-                if ((e.getX() > prop.getElip().getCoordenadas().get(0).getX()) &&
-                (e.getX() < prop.getElip().getCoordenadas().get(1).getX()) &&
-                (e.getY() > prop.getElip().getCoordenadas().get(0).getY()) &&
-                (e.getY() < prop.getElip().getCoordenadas().get(2).getY())) {
+        for(int i=0 ; i<diagrama.getEntidades().size();i++){
+            if(!(diagrama.getEntidades().get(i) instanceof Agrupacion)){
+                Entidad entidade = diagrama.getEntidades().get(i);
+                if ((e.getX() > entidade.getFigura().getCoordenadas().get(0).getX()) &&
+                (e.getX() < entidade.getFigura().getCoordenadas().get(1).getX()) &&
+                (e.getY() > entidade.getFigura().getCoordenadas().get(0).getY()) &&
+                (e.getY() < entidade.getFigura().getCoordenadas().get(2).getY())){
                     return true;
                 }
-                if(prop.getPropiedades()!=null){
-                    for(Propiedad prop2 : prop.getPropiedades()){
-                        if ((e.getX() > prop2.getElip().getCoordenadas().get(0).getX()) &&
-                        (e.getX() < prop2.getElip().getCoordenadas().get(1).getX()) &&
-                        (e.getY() > prop2.getElip().getCoordenadas().get(0).getY()) &&
-                        (e.getY() < prop2.getElip().getCoordenadas().get(2).getY())) {
-                            return true;
+                for (Propiedad prop: entidade.getPropiedades()){
+                    if ((e.getX() > prop.getElip().getCoordenadas().get(0).getX()) &&
+                    (e.getX() < prop.getElip().getCoordenadas().get(1).getX()) &&
+                    (e.getY() > prop.getElip().getCoordenadas().get(0).getY()) &&
+                    (e.getY() < prop.getElip().getCoordenadas().get(2).getY())) {
+                        return true;
+                    }
+                    if(prop.getPropiedades()!=null){
+                        for(Propiedad prop2 : prop.getPropiedades()){
+                            if ((e.getX() > prop2.getElip().getCoordenadas().get(0).getX()) &&
+                            (e.getX() < prop2.getElip().getCoordenadas().get(1).getX()) &&
+                            (e.getY() > prop2.getElip().getCoordenadas().get(0).getY()) &&
+                            (e.getY() < prop2.getElip().getCoordenadas().get(2).getY())) {
+                                return true;
+                            }
                         }
                     }
                 }
             }
+            
         }
         for (Relacion entidade : diagrama.getRelaciones()) {
             
@@ -439,34 +515,40 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         }
         return false;
     }
+    
   
     public Figura figuraEnMovimiento(Point2D e){
-        for (Entidad entidad : diagrama.getEntidades()) {
-            if ((e.getX() > entidad.getFigura().getCoordenadas().get(0).getX()) &&
+        for (int i = 0; i < diagrama.getEntidades().size(); i++){
+            if(!(diagrama.getEntidades().get(i) instanceof Agrupacion)){
+                Entidad entidad = diagrama.getEntidades().get(i);
+                if ((e.getX() > entidad.getFigura().getCoordenadas().get(0).getX()) &&
                     (e.getX() < entidad.getFigura().getCoordenadas().get(1).getX()) &&
                     (e.getY() > entidad.getFigura().getCoordenadas().get(0).getY()) &&
                     (e.getY() < entidad.getFigura().getCoordenadas().get(2).getY())){
-                
-                return entidad.getFigura();
-            }
-            for (Propiedad prop: entidad.getPropiedades()){
-                if ((e.getX() > prop.getElip().getCoordenadas().get(0).getX()) &&
-                (e.getX() < prop.getElip().getCoordenadas().get(1).getX()) &&
-                (e.getY() > prop.getElip().getCoordenadas().get(0).getY()) &&
-                (e.getY() < prop.getElip().getCoordenadas().get(2).getY())) {
-                    return prop.getElip();
+
+                    return entidad.getFigura();
                 }
-                if(prop.getPropiedades()!=null){
-                    for(Propiedad prop2 : prop.getPropiedades()){
-                        if ((e.getX() > prop2.getElip().getCoordenadas().get(0).getX()) &&
-                        (e.getX() < prop2.getElip().getCoordenadas().get(1).getX()) &&
-                        (e.getY() > prop2.getElip().getCoordenadas().get(0).getY()) &&
-                        (e.getY() < prop2.getElip().getCoordenadas().get(2).getY())) {
-                            return prop2.getElip();
+                for (Propiedad prop: entidad.getPropiedades()){
+                    if ((e.getX() > prop.getElip().getCoordenadas().get(0).getX()) &&
+                        (e.getX() < prop.getElip().getCoordenadas().get(1).getX()) &&
+                        (e.getY() > prop.getElip().getCoordenadas().get(0).getY()) &&
+                        (e.getY() < prop.getElip().getCoordenadas().get(2).getY())) {
+
+                        return prop.getElip();
+                    }
+                    if(prop.getPropiedades()!=null){
+                        for(Propiedad prop2 : prop.getPropiedades()){
+                            if ((e.getX() > prop2.getElip().getCoordenadas().get(0).getX()) &&
+                                (e.getX() < prop2.getElip().getCoordenadas().get(1).getX()) &&
+                                (e.getY() > prop2.getElip().getCoordenadas().get(0).getY()) &&
+                                (e.getY() < prop2.getElip().getCoordenadas().get(2).getY())) {
+                                return prop2.getElip();
+                            }
                         }
                     }
                 }
             }
+            
         }
         for (Relacion entidade : diagrama.getRelaciones()) {
             
@@ -503,26 +585,33 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                 return herencia.getFigura();
             }
         }
-        return new Figura();
+        return null;
     }
     
     
     public void reDibujarTodo(){
-        for (Entidad entidade : diagrama.getEntidades()) {
-            entidade.getFigura().dibujar(gc,mostrarPuntos);
-            entidade.f(gc);
-            for (Propiedad prop : entidade.getPropiedades()){
-                prop.getElip().dibujarElipse(gc, prop.getTipo());
-                if(prop.getPropiedades()!=null){
-                    for(Propiedad prop2 : prop.getPropiedades()){
-                        prop2.getElip().dibujarElipse(gc, prop2.getTipo());
-                    
+        for (int i = 0; i <  diagrama.getEntidades().size(); i++) {
+            if(! (diagrama.getEntidades().get(i) instanceof Agrupacion)){
+                
+                diagrama.getEntidades().get(i).getFigura().dibujar(gc, mostrarPuntos);
+                diagrama.getEntidades().get(i).f(gc);
+                for (Propiedad prop : diagrama.getEntidades().get(i).getPropiedades()){
+                    prop.getElip().dibujarElipse(gc, prop.getTipo());
+                    if(prop.getPropiedades()!=null){
+                        for(Propiedad prop2 : prop.getPropiedades()){
+                            prop2.getElip().dibujarElipse(gc, prop2.getTipo());
+
+                        }
                     }
                 }
             }
-            
-            
+            else{
+                Agrupacion agruAux = (Agrupacion) diagrama.getEntidades().get(i);
+                diagrama.getEntidades().get(i).getFigura().dibujar(gc, agruAux.getRelacion() );
+                
+            }
         }
+        
         for (Relacion relacion : diagrama.getRelaciones()) {
             relacion.correccion();
             relacion.metamorfosear();
@@ -543,12 +632,15 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             herencia.f(gc);
             herencia.getFigura().dibujarCirculo(gc);
         }
-        for (Entidad entidade : diagrama.getEntidades()) {
-            entidade.getFigura().pintar(gc);
-            
-        }
+        
         for (Relacion relacion : diagrama.getRelaciones()) {
             relacion.getFigura().pintar(gc);
+        }
+        
+         for (int i = 0; i <  diagrama.getEntidades().size(); i++) {
+            if(diagrama.getEntidades().get(i) instanceof Entidad){
+                diagrama.getEntidades().get(i).getFigura().pintar(gc);
+            }
         }
     }    
     
@@ -738,24 +830,25 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         this.state = !state;
     }
     
-   @FXML
+      @FXML
     public void modificar(MouseEvent event) throws IOException{
         
         if(editar){
             Point2D e=new Point2D(event.getX(), event.getY());
-            for(Entidad entidad : diagrama.getEntidades() ){
-                if ((e.getX() > entidad.getFigura().getCoordenadas().get(0).getX()) &&
-                        (e.getX() < entidad.getFigura().getCoordenadas().get(1).getX()) &&
-                        (e.getY() > entidad.getFigura().getCoordenadas().get(0).getY()) &&
-                        (e.getY() < entidad.getFigura().getCoordenadas().get(2).getY())){
-                    entidadActual=entidad;
-                    AbrirVentana.CargarVista(getClass().getResource("/fxmls/DatosEntidad.fxml"));
-                    gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-                    reDibujarTodo();
-                    puntoGuardado();
-                    break;
+            for(Object entidad : diagrama.getEntidades() ){
+                if(!(entidad instanceof Agrupacion)){
+                    if ((e.getX() > ((Entidad)entidad).getFigura().getCoordenadas().get(0).getX()) &&
+                            (e.getX() < ((Entidad)entidad).getFigura().getCoordenadas().get(1).getX()) &&
+                            (e.getY() > ((Entidad)entidad).getFigura().getCoordenadas().get(0).getY()) &&
+                            (e.getY() < ((Entidad)entidad).getFigura().getCoordenadas().get(2).getY())){
+                        entidadActual=((Entidad)entidad);
+                        AbrirVentana.CargarVista(getClass().getResource("/fxmls/DatosEntidad.fxml"));
+                        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+                        reDibujarTodo();
+                        puntoGuardado();
+                        break;
+                    }
                 }
-                
             }
             for (Relacion relacion : diagrama.getRelaciones()) {
             
@@ -771,7 +864,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                             puntoGuardado();
                             break;
                         }
-                        if(hayClave(relacionActual.getComponentes()) && 1==hayDebil(relacionActual.getComponentes()) && relacionActual.getComponentes().size()==2){
+                        if(hayClave(relacionActual.getComponentes()) && 0<hayDebil(relacionActual.getComponentes())){
                             ArrayList<Integer> debiles =cualesDependeran(relacionActual.getComponentes());
                             if(debiles.isEmpty()){
                                 relacionActual.getFigura().setDebil(false);
@@ -792,11 +885,6 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                             AbrirVentana.CargarVista(getClass().getResource("/fxmls/CrearCardinalidad.fxml"));
                 
                             relacionActual = null;
-                        }else{
-                            relacionActual.setEntidad1Cardinal("");
-                            relacionActual.setEntidad2Cardinal("");
-                            relacionActual.setEntidad1Linea("Simple");
-                            relacionActual.setEntidad2Linea("Simple");
                         }
                         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                         reDibujarTodo();

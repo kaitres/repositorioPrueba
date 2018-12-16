@@ -87,6 +87,7 @@
                </graphic>
             </Button>
             <Label layoutX="10.0" layoutY="328.0" text="Validacion Semantica" />
+            <Button layoutX="28.0" layoutY="241.0" mnemonicParsing="false" onAction="#agrupacion" text="agrupación" />
          </children>
       </Pane>
       <Pane layoutY="-2.0" prefHeight="46.0" prefWidth="900.0" style="-fx-background-color: #aab2bd;">

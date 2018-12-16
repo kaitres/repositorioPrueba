@@ -75,21 +75,14 @@ public class Union {
     public void ConeccionEntidadRelacion(){       
         Point2D minFig2=new Point2D(0,0);
         Point2D minFig1=new Point2D(0,0);
-        for (int i = 0; i < fig1.coordenadasConeccion.size() ; i++) {
-            for (int j = 0; j < fig2.coordenadasConeccion.size(); j++) {
-                if(j==0 && i==0){
-                    minFig1 = fig1.coordenadasConeccion.get(i);
-                    minFig2 = fig2.coordenadasConeccion.get(j) ;
-                }
-                if(minFig2.distance(minFig1) > fig1.coordenadasConeccion.get(i).distance(fig2.coordenadasConeccion.get(j) )){                 
-                   minFig1 = fig1.coordenadasConeccion.get(i);
-                   minFig2 = fig2.coordenadasConeccion.get(j);
-                }
+        
+        minFig1 = fig1.coordenadasConeccion.get(0);
+        for (Point2D puntoFig1 : fig1.coordenadasConeccion) {
+            if(fig2.puntoCentral.distance(minFig1) > fig2.puntoCentral.distance(puntoFig1)){                 
+                minFig1 = puntoFig1;
             }
         }
         fig1.coordenadasConeccion.remove(minFig1);
-        //entidad.coordenadasConeccion.remove(minFig2);
-        
         //unionFig2 = minFig2;
         unionFig2 = fig2.getPuntoCentral();
         unionFig1 = minFig1;

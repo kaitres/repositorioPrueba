@@ -5,6 +5,9 @@
  */
 package clases;
 
+import controladores.InterfazController;
+import static controladores.InterfazController.diagrama;
+import static controladores.InterfazController.mostrarPuntos;
 import static java.lang.Math.abs;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
@@ -30,6 +33,8 @@ public  class Figura {
     Point2D puntoCentral; 
     int lados;
     boolean debil = false;
+    //agrupacion
+    ArrayList<Point2D> cordCuadradoMov = new ArrayList();
 
     
     
@@ -55,6 +60,14 @@ public  class Figura {
         aux.setLados(lados);
         return aux;
         
+    }
+    
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public ArrayList<Point2D> getCordCuadradoMov() {
+        return cordCuadradoMov;
     }
 
     public void setLados(int lados) {
@@ -262,8 +275,6 @@ public  class Figura {
         if (debil){
             dobleLinea(gc);
         }
-        
-        
     }
     /**
      * metodo que conecta graficamente los puntos de la lista de coordenas de la figura
@@ -630,5 +641,170 @@ public  class Figura {
             p1 = new Point2D(p1.getX()+1 ,p1.getY());
         }
         
+    }
+    
+    // -----------------------------------agrupacion--------------------------------
+    private Point2D getMayor(Relacion relacion){
+        double XMayor = relacion.getFigura().getCoordenadas().get(0).getX();
+        double YMayor = relacion.getFigura().getCoordenadas().get(0).getY();
+        for (Point2D cord : relacion.getFigura().getCoordenadas()) {
+            if(cord.getX()> XMayor){
+                XMayor = (int)cord.getX();
+            }
+            if(cord.getY()> YMayor){
+                YMayor = (int)cord.getY();
+            }
+        }
+        for (Entidad entidad : relacion.getComponentes()) {
+            for (Point2D cord : entidad.getFigura().getCoordenadas()) {
+                if(cord.getX()> XMayor){
+                    XMayor = cord.getX();
+                }
+                if(cord.getY()> YMayor){
+                    YMayor = cord.getY();
+                }  
+            }
+            for (Propiedad prop : entidad.getPropiedades()){
+                for (Point2D cord : prop.getElip().getCoordenadas()) {
+                    if(cord.getX()> XMayor){
+                        XMayor = cord.getX();
+                    }
+                    if(cord.getY()> YMayor){
+                        YMayor = cord.getY();
+                    }  
+                }
+            }
+        }      
+
+        return new Point2D(XMayor, YMayor);
+    }
+    private Point2D getMenor(Relacion relacion){
+        double XMenor = relacion.getFigura().getCoordenadas().get(0).getX();
+        double YMenor = relacion.getFigura().getCoordenadas().get(0).getY();
+        
+        for (Point2D cord : relacion.getFigura().getCoordenadas()) {
+            if(cord.getX()< XMenor){
+                XMenor = cord.getX();
+            }
+            if(cord.getY()< YMenor){
+                YMenor = cord.getY();
+            }              
+        }
+        for (Entidad entidad : relacion.getComponentes()) {
+            for (Point2D cord : entidad.getFigura().getCoordenadas()) {
+                if(cord.getX()< XMenor){
+                    XMenor = cord.getX();
+                }
+                if(cord.getY()< YMenor){
+                    YMenor = cord.getY();
+                }
+            }
+            for (Propiedad prop : entidad.getPropiedades()){
+                for (Point2D cord : prop.getElip().getCoordenadas()) {
+                    if(cord.getX()< XMenor){
+                        XMenor = cord.getX();
+                    }
+                    if(cord.getY()< YMenor){
+                        YMenor = cord.getY();
+                    }  
+                }
+            }
+        } 
+
+        return new Point2D(XMenor, YMenor);
+    }
+    protected void obtenerCordenadas(Relacion relacion){
+        Point2D menor = getMenor(relacion);
+        Point2D mayor = getMayor(relacion);
+        coordenadasConeccion.clear();
+        coordenadas.clear();
+        coordenadas.add(new Point2D(menor.getX() - 10  , menor.getY() - 10 ));
+        coordenadas.add(new Point2D(mayor.getX() + 10  , menor.getY() - 10 ));
+        coordenadas.add(new Point2D(mayor.getX() + 10  , mayor.getY() + 10 ));
+        coordenadas.add(new Point2D(menor.getX() - 10  , mayor.getY() + 10 ));
+        puntoCentral = menor.midpoint(mayor);
+        coordenadasConeccion = (ArrayList<Point2D>) coordenadas.clone();
+        
+    }
+    protected void dibujarMarco(GraphicsContext gc,Relacion relacion){
+        gc.setStroke(Color.BLACK);
+        obtenerCordenadas(relacion);
+        gc.strokeLine(coordenadas.get(0).getX(), coordenadas.get(0).getY(), coordenadas.get(1).getX(), coordenadas.get(1).getY());
+        gc.strokeLine(coordenadas.get(1).getX(), coordenadas.get(1).getY(), coordenadas.get(2).getX(), coordenadas.get(2).getY());
+        gc.strokeLine(coordenadas.get(2).getX(), coordenadas.get(2).getY(), coordenadas.get(3).getX(), coordenadas.get(3).getY());
+        gc.strokeLine(coordenadas.get(3).getX(), coordenadas.get(3).getY(), coordenadas.get(0).getX(), coordenadas.get(0).getY());
+        //ipntarCuadrados(gc , coordenadas);
+    }  
+    private void pintarCuadrados(GraphicsContext gc ,ArrayList<Point2D> coordenadas) {
+        Point2D p1 = coordenadas.get(0);
+        Point2D p2 = coordenadas.get(1);
+        int largo = (int) (coordenadas.get(2).getY() - coordenadas.get(1).getY());
+        
+        gc.setStroke(Color.WHITE);
+        p1= new Point2D(p1.getX()+1, p1.getY()+1);
+        while(p1.getX() < p2.getX()){
+            gc.strokeLine(p1.getX() , p1.getY() ,p1.getX() , p1.getY()+ largo-2 );
+            p1 = new Point2D(p1.getX()+1 ,p1.getY());
+        }
+        
+   
+    }
+    private void CuadradoMov(GraphicsContext gc){
+        Point2D pCentro = coordenadas.get(1);
+        cordCuadradoMov.clear();
+        cordCuadradoMov.add(new Point2D(pCentro.getX() - 10 , pCentro.getY() - 10 ));
+        cordCuadradoMov.add(new Point2D(pCentro.getX() + 10 , pCentro.getY() - 10 ));
+        cordCuadradoMov.add(new Point2D(pCentro.getX() + 10 , pCentro.getY() + 10 ));
+        cordCuadradoMov.add(new Point2D(pCentro.getX() - 10 , pCentro.getY() + 10 ));
+        dibujarCuadrado(gc, cordCuadradoMov);
+       
+        
+    }
+    protected void dibujarCuadrado(GraphicsContext gc, ArrayList<Point2D> cordCuadradoMov) {
+        gc.setStroke(Color.BLACK);
+        gc.strokeLine(cordCuadradoMov.get(0).getX(), cordCuadradoMov.get(0).getY(), cordCuadradoMov.get(1).getX(), cordCuadradoMov.get(1).getY());
+        gc.strokeLine(cordCuadradoMov.get(1).getX(), cordCuadradoMov.get(1).getY(), cordCuadradoMov.get(2).getX(), cordCuadradoMov.get(2).getY());
+        gc.strokeLine(cordCuadradoMov.get(2).getX(), cordCuadradoMov.get(2).getY(), cordCuadradoMov.get(3).getX(), cordCuadradoMov.get(3).getY());
+        gc.strokeLine(cordCuadradoMov.get(3).getX(), cordCuadradoMov.get(3).getY(), cordCuadradoMov.get(0).getX(), cordCuadradoMov.get(0).getY());
+        pintarCuadrados(gc, cordCuadradoMov);
+    }
+    public void dibujar(GraphicsContext gc , Relacion relacion){
+        dibujarMarco(gc, relacion);
+         CuadradoMov(gc);
+         dibujarInterior(gc , relacion);
+         reDibujarTodo(gc , relacion );
+         
+                 
+    }
+    public void reDibujarTodo(GraphicsContext gc, Relacion relacion){
+         for (int i = 0; i < relacion.componentes.size(); i++) {
+            if(relacion.componentes.get(i) instanceof Agrupacion){
+                reDibujarTodo(gc, ((Agrupacion)relacion.componentes.get(i)).getRelacion() );
+            }
+            else{
+                relacion.componentes.get(i).getFigura().dibujar(gc, mostrarPuntos);
+                relacion.componentes.get(i).f(gc);
+                relacion.componentes.get(i).getFigura().pintar(gc);
+                for (Propiedad prop : relacion.componentes.get(i).getPropiedades()){
+                    prop.getElip().dibujarElipse(gc, prop.getTipo());
+                    if(prop.getPropiedades()!=null){
+                        for(Propiedad prop2 : prop.getPropiedades()){
+                            prop2.getElip().dibujarElipse(gc, prop2.getTipo());
+                        }
+                    }
+                }
+                
+            }
+        }
+        
+    
+    }
+    protected void dibujarInterior(GraphicsContext gc , Relacion relacion) {
+        relacion.getFigura().dibujar(gc, InterfazController.mostrarPuntos);
+        relacion.figura.pintar(gc);
+        for(Entidad entidad : relacion.getComponentes()){
+            entidad.getFigura().dibujar(gc, InterfazController.mostrarPuntos);
+            entidad.figura.pintar(gc);
+        }
     }
 }
