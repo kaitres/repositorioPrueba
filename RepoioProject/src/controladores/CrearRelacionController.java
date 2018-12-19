@@ -5,6 +5,7 @@
  */
 package controladores;
 
+import clases.Agrupacion;
 import clases.Entidad;
 import java.io.IOException;
 import java.net.URL;
@@ -52,6 +53,7 @@ public class CrearRelacionController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         for (Entidad e: InterfazController.diagrama.getEntidades()){
+            
             MenuItem m = new MenuItem(e.getNombre());
             entChoicer.getItems().add(m);
             m.setOnAction(new EventHandler<ActionEvent>(){

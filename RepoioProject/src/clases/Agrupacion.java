@@ -64,6 +64,12 @@ public class Agrupacion extends Entidad {
                 else{
                     Point2D pCAAux = relacion.getComponente(i).getFigura().getPuntoCentral();
                     relacion.getComponente(i).getFigura().setPuntoCentral(new Point2D(relacion.getComponente(i).getFigura().getPuntoCentral().getX() + XDistancia,relacion.getComponente(i).getFigura().getPuntoCentral().getY() +  YDistancia));
+                    for (Propiedad propiedade :  relacion.getComponente(i).getPropiedades()) {
+                        propiedade.getElip().setPuntoCentral(new Point2D(propiedade.getElip().getPuntoCentral().getX() + XDistancia,propiedade.getElip().getPuntoCentral().getY() +  YDistancia));
+                    }
+ {
+                        
+                    }
                 }
             }
         

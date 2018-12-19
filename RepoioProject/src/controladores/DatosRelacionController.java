@@ -6,6 +6,7 @@
 package controladores;
 
 
+import clases.Agrupacion;
 import clases.Entidad;
 import clases.Figura;
 import clases.Propiedad;
@@ -82,7 +83,14 @@ public class DatosRelacionController implements Initializable {
         ObservableList<Entidad> itemCB = FXCollections.observableArrayList();
         for (Entidad e : InterfazController.diagrama.getEntidades()){
             if (!relacionActual.getComponentes().contains(e)){
-                itemCB.add(e);
+                if(e instanceof Agrupacion){
+                    if(!relacionDentroAgrupacion((Agrupacion) e)){
+                        itemCB.add(e);
+                    }
+                }
+                else{
+                    itemCB.add(e);
+                }
             }
         }
         comboBox.setItems(itemCB);
@@ -98,6 +106,17 @@ public class DatosRelacionController implements Initializable {
         nombre.setText(relacionActual.getNombre());
     }    
     
+    private boolean relacionDentroAgrupacion(Agrupacion agrupacion){
+        if(agrupacion.getRelacion()==relacionActual){
+            return true;
+        }
+        for (Object componente : agrupacion.getRelacion().getComponentes()) {
+            if(componente instanceof Agrupacion){
+                return relacionDentroAgrupacion((Agrupacion) componente);
+            }
+        }
+        return false;
+    }
     @FXML
     public void modificar(){
         if(!(nombre.getText().equals(""))){
