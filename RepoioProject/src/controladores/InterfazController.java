@@ -62,6 +62,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     double canvasTX = 773;
     double canvasTY = 522;
     
+    public static Agrupacion agrupacionActual;
     public static boolean relacionDebil = false;
     public static String newRelacionNombre;
     public static boolean relacionValidacion;
@@ -143,14 +144,11 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         
     }
      @FXML
-    private void agrupacion(){
-        
-        Agrupacion agrupacion = new Agrupacion("perro", diagrama.getRelaciones().get(diagrama.getRelaciones().size()-1));
-        diagrama.entidades.add(agrupacion);
-        
-        agrupacion.getFigura().dibujar(gc,agrupacion.getRelacion());
-        agrupacion.getFigura().setNombre("perro");
-
+    private void agregacion() throws IOException{
+        AbrirVentana.CargarVista(getClass().getResource("/fxmls/CrearAgregacion.fxml"));
+        diagrama.entidades.add(agrupacionActual);
+        agrupacionActual.getFigura().dibujar(gc,agrupacionActual.getRelacion());
+        reDibujarTodo();
     }
 
 //---------------------------------------------------------------------------------------------
