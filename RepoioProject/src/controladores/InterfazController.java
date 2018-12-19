@@ -1054,7 +1054,4 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         return false;
     }
 
-    @FXML
-    private void validSemantica(ActionEvent event) {
-    }
 }
