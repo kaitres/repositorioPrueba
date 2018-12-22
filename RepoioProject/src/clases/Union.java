@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import javafx.geometry.Point2D;
 import javafx.geometry.VPos;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcType;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
@@ -57,7 +58,15 @@ public class Union {
         gc.setFont(Font.font(15));
         double puntoMedioX=this.unionFig1.midpoint(unionFig2).getX();
         double puntoMedioY=this.unionFig1.midpoint(unionFig2).getY();
-        gc.fillText(cardinalidad, this.unionFig1.midpoint(unionFig2).getX(), this.unionFig1.midpoint(unionFig2).getY());
+        puntoMedioX=this.unionFig1.midpoint(new Point2D(puntoMedioX, puntoMedioY)).getX();
+        puntoMedioY=this.unionFig1.midpoint(new Point2D(puntoMedioX, puntoMedioY)).getY();
+        Figura rec = new Figura();
+        rec.coordenadas.add(new Point2D(puntoMedioX-6, puntoMedioY-5));
+        rec.coordenadas.add(new Point2D(puntoMedioX+6, puntoMedioY-5));
+        gc.setStroke(Color.WHITE);
+        rec.pintarRectangulo(gc);
+        gc.setStroke(Color.BLACK);
+        gc.fillText(cardinalidad, puntoMedioX, puntoMedioY);
         
  
          
