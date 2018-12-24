@@ -67,7 +67,6 @@ public class EditarPropiedadController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        
         alertNombre.setTitle("Error");
         alertNombre.setHeaderText(null);
         alertNombre.setContentText("La propiedad tiene el mismo nombre que otro elemento en el diagrama");
@@ -100,7 +99,7 @@ public class EditarPropiedadController implements Initializable {
     private void aniadir(ActionEvent event) throws IOException {
         if(!"".equals(propiedadField.getText())){
             InterfazController.nombreActual = propiedadField.getText();
-            if (!InterfazController.elemMismoNombre()){
+            if (!InterfazController.elemHerenciaPropiedad()){
                 if(comboBox.getValue()==Tipo.compuesto ){
                     InterfazController.nivelPropiedadCompuesta=false;
                     InterfazController.propiedadActual.clear();

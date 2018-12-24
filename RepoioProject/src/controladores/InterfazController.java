@@ -1027,26 +1027,56 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             InterfazController.diagrama.getHerencias().add(herenciaActual);
         
             herenciaActual.f(gc);
+            
             herenciaActual.getFigura().dibujarCirculo(gc);
             herenciaActual=null;
+            gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+            reDibujarTodo();
             puntoGuardado();
             
         }
     }
     public static boolean elemMismoNombre (){
-        for (Entidad e : diagrama.getEntidades()){
+        ArrayList<Entidad> entidadesAqui = (ArrayList<Entidad>) diagrama.getEntidades().clone();
+        ArrayList<Relacion> relacionesAqui = (ArrayList<Relacion>) diagrama.getRelaciones().clone();
+        
+        
+        if(entidadActual!=null){
+            entidadesAqui.remove(entidadActual);
+        }
+        if (relacionActual!=null) {
+            relacionesAqui.remove(relacionActual);
+        }
+        for (Entidad e : entidadesAqui){
             if (e.getNombre().equals(nombreActual)){
                 return true;
             }
-            for (Propiedad p : e.getPropiedades()){
-                if (p.getNombre().equals(nombreActual)){
-                    return true;
-                }
-            }
         }
-        for (Relacion r : diagrama.getRelaciones()){
+        for (Relacion r : relacionesAqui){
             if (r.getNombre().equals(nombreActual)){
                 return true;
+            }
+        }
+        return false;
+    }
+    public static boolean elemHerenciaPropiedad(){
+        if(entidadActual!=null){
+            for (Herencia herencia : diagrama.herencias) {
+                if(herencia.esHijo(entidadActual)){
+                    for (Propiedad p : herencia.getPadre().getPropiedades()) {
+                        if (p.getNombre().equals(nombreActual)){
+                            return true;
+                        }else{
+                            if (p.getTipo()==Tipo.compuesto) {
+                                for (Propiedad p2 : p.getPropiedades()) {
+                                    if (p.getNombre().equals(nombreActual)){
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
         return false;

@@ -9,6 +9,7 @@ import clases.Entidad;
 import clases.Herencia;
 import clases.Diagrama;
 import clases.Figura;
+import clases.Propiedad;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -108,9 +109,27 @@ public class CrearHerenciaController implements Initializable {
             }
             
             //InterfazController.diagrama.getEntidades().get(index).setHijos(aux);
-            
+            int i=0;
+            int w=0;
             Figura f = new Figura();
             f.circulo(InterfazController.posicionDefaultX, InterfazController.posicionDefaultY);
+            for (Entidad entidad : aux) {
+                while(i<entidad.getPropiedades().size()){
+                    while(w<entChoice.getValue().getPropiedades().size()) {
+                        if(entChoice.getValue().getPropiedades().get(w).getNombre()
+                                .equals(entidad.getPropiedades().get(i).getNombre())){
+                            entidad.getPropiedades().remove(i);
+                            i-=1;
+                            w=1000000;
+                        }
+                        w+=1;
+                        
+                    }
+                    w=0;
+                    i+=1;
+                }
+                i=0;
+            }
             InterfazController.herenciaActual=new Herencia(tipChoice.getValue(),
                     aux, f, entChoice.getValue());
             Stage stage = (Stage) canBtn.getScene().getWindow();
