@@ -6,6 +6,7 @@
 package controladores;
 
 import clases.Diagrama;
+import clases.Entidad;
 import clases.Figura;
 import clases.Herencia;
 import clases.Propiedad;
@@ -59,6 +60,7 @@ public class DatosEntidadController implements Initializable {
     Alert alertFuerte = new Alert(Alert.AlertType.INFORMATION);
     Alert alertEx = new Alert(Alert.AlertType.INFORMATION);
     
+    String nombreIni;
     
     private Button btEliminar;
     @FXML
@@ -94,7 +96,7 @@ public class DatosEntidadController implements Initializable {
         InterfazController.propiedadActual = (ArrayList<Propiedad>) entidadActual.getPropiedades().clone();
         
         
-        
+        nombreIni = nombre.getText();
         
     }    
     
@@ -119,7 +121,7 @@ public class DatosEntidadController implements Initializable {
                     alertFuerte.showAndWait();
                 } else {
                     InterfazController.nombreActual = nombre.getText();
-                    if (!InterfazController.elemMismoNombre()){
+                    if (!entidadIgual(nombre.getText())){
                         entidadActual.setNombre(nombre.getText());
                         entidadActual.setPropiedades((ArrayList<Propiedad>) InterfazController.propiedadActual.clone());
                         entidadActual.getFigura().setDebil(choiceDebil.isSelected());
@@ -222,6 +224,8 @@ public class DatosEntidadController implements Initializable {
         if (nombre.getText().length()!=0){
             if(nombre.getText().length()>20){
                 alertEx.showAndWait();
+            } else{
+                InterfazController.nombreActual=nombre.getText();
             }
         } else{
             InterfazController.nombreActual="e"+(InterfazController.diagrama.getEntidades().size()+1);
@@ -229,6 +233,16 @@ public class DatosEntidadController implements Initializable {
         AbrirVentana.CargarVista(getClass().getResource("/fxmls/EditarPropiedad.fxml"));
     }
     
-    
+    private boolean entidadIgual(String nombre){
+        for (Entidad e: InterfazController.diagrama.getEntidades()) {
+            if (nombreIni.equals(nombre)){
+                return false;
+            }
+            if (nombre.equals(e.getNombre())){
+                return true;
+            }
+        }
+        return false;
+    }
     
 }

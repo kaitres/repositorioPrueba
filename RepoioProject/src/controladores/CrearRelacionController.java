@@ -103,15 +103,10 @@ public class CrearRelacionController implements Initializable {
                 alertEx.showAndWait();
             } else{
                 InterfazController.nombreActual = nombre.getText();
-                if (!InterfazController.elemMismoNombre()){
-                    InterfazController.newRelacionNombre = nombre.getText();
-                    InterfazController.relacionValidacion = true;
-                    Stage stage = (Stage) nombre.getScene().getWindow();
-                    stage.close();
-                } else {
-                    alertNombre.showAndWait();
-                }
-                
+                InterfazController.newRelacionNombre = nombre.getText();
+                InterfazController.relacionValidacion = true;
+                Stage stage = (Stage) nombre.getScene().getWindow();
+                stage.close();
             }   
         }
     }
@@ -134,14 +129,10 @@ public class CrearRelacionController implements Initializable {
                 alertEx.showAndWait();
             } else{
                 InterfazController.nombreActual = nombre.getText();
-                if (!InterfazController.elemMismoNombre()){
-                    InterfazController.newRelacionNombre = nombre.getText();
-                    InterfazController.relacionValidacion = true;
-                    Stage stage = (Stage) nombre.getScene().getWindow();
-                    stage.close();
-                } else {
-                    alertNombre.showAndWait();
-                }
+                InterfazController.newRelacionNombre = nombre.getText();
+                InterfazController.relacionValidacion = true;
+                Stage stage = (Stage) nombre.getScene().getWindow();
+                stage.close();
             }
         }
     }

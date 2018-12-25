@@ -1036,29 +1036,6 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             
         }
     }
-    public static boolean elemMismoNombre (){
-        ArrayList<Entidad> entidadesAqui = (ArrayList<Entidad>) diagrama.getEntidades().clone();
-        ArrayList<Relacion> relacionesAqui = (ArrayList<Relacion>) diagrama.getRelaciones().clone();
-        
-        
-        if(entidadActual!=null){
-            entidadesAqui.remove(entidadActual);
-        }
-        if (relacionActual!=null) {
-            relacionesAqui.remove(relacionActual);
-        }
-        for (Entidad e : entidadesAqui){
-            if (e.getNombre().equals(nombreActual)){
-                return true;
-            }
-        }
-        for (Relacion r : relacionesAqui){
-            if (r.getNombre().equals(nombreActual)){
-                return true;
-            }
-        }
-        return false;
-    }
     public static boolean elemHerenciaPropiedad(){
         if(entidadActual!=null){
             for (Herencia herencia : diagrama.herencias) {

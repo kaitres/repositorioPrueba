@@ -124,26 +124,22 @@ public class DatosRelacionController implements Initializable {
                 alertEx.showAndWait();
             }else{
                 InterfazController.nombreActual = nombre.getText();
-                if (!InterfazController.elemMismoNombre()){
-                    Figura fig = new Figura();
-                    if (ents.size()==1 ||
-                        ents.size()==2 ||
-                        ents.size()==4 ){
-                        fig.crearFigura((int)relacionActual.getFigura().getPuntoCentral().getX(), 
-                                (int)relacionActual.getFigura().getPuntoCentral().getY(), 20 , 4);
-                    } else {
-                        fig.crearFigura((int)relacionActual.getFigura().getPuntoCentral().getX(), 
-                                (int)relacionActual.getFigura().getPuntoCentral().getY(), 20 , ents.size());
-                    }   
-                    relacionActual.setFigura(fig);
-                    relacionActual.setComponentes(ents);
-                    relacionActual.setNombre(nombre.getText());
-                    relacionActual.setPropiedades((ArrayList<Propiedad>) InterfazController.propiedadActual.clone());
-                    Stage stage = (Stage) canBtn.getScene().getWindow();
-                    stage.close();
+                Figura fig = new Figura();
+                if (ents.size()==1 ||
+                    ents.size()==2 ||
+                    ents.size()==4 ){
+                    fig.crearFigura((int)relacionActual.getFigura().getPuntoCentral().getX(), 
+                            (int)relacionActual.getFigura().getPuntoCentral().getY(), 20 , 4);
                 } else {
-                    alertNombre.showAndWait();
-                }
+                    fig.crearFigura((int)relacionActual.getFigura().getPuntoCentral().getX(), 
+                            (int)relacionActual.getFigura().getPuntoCentral().getY(), 20 , ents.size());
+                }   
+                relacionActual.setFigura(fig);
+                relacionActual.setComponentes(ents);
+                relacionActual.setNombre(nombre.getText());
+                relacionActual.setPropiedades((ArrayList<Propiedad>) InterfazController.propiedadActual.clone());
+                Stage stage = (Stage) canBtn.getScene().getWindow();
+                stage.close();
                 
             } 
         }
