@@ -36,6 +36,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ZoomEvent;
@@ -113,6 +114,8 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     private Button zoomIBTN;
     @FXML
     private CheckBox checkBEditar;
+    @FXML
+    private Label debilLabel;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -243,6 +246,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         }
         entidadActual=null;
         propiedadActual= new ArrayList<>();
+        debilLabel.setVisible(!debilConRelacion());
         
     }
     
@@ -303,9 +307,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         relacionActual= null;
         propiedadActual= new ArrayList<>();
         InterfazController.compRelacion.clear();
-
-        
-        
+        debilLabel.setVisible(!debilConRelacion());
     }
     
     public static int hayDebil(ArrayList<Entidad> componentes ){
@@ -916,8 +918,9 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             if (diagrama.getEntidades().size()<2) {
                 hBtn.setDisable(true);
             }
-        
-        }   
+            
+        }
+        debilLabel.setVisible(!debilConRelacion());
     }
 
     @FXML
@@ -965,7 +968,6 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             editar = state;
         }
     }
-
     @FXML
     private void zoomIn(ActionEvent event) {
         if (zoomTime == 1){
@@ -1010,7 +1012,6 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             editar = state;
         }
     }
-
     @FXML
     private void crearHerencia(ActionEvent event) throws IOException {
         AbrirVentana.CargarVista(getClass().getResource("/fxmls/crearHerencia.fxml"));
@@ -1056,6 +1057,20 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                 }
             }
         }
+        return false;
+    }
+    
+    private boolean debilConRelacion(){
+        int rdebil = 0;
+        int edebil = 0;
+        for (Relacion r : diagrama.getRelaciones())
+            if (r.getFigura().isDebil())
+                rdebil++;
+        for (Entidad e : diagrama.getEntidades())
+            if (e.getFigura().isDebil())
+                edebil++;
+        if (rdebil == edebil)
+            return true;
         return false;
     }
 
