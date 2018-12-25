@@ -40,6 +40,7 @@ public class CrearRelacionController implements Initializable {
     Alert alertNombre = new Alert(Alert.AlertType.INFORMATION);
     Alert alertEmpty = new Alert(Alert.AlertType.INFORMATION);
     Alert alertEx = new Alert(Alert.AlertType.INFORMATION);
+    Alert alertExCmp = new Alert(Alert.AlertType.INFORMATION);
     
     @FXML
     private ListView<String> lista;
@@ -77,6 +78,9 @@ public class CrearRelacionController implements Initializable {
         alertEx.setTitle("Error");
         alertEx.setHeaderText(null);
         alertEx.setContentText("Haz excedido el limite de 20 caracteres");
+        alertExCmp.setTitle("Error");
+        alertExCmp.setHeaderText(null);
+        alertExCmp.setContentText("Las relaciones deben ser solo binarias");
     }    
 
     @FXML
@@ -89,10 +93,14 @@ public class CrearRelacionController implements Initializable {
     private void aceptar(ActionEvent event) {
         if (nombre.getText().length()==0){
             if (!InterfazController.compRelacion.isEmpty()){
-                InterfazController.newRelacionNombre = "r"+(InterfazController.diagrama.getRelaciones().size()+1);
-                InterfazController.relacionValidacion = true;
-                Stage stage = (Stage) nombre.getScene().getWindow();
-                stage.close();
+                if (InterfazController.compRelacion.size()>2){
+                    alertExCmp.showAndWait();
+                }else{
+                    InterfazController.newRelacionNombre = "r"+(InterfazController.diagrama.getRelaciones().size()+1);
+                    InterfazController.relacionValidacion = true;
+                    Stage stage = (Stage) nombre.getScene().getWindow();
+                    stage.close();
+                }
             }else{
                 alertEmpty.showAndWait();
             }
@@ -102,11 +110,15 @@ public class CrearRelacionController implements Initializable {
             if(nombre.getText().length()>20){
                 alertEx.showAndWait();
             } else{
-                InterfazController.nombreActual = nombre.getText();
-                InterfazController.newRelacionNombre = nombre.getText();
-                InterfazController.relacionValidacion = true;
-                Stage stage = (Stage) nombre.getScene().getWindow();
-                stage.close();
+                if (InterfazController.compRelacion.size()>2){
+                    alertExCmp.showAndWait();
+                }else{
+                    InterfazController.nombreActual = nombre.getText();
+                    InterfazController.newRelacionNombre = nombre.getText();
+                    InterfazController.relacionValidacion = true;
+                    Stage stage = (Stage) nombre.getScene().getWindow();
+                    stage.close();
+                }
             }   
         }
     }
@@ -115,10 +127,14 @@ public class CrearRelacionController implements Initializable {
     private void txtField(ActionEvent event) {
         if (nombre.getText().length()==0){
             if (!InterfazController.compRelacion.isEmpty()){
-                InterfazController.newRelacionNombre = "r"+(InterfazController.diagrama.getRelaciones().size()+1);
-                InterfazController.relacionValidacion = true;
-                Stage stage = (Stage) nombre.getScene().getWindow();
-                stage.close();
+                if (InterfazController.compRelacion.size()>2){
+                    alertExCmp.showAndWait();
+                }else{
+                    InterfazController.newRelacionNombre = "r"+(InterfazController.diagrama.getRelaciones().size()+1);
+                    InterfazController.relacionValidacion = true;
+                    Stage stage = (Stage) nombre.getScene().getWindow();
+                    stage.close();
+                }
             }else{
                 alertEmpty.showAndWait();
             }
@@ -128,11 +144,15 @@ public class CrearRelacionController implements Initializable {
             if(nombre.getText().length()>20){
                 alertEx.showAndWait();
             } else{
-                InterfazController.nombreActual = nombre.getText();
-                InterfazController.newRelacionNombre = nombre.getText();
-                InterfazController.relacionValidacion = true;
-                Stage stage = (Stage) nombre.getScene().getWindow();
-                stage.close();
+                if (InterfazController.compRelacion.size()>2){
+                    alertExCmp.showAndWait();
+                }else{
+                    InterfazController.nombreActual = nombre.getText();
+                    InterfazController.newRelacionNombre = nombre.getText();
+                    InterfazController.relacionValidacion = true;
+                    Stage stage = (Stage) nombre.getScene().getWindow();
+                    stage.close();
+                }
             }
         }
     }

@@ -104,6 +104,8 @@ public class DatosRelacionController implements Initializable {
         alertEx.setContentText("Haz excedido el limite de 20 caracteres");
         
         nombre.setText(relacionActual.getNombre());
+        if (ents.size()>=2)
+            addBtn.setDisable(true);
     }    
     
     private boolean relacionDentroAgrupacion(Agrupacion agrupacion){
@@ -186,6 +188,8 @@ public class DatosRelacionController implements Initializable {
             }
             comboBox.setItems(itemCB);
         }
+        if (ents.size()>=2)
+            addBtn.setDisable(true);
     }
 
     @FXML
@@ -202,6 +206,8 @@ public class DatosRelacionController implements Initializable {
         }
         comboBox.setItems(itemCB);
         delBtn.setDisable(true);
+        if (ents.size()<=2)
+            addBtn.setDisable(false);
     }
 
     @FXML
