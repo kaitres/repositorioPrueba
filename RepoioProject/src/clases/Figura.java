@@ -656,22 +656,35 @@ public  class Figura {
             }
         }
         for (Entidad entidad : relacion.getComponentes()) {
-            for (Point2D cord : entidad.getFigura().getCoordenadas()) {
-                if(cord.getX()> XMayor){
-                    XMayor = cord.getX();
-                }
-                if(cord.getY()> YMayor){
-                    YMayor = cord.getY();
-                }  
-            }
-            for (Propiedad prop : entidad.getPropiedades()){
-                for (Point2D cord : prop.getElip().getCoordenadas()) {
+             if(!(entidad instanceof Agrupacion)){
+                for (Point2D cord : entidad.getFigura().getCoordenadas()) {
                     if(cord.getX()> XMayor){
                         XMayor = cord.getX();
                     }
                     if(cord.getY()> YMayor){
                         YMayor = cord.getY();
                     }  
+                }
+                for (Propiedad prop : entidad.getPropiedades()){
+                    for (Point2D cord : prop.getElip().getCoordenadas()) {
+                        if(cord.getX()> XMayor){
+                            XMayor = cord.getX();
+                        }
+                        if(cord.getY()> YMayor){
+                            YMayor = cord.getY();
+                        }  
+                    }
+                }
+            }
+            else{
+                ((Agrupacion)entidad).figura.obtenerCordenadas(((Agrupacion)entidad).getRelacion());
+                for (Point2D cord : ((Agrupacion)entidad).getFigura().getCoordenadas()) {
+                    if(cord.getX()> XMayor){
+                        XMayor = cord.getX();
+                    }
+                    if(cord.getY()> YMayor){
+                        YMayor = cord.getY();
+                    }
                 }
             }
         }      
@@ -690,26 +703,39 @@ public  class Figura {
                 YMenor = cord.getY();
             }              
         }
-        for (Entidad entidad : relacion.getComponentes()) {
-            for (Point2D cord : entidad.getFigura().getCoordenadas()) {
-                if(cord.getX()< XMenor){
-                    XMenor = cord.getX();
-                }
-                if(cord.getY()< YMenor){
-                    YMenor = cord.getY();
-                }
-            }
-            for (Propiedad prop : entidad.getPropiedades()){
-                for (Point2D cord : prop.getElip().getCoordenadas()) {
+        for (Object entidad : relacion.getComponentes()) {
+            if(!(entidad instanceof Agrupacion)){
+                for (Point2D cord : ((Entidad)entidad).getFigura().getCoordenadas()) {
                     if(cord.getX()< XMenor){
                         XMenor = cord.getX();
                     }
                     if(cord.getY()< YMenor){
                         YMenor = cord.getY();
-                    }  
+                    }
+                }
+                for (Propiedad prop : ((Entidad)entidad).getPropiedades()){
+                    for (Point2D cord : prop.getElip().getCoordenadas()) {
+                        if(cord.getX()< XMenor){
+                            XMenor = cord.getX();
+                        }
+                        if(cord.getY()< YMenor){
+                            YMenor = cord.getY();
+                        }  
+                    }
+                }
+            } 
+            else{
+                ((Agrupacion)entidad).figura.obtenerCordenadas(((Agrupacion)entidad).getRelacion());
+                for (Point2D cord : ((Agrupacion)entidad).getFigura().getCoordenadas()) {
+                    if(cord.getX()< XMenor){
+                        XMenor = cord.getX();
+                    }
+                    if(cord.getY()< YMenor){
+                        YMenor = cord.getY();
+                    }
                 }
             }
-        } 
+        }
 
         return new Point2D(XMenor, YMenor);
     }
@@ -733,9 +759,6 @@ public  class Figura {
         gc.strokeLine(coordenadas.get(1).getX(), coordenadas.get(1).getY(), coordenadas.get(2).getX(), coordenadas.get(2).getY());
         gc.strokeLine(coordenadas.get(2).getX(), coordenadas.get(2).getY(), coordenadas.get(3).getX(), coordenadas.get(3).getY());
         gc.strokeLine(coordenadas.get(3).getX(), coordenadas.get(3).getY(), coordenadas.get(0).getX(), coordenadas.get(0).getY());
-        //ipntarCuadrados(gc , coordenadas);
-    }  
-    private void pintarCuadrados(GraphicsContext gc ,ArrayList<Point2D> coordenadas) {
         Point2D p1 = coordenadas.get(0);
         Point2D p2 = coordenadas.get(1);
         int largo = (int) (coordenadas.get(2).getY() - coordenadas.get(1).getY());
@@ -746,9 +769,23 @@ public  class Figura {
             gc.strokeLine(p1.getX() , p1.getY() ,p1.getX() , p1.getY()+ largo-2 );
             p1 = new Point2D(p1.getX()+1 ,p1.getY());
         }
+        //ipntarCuadrados(gc , coordenadas);
+    }  
+    /*private void pintarCuadrados(GraphicsContext gc ,Relacion relacion) {
+        obtenerCordenadas( relacion);
+        Point2D p1 = coordenadas.get(0);
+        Point2D p2 = coordenadas.get(1);
+        int largo = (int) (coordenadas.get(2).getY() - coordenadas.get(1).getY());
         
-   
+        gc.setStroke(Color.WHITE);
+        p1= new Point2D(p1.getX()+1, p1.getY()+1);
+        while(p1.getX() < p2.getX()){
+            gc.strokeLine(p1.getX() , p1.getY() ,p1.getX() , p1.getY()+ largo-2 );
+            p1 = new Point2D(p1.getX()+1 ,p1.getY());
+        }
     }
+   */
+    
     private void CuadradoMov(GraphicsContext gc){
         Point2D pCentro = coordenadas.get(1);
         cordCuadradoMov.clear();
@@ -766,20 +803,38 @@ public  class Figura {
         gc.strokeLine(cordCuadradoMov.get(1).getX(), cordCuadradoMov.get(1).getY(), cordCuadradoMov.get(2).getX(), cordCuadradoMov.get(2).getY());
         gc.strokeLine(cordCuadradoMov.get(2).getX(), cordCuadradoMov.get(2).getY(), cordCuadradoMov.get(3).getX(), cordCuadradoMov.get(3).getY());
         gc.strokeLine(cordCuadradoMov.get(3).getX(), cordCuadradoMov.get(3).getY(), cordCuadradoMov.get(0).getX(), cordCuadradoMov.get(0).getY());
-        pintarCuadrados(gc, cordCuadradoMov);
+        //pintarCuadrados(gc, cordCuadradoMov);
     }
-    public void dibujar(GraphicsContext gc , Relacion relacion){
+    public void dibujar(GraphicsContext gc , Relacion relacion , Agrupacion agru){
         dibujarMarco(gc, relacion);
          CuadradoMov(gc);
          dibujarInterior(gc , relacion);
-         reDibujarTodo(gc , relacion );
+         reDibujarTodo(gc , agru);
          
                  
     }
-    public void reDibujarTodo(GraphicsContext gc, Relacion relacion){
+    public void reDibujarTodo(GraphicsContext gc , Agrupacion agru){
+        
+        Relacion relacion = agru.relacion;
+        agru.figura.dibujarMarco(gc, relacion);
+        relacion.getFigura().dibujar(gc, mostrarPuntos);
+        relacion.correccion();
+        relacion.metamorfosear();
+        relacion.getFigura().dibujar(gc,mostrarPuntos);
+        relacion.crearUniones();
+        relacion.f(gc);
+        for (Propiedad prop : relacion.getPropiedades()){
+            prop.getElip().dibujarElipse(gc, prop.getTipo());
+            if(prop.getPropiedades()!=null){
+                for(Propiedad prop2 : prop.getPropiedades()){
+                    prop2.getElip().dibujarElipse(gc, prop2.getTipo());
+
+                }
+            }
+        }
          for (int i = 0; i < relacion.componentes.size(); i++) {
             if(relacion.componentes.get(i) instanceof Agrupacion){
-                reDibujarTodo(gc, ((Agrupacion)relacion.componentes.get(i)).getRelacion() );
+                reDibujarTodo(gc, ((Agrupacion)relacion.componentes.get(i)));
             }
             else{
                 relacion.componentes.get(i).getFigura().dibujar(gc, mostrarPuntos);

@@ -150,7 +150,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     private void agregacion() throws IOException{
         AbrirVentana.CargarVista(getClass().getResource("/fxmls/CrearAgregacion.fxml"));
         diagrama.entidades.add(agrupacionActual);
-        agrupacionActual.getFigura().dibujar(gc,agrupacionActual.getRelacion());
+        agrupacionActual.getFigura().dibujar(gc,agrupacionActual.getRelacion(), agrupacionActual);
         reDibujarTodo();
     }
 
@@ -605,11 +605,6 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                     }
                 }
             }
-            else{
-                Agrupacion agruAux = (Agrupacion) diagrama.getEntidades().get(i);
-                diagrama.getEntidades().get(i).getFigura().dibujar(gc, agruAux.getRelacion() );
-                
-            }
         }
         
         for (Relacion relacion : diagrama.getRelaciones()) {
@@ -640,6 +635,11 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
          for (int i = 0; i <  diagrama.getEntidades().size(); i++) {
             if(diagrama.getEntidades().get(i) instanceof Entidad){
                 diagrama.getEntidades().get(i).getFigura().pintar(gc);
+            }
+        }
+        for (Entidad entidade : diagrama.getEntidades()) {
+            if(entidade instanceof Agrupacion){
+                entidade.getFigura().dibujar(gc, ((Agrupacion) entidade).getRelacion(), (Agrupacion)entidade);
             }
         }
     }    

@@ -73,10 +73,10 @@ public class Agrupacion extends Entidad {
                 }
             }
         
-            getFigura().dibujarMarco(gc, relacion);
-            getFigura().dibujarCuadrado(gc, figura.cordCuadradoMov);
-            pintar(gc);
-            getFigura().dibujarInterior(gc, relacion);
+            //getFigura().dibujarMarco(gc, relacion);
+            //getFigura().dibujarCuadrado(gc, figura.cordCuadradoMov);
+            //pintar(gc);
+            //getFigura().dibujarInterior(gc, relacion);
             
         
         
