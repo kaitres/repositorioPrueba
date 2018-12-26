@@ -861,7 +861,7 @@ public  class Figura {
         }
         relacion.getFigura().dibujar(gc,mostrarPuntos);
         relacion.getFigura().pintar(gc);
-        nombre= "jajajxd";
+        System.out.println(nombre);
         gc.fillText(nombre, coordenadas.get(0).getX() ,coordenadas.get(0).getY()-10 );
          for (int i = 0; i < relacion.componentes.size(); i++) {
             if(relacion.componentes.get(i) instanceof Agrupacion){

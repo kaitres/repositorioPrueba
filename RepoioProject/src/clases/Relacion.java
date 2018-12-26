@@ -246,5 +246,11 @@ public class Relacion {
         }
         
     }
+
+    @Override
+    public String toString() {
+        return nombre;
+    }
+
     
 }

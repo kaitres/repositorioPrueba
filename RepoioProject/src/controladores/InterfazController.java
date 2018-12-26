@@ -45,6 +45,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import sun.management.resources.agent;
 
 /**
  *
@@ -149,8 +150,6 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
      @FXML
     private void agregacion() throws IOException{
         AbrirVentana.CargarVista(getClass().getResource("/fxmls/CrearAgregacion.fxml"));
-        diagrama.entidades.add(agrupacionActual);
-        agrupacionActual.getFigura().dibujar(gc,agrupacionActual.getRelacion(), agrupacionActual);
         reDibujarTodo();
     }
 
@@ -590,7 +589,15 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     
     
     public void reDibujarTodo(){
-        eliminarAgrupaciones();
+        System.out.println("relaciones"+ diagrama.relaciones);
+        actualizarAgru();    
+        eliminarRelacion();
+        for (Object entidade : diagrama.entidades) {
+            if(entidade instanceof Agrupacion){
+//                System.out.println("nombre rel agre "+((Agrupacion) entidade).getRelacion().getNombre());
+            }
+        }
+        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         for (int i = 0; i <  diagrama.getEntidades().size(); i++) {
             if(! (diagrama.getEntidades().get(i) instanceof Agrupacion)){
                 
@@ -609,6 +616,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         }
         
         for (Relacion relacion : diagrama.getRelaciones()) {
+            System.out.println("afuera "+ relacion.getNombre());
             relacion.correccion();
             relacion.metamorfosear();
             relacion.getFigura().dibujar(gc,mostrarPuntos);
@@ -634,16 +642,18 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         }
         
          for (int i = 0; i <  diagrama.getEntidades().size(); i++) {
-            if(diagrama.getEntidades().get(i) instanceof Entidad){
+            if(!(diagrama.getEntidades().get(i) instanceof Agrupacion)){
                 diagrama.getEntidades().get(i).getFigura().pintar(gc);
             }
         }
-         eliminarAgrupaciones();
+        
         for (Entidad entidade : diagrama.getEntidades()) {
             if(entidade instanceof Agrupacion){
                 entidade.getFigura().dibujar(gc, ((Agrupacion) entidade).getRelacion(), (Agrupacion)entidade);
             }
         }
+        
+//        .out.println(((Agrupacion)diagrama.getEntidades().get(diagrama.getEntidades().size()-1)).getRelacion().getNombre());
     }    
     
     @FXML
@@ -1061,19 +1071,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         }
         return false;
     }
-    public static void eliminarAgrupaciones(){
-        ArrayList agrupacionesEliminar=  new ArrayList();
-        for (Object agru : diagrama.getEntidades()) {
-            if(agru instanceof Agrupacion){
-                if(((Agrupacion) agru).getRelacion()==null){
-                    agrupacionesEliminar.add(agru);
-                }
-            }
-        }
-        diagrama.entidades.removeAll(agrupacionesEliminar);
-        agrupacionesEliminar.clear();
-   
-    }
+    
     
     private boolean debilConRelacion(){
         int rdebil = 0;
@@ -1087,6 +1085,66 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         if (rdebil == edebil)
             return true;
         return false;
+    }
+    public boolean buscar(Agrupacion a){
+        for (Relacion relacione : diagrama.relaciones) {
+            if(relacione.getNombre() == a.getRelacion().getNombre()){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    
+    public void actualizarAgru(Agrupacion a){
+        if(!buscar(a)){
+            System.out.println("eliminar");
+            a.borrarRelacion();
+        }
+        else{
+            for (Object componente : a.getRelacion().getComponentes()) {
+                if(componente instanceof Agrupacion){
+                    actualizarAgru((Agrupacion) componente);
+                }
+            }
+        }
+    }
+    public void actualizarAgru(){
+        System.out.println(".........");
+        for(Object o :diagrama.entidades){
+            if (o instanceof Agrupacion){
+                actualizarAgru((Agrupacion) o);
+            }
+        }
+        System.out.println(".........");
+    }
+    public void eliminarRelacion(Agrupacion a){
+        if(a.getRelacion() == null){
+            a.borrarRelacion();
+        }
+        else{
+            for (Object o : a.getRelacion().getComponentes()) {
+                if(o instanceof Agrupacion){
+                    eliminarRelacion((Agrupacion) o);
+                }
+            }
+        }
+    }
+    public void eliminarRelacion(){
+        ArrayList eliminar= new ArrayList();
+        for (Object o : diagrama.entidades) {
+            if(o instanceof Agrupacion){
+                eliminarRelacion((Agrupacion) o);
+            }
+        }
+        for(int i=0 ; i  < diagrama.entidades.size(); i++) {
+            if(diagrama.entidades.get(i) instanceof Agrupacion){
+                if(((Agrupacion)diagrama.entidades.get(i)).getRelacion()==null){
+                    eliminar.add(((Agrupacion)diagrama.entidades.get(i)));
+                }
+            }
+        }
+        diagrama.entidades.removeAll(eliminar);
     }
 
 }

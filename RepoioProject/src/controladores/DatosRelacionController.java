@@ -7,11 +7,13 @@ package controladores;
 
 
 import clases.Agrupacion;
+import clases.Diagrama;
 import clases.Entidad;
 import clases.Figura;
 import clases.Propiedad;
 import clases.Relacion;
 import static controladores.InterfazController.compRelacion;
+import static controladores.InterfazController.diagrama;
 import static controladores.InterfazController.posicionDefaultX;
 import static controladores.InterfazController.posicionDefaultY;
 import static controladores.InterfazController.relacionActual;
@@ -237,6 +239,8 @@ public class DatosRelacionController implements Initializable {
         public StringProperty getNombre() { return nombre; }    
         public BooleanProperty getCheck() { return check; }
     }
+    
+
     
     @FXML
     private void eliminarRelacion(){

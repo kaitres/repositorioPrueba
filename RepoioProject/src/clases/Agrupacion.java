@@ -24,10 +24,16 @@ public class Agrupacion extends Entidad {
        this.relacion = relacion;
        Figura fig = new Figura();
        figura = fig;
+       fig.setNombre(nombre);
        
         
     }
-    
+     public void borrarRelacion(){
+         this.relacion = null;
+                 
+     
+     }
+             
     public void setFigura(){
         Figura fig = new Figura();
         figura = fig;
@@ -86,6 +92,11 @@ public class Agrupacion extends Entidad {
 
     private void pintar(GraphicsContext gc) {
        figura.pintarRectangulo(gc);
+    }
+
+    @Override
+    public String toString() {
+        return nombre;
     }
     
 }

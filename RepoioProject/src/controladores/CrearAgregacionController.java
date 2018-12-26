@@ -56,6 +56,15 @@ public class CrearAgregacionController implements Initializable {
         alertEmpty.setContentText("Debe tener entidades");
     }    
     
+    public int buscarRelacion(Relacion r){
+        for (int i = 0; i < InterfazController.diagrama.relaciones.size(); i++) {
+            if(InterfazController.diagrama.relaciones.get(i).getNombre() == r.getNombre()){
+                return i;
+            }
+        }
+        return -1;
+    }
+    
     @FXML
     private void aceptar(ActionEvent event) {
         if (relChoice.getValue()==null){
@@ -63,8 +72,8 @@ public class CrearAgregacionController implements Initializable {
             }
         else{
             if(nombre.getText()!=""){
-                Agrupacion agru = new Agrupacion(nombre.getText(), relChoice.getValue());
-                InterfazController.agrupacionActual= agru;
+                System.out.println( buscarRelacion(relChoice.getValue()));
+                InterfazController.diagrama.entidades.add(new Agrupacion(nombre.getText(), InterfazController.diagrama.relaciones.get(buscarRelacion(relChoice.getValue()))));
                 Stage stage = (Stage) canBtn.getScene().getWindow();
                 stage.close();
             }
