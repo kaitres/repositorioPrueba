@@ -237,10 +237,21 @@ public class Relacion {
                 this.figura.tirarLinea(gc, uniones.get(i));
             }
             if(i==0){
-                uniones.get(0).cardinalidad(entidad1Cardinal,gc);
+                if("".equals(entidad1Cardinal)){
+                    
+                }else{
+                    uniones.get(0).cardinalidad(entidad1Cardinal,gc);
+                }
+                
             }
             if(i==1){
-                uniones.get(1).cardinalidad(entidad2Cardinal,gc);
+                if("".equals(entidad1Cardinal)){
+                    
+                }else{
+                    uniones.get(1).cardinalidad(entidad2Cardinal,gc);
+                }
+                
+                
             }
             
         }
