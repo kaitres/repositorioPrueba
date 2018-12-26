@@ -61,7 +61,7 @@
                </graphic>
             </Button>
             <Button fx:id="hBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="24.0" layoutY="119.0" mnemonicParsing="false" onAction="#crearHerencia" prefHeight="32.0" prefWidth="71.0" styleClass="boton" stylesheets="@Estilo.css" text="Herencia" textAlignment="CENTER" />
-            <Button layoutX="24.0" layoutY="384.0" mnemonicParsing="false" onAction="#deshacer" prefHeight="35.0" prefWidth="38.0">
+            <Button disable="true" layoutX="24.0" layoutY="384.0" mnemonicParsing="false" onAction="#deshacer" prefHeight="35.0" prefWidth="38.0">
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -69,7 +69,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Button layoutX="65.0" layoutY="384.0" mnemonicParsing="false" onAction="#rehacer" prefHeight="35.0" prefWidth="38.0">
+            <Button disable="true" layoutX="65.0" layoutY="384.0" mnemonicParsing="false" onAction="#rehacer" prefHeight="35.0" prefWidth="38.0">
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                      <image>
