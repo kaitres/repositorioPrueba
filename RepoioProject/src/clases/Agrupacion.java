@@ -68,6 +68,11 @@ public class Agrupacion extends Entidad {
             relacion.getFigura().setPuntoCentral(new Point2D(relacion.getFigura().getPuntoCentral().getX() + XDistancia,relacion.getFigura().getPuntoCentral().getY() +  YDistancia));
             for (Propiedad propiedade :  relacion.getPropiedades()) {
                 propiedade.getElip().setPuntoCentral(new Point2D(propiedade.getElip().getPuntoCentral().getX() + XDistancia,propiedade.getElip().getPuntoCentral().getY() +  YDistancia));
+                if(propiedade.tipo == Tipo.compuesto){
+                            for (Propiedad prop :  propiedade.propiedades) {
+                            prop.getElip().setPuntoCentral(new Point2D(prop.getElip().getPuntoCentral().getX() + XDistancia,prop.getElip().getPuntoCentral().getY() +  YDistancia));
+                        }
+                }
             }
             
             

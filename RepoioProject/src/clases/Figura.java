@@ -656,6 +656,18 @@ public  class Figura {
                     YMayor = cord.getY();
                 }  
             }
+            if(prop.tipo == Tipo.compuesto){
+                        for (Propiedad propiedade : prop.propiedades) {
+                            for (Point2D cord : propiedade.getElip().getCoordenadas()) {
+                                if(cord.getX()> XMayor){
+                                    XMayor = cord.getX();
+                                }
+                                if(cord.getY() > YMayor){
+                                    YMayor = cord.getY();
+                                }  
+                            }
+                        }
+                    }
         }
         
         for (Point2D cord : relacion.getFigura().getCoordenadas()) {
@@ -726,6 +738,18 @@ public  class Figura {
                     YMenor = cord.getY();
                 }  
             }
+            if(prop.tipo == Tipo.compuesto){
+                        for (Propiedad propiedade : prop.propiedades) {
+                            for (Point2D cord : propiedade.getElip().getCoordenadas()) {
+                                if(cord.getX()< XMenor){
+                                    XMenor = cord.getX();
+                                }
+                                if(cord.getY()< YMenor){
+                                    YMenor = cord.getY();
+                                }  
+                            }
+                        }
+                    }
         }
         for (Point2D cord : relacion.getFigura().getCoordenadas()) {
             if(cord.getX()< XMenor){
@@ -851,6 +875,9 @@ public  class Figura {
         //pintarCuadrados(gc, cordCuadradoMov);
     }
     public void dibujar(GraphicsContext gc , Relacion relacion , Agrupacion agru){
+        if (InterfazController.mostrarPuntos) {
+          dibujarPuntoControl(gc);  
+        }
         dibujarMarco(gc, relacion);
          CuadradoMov(gc);
          dibujarInterior(gc , relacion);

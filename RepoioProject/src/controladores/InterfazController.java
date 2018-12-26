@@ -155,7 +155,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
 
 //---------------------------------------------------------------------------------------------
     private void puntoGuardado() {
-
+/*
         if(indiceD < diagramas.size() - 1 ){
             while(indiceD != diagramas.size()-1 ){
                 diagramas.remove(diagramas.size()-1);
@@ -172,7 +172,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         }       
         diagramas.add(diagrama.clon(id));
         id+=1; 
-
+*/
      }
     
     @FXML 
@@ -375,14 +375,13 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                 else{
                     figuraMov.setPuntoCentral(mouse);
                 }
-                /*
+                
                 if (getMayores().getX()>770){ 
                     canvas.setWidth(getMayores().getX());
                 }
                 if (getMayores().getY()>520){
                     canvas.setHeight(getMayores().getY());
                 }
-*/
                 gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                 reDibujarTodo();
 
@@ -1145,6 +1144,17 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             }
         }
         diagrama.entidades.removeAll(eliminar);
+        
     }
+    //public boolean agruEnHerencia(Herencia h){
+    //    for (Herencia herencia : diagrama.herencias) {
+        
+    //}
+    //public void eliminarHerencia(){
+    //    ArrayList eliminar= new ArrayList();
+    //    for (Herencia herencia : diagrama.herencias) {
+    //       if(herencia.getPadre())
+    //    }
+    //}
 
-}
+    }
