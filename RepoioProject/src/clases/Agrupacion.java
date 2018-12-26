@@ -6,6 +6,7 @@
 package clases;
 
 
+
 import java.awt.Point;
 import java.util.ArrayList;
 import javafx.geometry.Point2D;
@@ -28,6 +29,16 @@ public class Agrupacion extends Entidad {
        
         
     }
+    public Agrupacion clon(){
+        Agrupacion agrupacion = new Agrupacion(nombre, relacion);
+        agrupacion.figura=figura.clon();
+        for (Propiedad propiedade : propiedades) {
+            agrupacion.propiedades.add(propiedade.clon());                 
+        }
+        return agrupacion;
+    }
+                
+    
      public void borrarRelacion(){
          this.relacion = null;
                  
@@ -74,8 +85,12 @@ public class Agrupacion extends Entidad {
                     relacion.getComponente(i).getFigura().setPuntoCentral(new Point2D(relacion.getComponente(i).getFigura().getPuntoCentral().getX() + XDistancia,relacion.getComponente(i).getFigura().getPuntoCentral().getY() +  YDistancia));
                     for (Propiedad propiedade :  relacion.getComponente(i).getPropiedades()) {
                         propiedade.getElip().setPuntoCentral(new Point2D(propiedade.getElip().getPuntoCentral().getX() + XDistancia,propiedade.getElip().getPuntoCentral().getY() +  YDistancia));
+                        if(propiedade.tipo == Tipo.compuesto){
+                            for (Propiedad prop :  propiedade.propiedades) {
+                            prop.getElip().setPuntoCentral(new Point2D(prop.getElip().getPuntoCentral().getX() + XDistancia,prop.getElip().getPuntoCentral().getY() +  YDistancia));
+                        }
                     }
- {
+
                         
                     }
                 }

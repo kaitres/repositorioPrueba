@@ -155,7 +155,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
 
 //---------------------------------------------------------------------------------------------
     private void puntoGuardado() {
-/*
+
         if(indiceD < diagramas.size() - 1 ){
             while(indiceD != diagramas.size()-1 ){
                 diagramas.remove(diagramas.size()-1);
@@ -172,7 +172,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         }       
         diagramas.add(diagrama.clon(id));
         id+=1; 
-*/
+
      }
     
     @FXML 

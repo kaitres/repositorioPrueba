@@ -685,6 +685,18 @@ public  class Figura {
                             YMayor = cord.getY();
                         }  
                     }
+                    if(prop.tipo == Tipo.compuesto){
+                        for (Propiedad propiedade : prop.propiedades) {
+                            for (Point2D cord : propiedade.getElip().getCoordenadas()) {
+                                if(cord.getX()> XMayor){
+                                    XMayor = cord.getX();
+                                }
+                                if(cord.getY() > YMayor){
+                                    YMayor = cord.getY();
+                                }  
+                            }
+                        }
+                    }
                 }
             }
             else{
@@ -734,6 +746,7 @@ public  class Figura {
                     }
                 }
                 for (Propiedad prop : ((Entidad)entidad).getPropiedades()){
+                    
                     for (Point2D cord : prop.getElip().getCoordenadas()) {
                         if(cord.getX()< XMenor){
                             XMenor = cord.getX();
@@ -741,6 +754,18 @@ public  class Figura {
                         if(cord.getY()< YMenor){
                             YMenor = cord.getY();
                         }  
+                    }
+                    if(prop.tipo == Tipo.compuesto){
+                        for (Propiedad propiedade : prop.propiedades) {
+                            for (Point2D cord : propiedade.getElip().getCoordenadas()) {
+                                if(cord.getX()< XMenor){
+                                    XMenor = cord.getX();
+                                }
+                                if(cord.getY()< YMenor){
+                                    YMenor = cord.getY();
+                                }  
+                            }
+                        }
                     }
                 }
             } 

@@ -31,8 +31,14 @@ public class Diagrama {
 
      public Diagrama clon(int id){
         Diagrama aux= new Diagrama(id);
-        for (Entidad entidad : entidades) {
-            aux.addEntidad(entidad.clon());
+        for (Object entidad : entidades) {
+            if(entidad instanceof Agrupacion){
+                aux.addEntidad(((Agrupacion)entidad).clon());
+            }
+            else{
+                aux.addEntidad(((Entidad)entidad).clon());
+            }
+                   
         }
         for (Relacion relacion : relaciones) {
             aux.addRelacion(relacion.clon(aux.getEntidades(),entidades ));
