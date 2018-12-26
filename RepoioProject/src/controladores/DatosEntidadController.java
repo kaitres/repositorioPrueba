@@ -5,6 +5,7 @@
  */
 package controladores;
 
+import clases.Agrupacion;
 import clases.Diagrama;
 import clases.Entidad;
 import clases.Figura;
@@ -180,6 +181,27 @@ public class DatosEntidadController implements Initializable {
                 
                 if( relacion.getComponentes().isEmpty()){
                     eliminar.add(relacion);
+                    for (Entidad entidade : InterfazController.diagrama.entidades) {
+                        if(entidade instanceof Agrupacion){
+                            if(relacion.getNombre()== ((Agrupacion) entidade).getRelacion().getNombre()){
+                                ArrayList <Herencia> eliminar2 = new ArrayList();
+                                for (Herencia herencia : InterfazController.diagrama.getHerencias()) {
+                                    if(herencia.getEntidades().contains(entidade)){
+                                        herencia.getEntidades().remove(entidade);
+                                    }
+                                    if(herencia.getPadre().getNombre() == null ? entidade.getNombre() == null :
+                                            herencia.getPadre().getNombre().equals(entidade.getNombre())){
+                                        eliminar2.add(herencia);
+                                    }
+                                    if(herencia.getEntidades().size()<1){
+                                        eliminar2.add(herencia);
+                                    }
+                                }
+                                InterfazController.diagrama.herencias.removeAll(eliminar2);
+                            }
+                        }
+                    }
+                    InterfazController.diagrama.getRelaciones().remove(relacionActual);
                 }
                 
                 

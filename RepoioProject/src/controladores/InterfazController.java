@@ -870,6 +870,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                         relacionActual = relacion;
                         AbrirVentana.CargarVista(getClass().getResource("/fxmls/DatosRelacion.fxml"));
                         if(relacionActual == null){
+                            
                             gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                             reDibujarTodo();
                             puntoGuardado();

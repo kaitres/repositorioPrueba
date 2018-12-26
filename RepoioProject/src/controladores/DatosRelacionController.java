@@ -10,10 +10,12 @@ import clases.Agrupacion;
 import clases.Diagrama;
 import clases.Entidad;
 import clases.Figura;
+import clases.Herencia;
 import clases.Propiedad;
 import clases.Relacion;
 import static controladores.InterfazController.compRelacion;
 import static controladores.InterfazController.diagrama;
+import static controladores.InterfazController.entidadActual;
 import static controladores.InterfazController.posicionDefaultX;
 import static controladores.InterfazController.posicionDefaultY;
 import static controladores.InterfazController.relacionActual;
@@ -244,6 +246,26 @@ public class DatosRelacionController implements Initializable {
     
     @FXML
     private void eliminarRelacion(){
+        for (Entidad entidade : InterfazController.diagrama.entidades) {
+            if(entidade instanceof Agrupacion){
+                if(relacionActual.getNombre()== ((Agrupacion) entidade).getRelacion().getNombre()){
+                    ArrayList <Herencia> eliminar2 = new ArrayList();
+                    for (Herencia herencia : InterfazController.diagrama.getHerencias()) {
+                        if(herencia.getEntidades().contains(entidade)){
+                            herencia.getEntidades().remove(entidade);
+                        }
+                        if(herencia.getPadre().getNombre() == null ? entidade.getNombre() == null :
+                                herencia.getPadre().getNombre().equals(entidade.getNombre())){
+                            eliminar2.add(herencia);
+                        }
+                        if(herencia.getEntidades().size()<1){
+                            eliminar2.add(herencia);
+                        }
+                    }
+                    InterfazController.diagrama.herencias.removeAll(eliminar2);
+                }
+            }
+        }
         InterfazController.diagrama.getRelaciones().remove(relacionActual);
         relacionActual=null;
         
