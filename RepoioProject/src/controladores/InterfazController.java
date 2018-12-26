@@ -590,6 +590,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
     
     
     public void reDibujarTodo(){
+        eliminarAgrupaciones();
         for (int i = 0; i <  diagrama.getEntidades().size(); i++) {
             if(! (diagrama.getEntidades().get(i) instanceof Agrupacion)){
                 
@@ -637,6 +638,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                 diagrama.getEntidades().get(i).getFigura().pintar(gc);
             }
         }
+         eliminarAgrupaciones();
         for (Entidad entidade : diagrama.getEntidades()) {
             if(entidade instanceof Agrupacion){
                 entidade.getFigura().dibujar(gc, ((Agrupacion) entidade).getRelacion(), (Agrupacion)entidade);
@@ -1058,6 +1060,19 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
             }
         }
         return false;
+    }
+    public static void eliminarAgrupaciones(){
+        ArrayList agrupacionesEliminar=  new ArrayList();
+        for (Object agru : diagrama.getEntidades()) {
+            if(agru instanceof Agrupacion){
+                if(((Agrupacion) agru).getRelacion()==null){
+                    agrupacionesEliminar.add(agru);
+                }
+            }
+        }
+        diagrama.entidades.removeAll(agrupacionesEliminar);
+        agrupacionesEliminar.clear();
+   
     }
     
     private boolean debilConRelacion(){

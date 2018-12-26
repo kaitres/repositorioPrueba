@@ -214,7 +214,6 @@ public class DatosEntidadController implements Initializable {
         InterfazController.diagrama.relaciones.removeAll(eliminar);
         InterfazController.diagrama.entidades.remove(entidadActual);
         entidadActual=null;
-        
         Stage stage = (Stage) canBtn.getScene().getWindow();
         stage.close(); 
     }

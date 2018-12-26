@@ -835,6 +835,7 @@ public  class Figura {
     }
     public void reDibujarTodo(GraphicsContext gc , Agrupacion agru){
         
+        
         Relacion relacion = agru.relacion;
         agru.figura.dibujarMarco(gc, relacion);
         relacion.correccion();
@@ -842,6 +843,12 @@ public  class Figura {
         relacion.getFigura().dibujar(gc,mostrarPuntos);
         relacion.crearUniones();
         relacion.f(gc);
+        
+        gc.setStroke(Color.BLACK);
+        gc.setTextAlign(TextAlignment.LEFT);
+        gc.setTextBaseline(VPos.CENTER);
+        gc.setFont(Font.font(15));
+        
         
         for (Propiedad prop : relacion.getPropiedades()){
             prop.getElip().dibujarElipse(gc, prop.getTipo());
@@ -853,6 +860,9 @@ public  class Figura {
             }
         }
         relacion.getFigura().dibujar(gc,mostrarPuntos);
+        relacion.getFigura().pintar(gc);
+        nombre= "jajajxd";
+        gc.fillText(nombre, coordenadas.get(0).getX() ,coordenadas.get(0).getY()-10 );
          for (int i = 0; i < relacion.componentes.size(); i++) {
             if(relacion.componentes.get(i) instanceof Agrupacion){
                 reDibujarTodo(gc, ((Agrupacion)relacion.componentes.get(i)));
