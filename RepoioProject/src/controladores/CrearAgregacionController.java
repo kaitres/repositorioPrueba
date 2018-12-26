@@ -72,10 +72,12 @@ public class CrearAgregacionController implements Initializable {
             }
         else{
             if(nombre.getText()!=""){
-                System.out.println( buscarRelacion(relChoice.getValue()));
-                InterfazController.diagrama.entidades.add(new Agrupacion(nombre.getText(), InterfazController.diagrama.relaciones.get(buscarRelacion(relChoice.getValue()))));
-                Stage stage = (Stage) canBtn.getScene().getWindow();
-                stage.close();
+                    System.out.println( buscarRelacion(relChoice.getValue()));
+                    InterfazController.diagrama.entidades.add(new Agrupacion(nombre.getText(), InterfazController.diagrama.relaciones.get(buscarRelacion(relChoice.getValue()))));
+                    Stage stage = (Stage) canBtn.getScene().getWindow();
+                    stage.close();
+                
+                
             }
         }
                 

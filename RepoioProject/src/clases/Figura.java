@@ -838,6 +838,14 @@ public  class Figura {
             gc.strokeLine(p1.getX() , p1.getY() ,p1.getX() , p1.getY()+ largo-2 );
             p1 = new Point2D(p1.getX()+1 ,p1.getY());
         }
+        Point2D pCentro = coordenadas.get(1);
+        cordCuadradoMov.clear();
+        cordCuadradoMov.add(new Point2D(pCentro.getX() - 10 , pCentro.getY() - 10 ));
+        cordCuadradoMov.add(new Point2D(pCentro.getX() + 10 , pCentro.getY() - 10 ));
+        cordCuadradoMov.add(new Point2D(pCentro.getX() + 10 , pCentro.getY() + 10 ));
+        cordCuadradoMov.add(new Point2D(pCentro.getX() - 10 , pCentro.getY() + 10 ));
+        dibujarCuadrado(gc, cordCuadradoMov);
+        
         //ipntarCuadrados(gc , coordenadas);
     }  
     /*private void pintarCuadrados(GraphicsContext gc ,Relacion relacion) {
@@ -872,7 +880,7 @@ public  class Figura {
         gc.strokeLine(cordCuadradoMov.get(1).getX(), cordCuadradoMov.get(1).getY(), cordCuadradoMov.get(2).getX(), cordCuadradoMov.get(2).getY());
         gc.strokeLine(cordCuadradoMov.get(2).getX(), cordCuadradoMov.get(2).getY(), cordCuadradoMov.get(3).getX(), cordCuadradoMov.get(3).getY());
         gc.strokeLine(cordCuadradoMov.get(3).getX(), cordCuadradoMov.get(3).getY(), cordCuadradoMov.get(0).getX(), cordCuadradoMov.get(0).getY());
-        //pintarCuadrados(gc, cordCuadradoMov);
+       // pintarCuadrados(gc, cordCuadradoMov);
     }
     public void dibujar(GraphicsContext gc , Relacion relacion , Agrupacion agru){
         if (InterfazController.mostrarPuntos) {

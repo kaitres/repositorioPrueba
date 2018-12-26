@@ -134,6 +134,7 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
         gc.setFill(Color.BLUE);
         cantProps = 0;
         
+        
     }    
 
     @FXML
@@ -902,6 +903,21 @@ public class InterfazController implements Initializable {//Lo hizo el Carlos Uw
                         reDibujarTodo();
                         puntoGuardado();
                         break;
+                }
+            }
+            for(int i=0 ; i<diagrama.getEntidades().size() ; i++){
+               if(diagrama.getEntidades().get(i) instanceof Agrupacion){
+                   Agrupacion entidade = (Agrupacion) diagrama.getEntidades().get(i);
+                   if ((e.getX() > ((Agrupacion) entidade).getFigura().getCordCuadradoMov().get(0).getX()) &&
+                       (e.getX() < ((Agrupacion) entidade).getFigura().getCordCuadradoMov().get(1).getX()) &&
+                       (e.getY() > ((Agrupacion) entidade).getFigura().getCordCuadradoMov().get(0).getY()) &&
+                       (e.getY() < ((Agrupacion) entidade).getFigura().getCordCuadradoMov().get(2).getY())){
+                       entidadActual=entidade;
+                       AbrirVentana.CargarVista(getClass().getResource("/fxmls/DatosAgregacion.fxml"));
+                       entidadActual=null;
+                       gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+                       reDibujarTodo();
+                    }
                 }
             }
             for (Herencia relacion : diagrama.getHerencias()) {
