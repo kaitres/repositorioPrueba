@@ -49,7 +49,9 @@ public class Agrupacion extends Entidad {
         int YDistancia = (int) (p.getY() - pAux.getY());
             Point2D pCRAux = relacion.getFigura().getPuntoCentral();
             relacion.getFigura().setPuntoCentral(new Point2D(relacion.getFigura().getPuntoCentral().getX() + XDistancia,relacion.getFigura().getPuntoCentral().getY() +  YDistancia));
-            
+            for (Propiedad propiedade :  relacion.getPropiedades()) {
+                propiedade.getElip().setPuntoCentral(new Point2D(propiedade.getElip().getPuntoCentral().getX() + XDistancia,propiedade.getElip().getPuntoCentral().getY() +  YDistancia));
+            }
             
             
             for (int i = 0; i < relacion.getComponentes().size(); i++) {

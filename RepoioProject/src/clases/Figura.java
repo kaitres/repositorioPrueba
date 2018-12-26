@@ -647,6 +647,17 @@ public  class Figura {
     private Point2D getMayor(Relacion relacion){
         double XMayor = relacion.getFigura().getCoordenadas().get(0).getX();
         double YMayor = relacion.getFigura().getCoordenadas().get(0).getY();
+        for (Propiedad prop : relacion.getPropiedades()) {
+            for (Point2D cord : prop.getElip().getCoordenadas()) {
+                if(cord.getX()> XMayor){
+                    XMayor = cord.getX();
+                }
+                if(cord.getY()> YMayor){
+                    YMayor = cord.getY();
+                }  
+            }
+        }
+        
         for (Point2D cord : relacion.getFigura().getCoordenadas()) {
             if(cord.getX()> XMayor){
                 XMayor = (int)cord.getX();
@@ -694,7 +705,16 @@ public  class Figura {
     private Point2D getMenor(Relacion relacion){
         double XMenor = relacion.getFigura().getCoordenadas().get(0).getX();
         double YMenor = relacion.getFigura().getCoordenadas().get(0).getY();
-        
+        for (Propiedad prop : relacion.getPropiedades()) {
+            for (Point2D cord : prop.getElip().getCoordenadas()) {
+                if(cord.getX()< XMenor){
+                    XMenor = cord.getX();
+                }
+                if(cord.getY()< YMenor){
+                    YMenor = cord.getY();
+                }  
+            }
+        }
         for (Point2D cord : relacion.getFigura().getCoordenadas()) {
             if(cord.getX()< XMenor){
                 XMenor = cord.getX();
@@ -817,12 +837,12 @@ public  class Figura {
         
         Relacion relacion = agru.relacion;
         agru.figura.dibujarMarco(gc, relacion);
-        relacion.getFigura().dibujar(gc, mostrarPuntos);
         relacion.correccion();
         relacion.metamorfosear();
         relacion.getFigura().dibujar(gc,mostrarPuntos);
         relacion.crearUniones();
         relacion.f(gc);
+        
         for (Propiedad prop : relacion.getPropiedades()){
             prop.getElip().dibujarElipse(gc, prop.getTipo());
             if(prop.getPropiedades()!=null){
@@ -832,6 +852,7 @@ public  class Figura {
                 }
             }
         }
+        relacion.getFigura().dibujar(gc,mostrarPuntos);
          for (int i = 0; i < relacion.componentes.size(); i++) {
             if(relacion.componentes.get(i) instanceof Agrupacion){
                 reDibujarTodo(gc, ((Agrupacion)relacion.componentes.get(i)));
