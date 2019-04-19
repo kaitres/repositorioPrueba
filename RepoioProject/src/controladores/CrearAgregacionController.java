@@ -30,6 +30,7 @@ public class CrearAgregacionController implements Initializable {
 
     /**
      * Initializes the controller class.
+     * pene flacido
      */
     @FXML
     private ComboBox<Relacion> relChoice;
