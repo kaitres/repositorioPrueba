@@ -24,6 +24,7 @@ import javafx.scene.text.TextAlignment;
 /**
  *
  * @author IP-ROUTE
+ * hola mama estoy en discord
  */
 public  class Figura {
     ArrayList<Point2D> coordenadas = new ArrayList();
